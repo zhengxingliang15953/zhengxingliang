@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import RouterHooks from "./hooks";
+import { getIndexAccount } from '../api';
 
 const routes = [
   {
@@ -12,6 +13,7 @@ const routes = [
     name:'index',
     path:'/index',
     component:()=>import('../views2/index.vue'),
+    redirect:'/index/notice',
     children:[
       {
         name:'notice',//公告管理
@@ -41,12 +43,30 @@ const routes = [
     ]
   }
 ];
-
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
 });
+
+/*var token = '';
+router.beforeEach((to, from, next) => {
+  console.log(to.path);
+  getIndexAccount().then((data) => {
+    token = data.data.msg;
+    console.log(token);
+    console.log(window.sessionStorage.getItem('token'));
+    if (to.path == '/') {
+      next();
+    } else {
+      if (window.sessionStorage.getItem('token') == token) {
+        next();
+      } else {
+        next('/');
+      }
+    }
+  })
+})*/
 
 RouterHooks.init(router);
 Vue.use(VueRouter);

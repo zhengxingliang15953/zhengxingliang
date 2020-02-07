@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import {getLogin} from '../api';
 export default {
   name: "login",
   data() {
@@ -28,7 +29,15 @@ export default {
   },
   methods:{
     loginBtn(){
-      this.$router.push('/index');
+      getLogin(this.formCustom).then(data=>{
+        if(data.data.msg!='0'){
+          window.sessionStorage.setItem('token',data.data.msg);
+          this.$Message.success('登陆成功');
+          this.$router.push('/index');
+        }else{
+          this.$Message.error('登陆失败');
+        }
+      })
     }
   }
 };
