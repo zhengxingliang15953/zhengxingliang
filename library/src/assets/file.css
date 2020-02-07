@@ -1,0 +1,27 @@
+body,html,#app{
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+.el-menu-demo{
+	background-color: #7fb6d8;
+}
+.input-with-select{
+	width: 75%;
+	margin-left:80px;
+	margin-top:70px;
+}
+.footer{
+	text-align: center;
+	height: 80px;
+	line-height: 80px;
+	font-size: 15px;
+	background-color:  #7fb6d8;
+	margin-top:8px;
+	color: black;
+  }
