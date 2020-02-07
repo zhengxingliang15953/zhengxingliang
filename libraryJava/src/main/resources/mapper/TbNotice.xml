@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbNoticeMapper">
+
+    <insert id="insertNotice" >
+        insert into tb_notice(title,message,noticeId)
+        values (#{title},#{message},#{noticeId})
+    </insert>
+
+    <delete id="deleteNotice" parameterType="java.util.Map">
+        delete from tb_notice where noticeId like #{noticeId}
+    </delete>
+
+    <select id="selectAll"  resultType="com.example.demo.entity.TbNotice">
+        select * from tb_notice order by noticeId desc
+    </select>
+
+    <update id="updateNotice" parameterType="java.util.Map">
+        update tb_notice
+        set title=#{title},message=#{message}
+        where noticeId like #{noticeId}
+    </update>
+</mapper>
