@@ -1,0 +1,23 @@
+html {overflow-y:scroll;}
+body {-webkit-font-smoothing: antialiased;margin:0;font: 14px/1.5 Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,\\5B8B\4F53,sans-serif;background:#ffffff;color: #666;}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,p{padding:0; margin:0;}
+table,td,tr,th{font-size:14px;}
+li{list-style-type:none;}
+img{vertical-align:middle;border:0;}/*鍘绘帀鍥剧墖搴曢儴榛樿绌洪殭*/
+ol,ul {list-style:none;}
+address,cite,code,em,th {font-weight:normal; font-style:normal;}
+em,i{font-style: normal;}
+button{cursor: pointer;}
+a{color: #666;text-decoration: none;}
+button,input{font-family: Microsoft YaHei,tahoma,arial,Hiragino Sans GB,\\5B8B\4F53,sans-serif;}
+input{}
+.hide,.none{display: none;}/*闅愯棌绫�*/
+.clearfix:after{visibility: hidden;clear: both;display: block;content: ".";height: 0;}/*娓呴櫎娴姩楂樺害濉岄櫡浼被*/
+.clearfix{zoom: 1;}/*鍏煎IE6銆�7娓呴櫎娴姩*/
+.iconfont{font-family: iconfont;font-style: normal;-webkit-text-stroke-width: .2px;-moz-osx-font-smoothing: grayscale;}/*0.2px鎻忚竟锛屽瓧浣撴姉閿娇*/
+.fl{float:left;}
+.fr{float:right;}
+.al{text-align:left;}
+.ac{text-align: center;}
+.ar{text-align: right;}
+.clear,.clr{display: block;clear: both;height: 0;line-height: 0;font-size: 0;}

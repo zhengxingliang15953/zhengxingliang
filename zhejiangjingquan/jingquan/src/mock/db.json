@@ -1,0 +1,17 @@
+{
+  "posts": [
+    { "id": 1, "title": "json-server", "author": "typicode" }
+  ],
+  "productsDetail": [
+    {
+      "proId": 0,
+      "proTitle": "多介质过滤器",
+      "proDetail": "多介质过滤器多介质过滤器又称机械过滤器，它是内填充石英砂滤料的过滤器，也称作砂滤器。过滤器为压力式，被处理液由过滤器上端进水口进入，"
+    },
+    {
+      "proId": 1,
+      "proTitle": "叠片过滤器",
+      "proDetail": "叠片过滤器一种由过滤单元并列组合而成能自动过滤器，属精密过滤器，采用美国HISEE品牌"
+    }
+  ]
+}
