@@ -9,7 +9,7 @@
         <div >
             <Form :model="formItem" :label-width="38">
               <FormItem label="账号">
-                <Input v-model="formItem.account" placeholder="请输入你的账号"></Input>
+                <Input v-model="formItem.sno" placeholder="请输入你的账号"></Input>
               </FormItem>
               <FormItem label="密码">
                 <Input v-model="formItem.pwd" placeholder="请输入你的密码" type="password"></Input>
@@ -17,7 +17,7 @@
             </Form>
         </div>
         <div slot="footer">
-            <Button type="primary" size="large" long >登录</Button>
+            <Button type="primary" size="large" long @click="studentLogin">登录</Button>
         </div>
     </Modal>
     <!--登录弹窗-->
@@ -31,10 +31,7 @@
       active-text-color="white"
     >
       <img src="../../assets/logo.png" height="60px" alt style="float:left;" />
-      <el-menu-item index="4" class="logoItem">关于湖图</el-menu-item>
-      <el-menu-item index="3" class="logoItem">湖师官网</el-menu-item>
-      <el-menu-item index="2" class="logoItem">网上借阅</el-menu-item>
-      <el-menu-item index="1" class="logoItem" >首页</el-menu-item>
+      
     </el-menu>
     <!--header-->
 
@@ -63,9 +60,13 @@
         
         <Col :lg="8" class="three">
           <Row type="flex" justify="center">
-            <Col :lg="8" >
+            <Col :lg="8" v-if="this.isToken=='1'">
               <img src="../../assets/six1.png" alt="" width="70%" @click="loginBtn">
               <p>登录</p>
+            </Col>
+            <Col :lg="8" v-if="this.isToken=='2'">
+              <img src="../../assets/six1.png" alt="" width="70%" @click="personBtn">
+              <p>个人中心</p>
             </Col>
             <Col :lg="8">
               <img src="../../assets/six2.png" alt="" width="70%" @click="openTimeBtn">
@@ -153,7 +154,7 @@
           </Col>
 
           <Col :lg="18" class="resource" v-if="this.name=='2'">
-          fds
+          
           </Col>
         </Row>  
       </Col>
@@ -163,18 +164,11 @@
           <TabPane label="通知公告">
             <!--通知公告-->
             <List>
-              <ListItem>
+              <ListItem v-for="(item,index) in noticeList" :key="index">
                 <ListItemMeta
                   avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
-                  title="春节闭关通知"
-                  description="This is description, this is description."
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemMeta
-                  avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
-                  title="新型冠状"
-                  description="This is description, this is description."
+                  :title="item.title"
+                  :description="item.message"
                 />
               </ListItem>
             </List>
@@ -183,18 +177,11 @@
           <TabPane label="读者留言">
             <!--读者留言-->
             <List>
-              <ListItem>
+              <ListItem v-for="(item,index) in readMessageList" :key="index">
                 <ListItemMeta
                   avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
-                  title="2018284129留言:"
-                  description="太好看了"
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemMeta
-                  avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
-                  title="2018284129留言:"
-                  description="This is description, this is description."
+                  :title="item.sno"
+                  :description="item.message"
                 />
               </ListItem>
             </List>
@@ -223,6 +210,7 @@
 </template>
 
 <script> 
+import {getStudentLogin,getAllNotice,getAllReadMessage} from '../../api';
 export default {
   name: "index",
   data() {
@@ -231,17 +219,27 @@ export default {
       name:'1',//资源导航/热门新书
       modal1:false,//登录弹窗控制
       formItem:{//账号密码
-        account:'',
+        sno:'',
         pwd:''
       },
       select:'',
+      noticeList:[],//通知公告
+      readMessageList:[],//读者列表
     };
+  },
+  created(){
+    getAllNotice().then((data)=>{
+      this.noticeList=data.data.slice(0,5);
+    })
+    getAllReadMessage().then(data=>{
+      this.readMessageList=data.data.slice(0,5);
+    })
   },
   methods: {
     selectName(value){
       this.name=value;
     },
-    loginBtn(){
+    loginBtn(){//登录弹窗
       this.modal1=true;
     },
     openTimeBtn(){//开放时间跳转
@@ -255,6 +253,30 @@ export default {
     },
     toLend(){//检索跳转
       this.$router.push('/lend');
+    },
+    personBtn(){
+      this.$router.push('/header/person');
+    },
+    studentLogin(){//登录
+      getStudentLogin(this.formItem).then(data=>{
+        if(data.data.msg!='0'){
+          this.$message.success('登录成功');
+          window.sessionStorage.setItem('token',data.data.msg);
+          location.reload();
+        }else{
+          this.$message.warning('账号获密码错误');
+        }
+      })
+      this.modal1=false;
+    }
+  },
+  computed:{
+    isToken(){
+      if(window.sessionStorage.getItem('token')){
+        return '2';
+      }else{
+        return '1';
+      }
     }
   }
 };

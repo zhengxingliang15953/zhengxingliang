@@ -2,11 +2,11 @@
   <div id="readMessage">
     <!--读者留言-->
     <List>
-      <ListItem>
+      <ListItem v-for="(item,index) in readMessageList" :key="index">
         <ListItemMeta
           avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
-          title="2018284129留言:"
-          description="太好看了"
+          :title="item.sno"
+          :description="item.message"
           style="padding-left:15px;"
         />
         <el-button
@@ -14,7 +14,7 @@
           icon="el-icon-delete"
           circle
           style="margin-right:70px;"
-          @click="detailBtn"
+          @click="detailBtn(item.readId)"
         ></el-button>
       </ListItem>
     </List>
@@ -23,15 +23,37 @@
 </template>
 
 <script>
+import { getAllReadMessage, getDeleteReadMessage } from "../../api";
 export default {
   name: "readMessage",
   data() {
-    return {};
+    return {
+      readMessageList: [] //读者留言
+    };
   },
-  methods:{
-      detailBtn(){
-
-      }
+  created() {
+    getAllReadMessage().then(data => {
+      this.readMessageList = data.data;
+    });
+  },
+  methods: {
+    detailBtn(readId) {
+      this.$confirm("确认删除该通知, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        getDeleteReadMessage(readId).then(() => {
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+          getAllReadMessage().then(data => {
+            this.readMessageList = data.data;
+          });
+        });
+      });
+    }
   }
 };
 </script>

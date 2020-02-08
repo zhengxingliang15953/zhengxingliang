@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbReadMessageMapper">
+
+    <select id="selectAllReadMessage" resultType="com.example.demo.entity.TbReadMessage">
+        select * from tb_readMessage order by readId desc
+    </select>
+
+    <insert id="insertReadMessage">
+        insert into tb_readMessage(sno,message,readId)
+        values (#{sno},#{message},#{readId})
+    </insert>
+
+    <delete id="deleteReadMessage">
+        delete from tb_readMessage where readId like #{readId}
+    </delete>
+
+    <select id="selectOneReadMessage" resultType="com.example.demo.entity.TbReadMessage">
+        select * from tb_readMessage where sno like #{sno} order by readId desc
+    </select>
+
+
+</mapper>
