@@ -6,6 +6,14 @@ import "./plugins/vconsole";
 import "./plugins/ui";
 import "./assets/file.css";
 
+Vue.filter('identity', function (value) {
+  if(value=='1'){
+    return "超级管理员";
+  }else if(value=='2'){
+    return "普通管理员";
+  }
+})
+
 
 Vue.config.productionTip = false;
 document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';

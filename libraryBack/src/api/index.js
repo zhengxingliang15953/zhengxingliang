@@ -36,3 +36,31 @@ export let getAllReadMessage = () => {
 export let getDeleteReadMessage = (readId) => {
     return Http.get(`/api/deleteReadMessage?readId=${readId}`);
 };  
+/**获取所有的学生 */
+export let getAllStudent = () => {
+    return Http.get(`/api/getAllStudent`);
+};  
+/*添加管理员*/
+export let getAddAccount = data => {
+    return Http.post(`/api/getAddAccount`, qs.stringify(data));
+};
+/*修改密码*/
+export let getUpdateAccountPwd = data => {
+    return Http.post(`/api/getUpdateAccountPwd`, qs.stringify(data));
+};
+/*获取所有的导航资源*/
+export let getAllResource = () => {
+    return Http.get(`/api/getAllResource`);
+};    
+/*删除导航资源*/
+export let getDetailResource = (resourceId) => {
+    return Http.get(`/api/getDetailResource?resourceId=${resourceId}`);
+};    
+/*添加导航资源*/
+export let getAddResource = (title,resourceUrl,resourceId) => {
+    return Http.get(`/api/getAddResource?title=${title}&resourceUrl=${resourceUrl}&resourceId=${resourceId}`);
+};   
+/*获取所有的图书*/
+export let getAllBook = (title,resourceUrl,resourceId) => {
+    return Http.get(`/api/getAllBook?`);
+};    

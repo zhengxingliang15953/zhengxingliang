@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface TbAccountMapper {
     public List<TbAccount> selectAllAccount();
+    void insertAccount(String account,String pwd);
+    void updateAccount(String account,String pwd);
 }

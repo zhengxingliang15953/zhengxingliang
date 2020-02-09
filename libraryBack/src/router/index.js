@@ -40,6 +40,16 @@ const routes = [
         path:'/index/person',
         component:()=>import('../views2/head/person.vue'),
       },
+      {
+        name:'resource',//资源管理
+        path:'/index/resource',
+        component:()=>import('../views2/head/resource.vue'),
+      },
+      {
+        name:'book',//图书管理
+        path:'/index/book',
+        component:()=>import('../views2/head/book.vue'),
+      },
     ]
   }
 ];

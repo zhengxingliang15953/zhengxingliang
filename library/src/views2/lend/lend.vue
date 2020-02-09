@@ -4,9 +4,10 @@
       <img src="../../assets/logo.png" height="100%" alt />
       <el-input placeholder="请输入内容" style="width:40%;margin:40px auto">
         <el-select slot="prepend" placeholder="请选择" v-model="select" style="width:100px;">
-          <el-option label="题名" value="1"></el-option>
-          <el-option label="著者" value="2"></el-option>
-          <el-option label="ISSN" value="3"></el-option>
+          <el-option label="题名(精确)" value="1"></el-option>
+          <el-option label="著者(模糊)" value="2"></el-option>
+          <el-option label="著者" value="3"></el-option>
+          <el-option label="ISSN" value="4"></el-option>
         </el-select>
         <el-button slot="append" icon="el-icon-search" style="background-color:orange;color:white"></el-button>
       </el-input>
@@ -23,7 +24,7 @@
           style="border-top:1px solid #B5B5B5;"
         >
           <Col :lg="5">
-            <img src="../../assets/book.jpg" width="30%" alt />
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1581273643447&di=71a454e860c079159cebdc7373408c80&imgtype=0&src=http%3A%2F%2Fc23.tianyuimg.com%2Fs%2Fp%2F78%2Fd9e99fe42e0248ab987d272755334b88.jpg%3Fp600" width="90px" height="100px" alt="错误,请检查链接" />
           </Col>
           <Col :lg="19">
             <p>

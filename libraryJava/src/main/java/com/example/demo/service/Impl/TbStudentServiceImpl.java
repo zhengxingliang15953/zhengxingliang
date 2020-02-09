@@ -63,5 +63,19 @@ public class TbStudentServiceImpl implements TbStudentService {
         tbStudentMapper.updatePwd(sno, pwd);
     }
 
+    /**
+     * 获取所有的学生
+     * @return
+     */
+    @Override
+    public List<TbStudent> selectAllStudent() {
+        List<TbStudent> studentList= tbStudentMapper.selectAllStudent();
+        for(TbStudent student:studentList){
+            student.setPwd("0");
+            student.setMsg("0");
+        }
+        return studentList;
+    }
+
 
 }

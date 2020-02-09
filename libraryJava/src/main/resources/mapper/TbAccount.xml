@@ -6,4 +6,14 @@
         select * from tb_account
     </select>
 
+    <insert id="insertAccount">
+        insert into tb_account(account,pwd,status)
+        values (#{account},#{pwd},2)
+    </insert>
+
+    <update id="updateAccount">
+        update tb_account
+        set pwd=#{pwd}
+        where account like #{account}
+    </update>
 </mapper>

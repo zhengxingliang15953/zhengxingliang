@@ -24,18 +24,13 @@ public class TbAccountServiceImpl implements TbAccountService {
         List<TbAccount> tbAccountList=tbAccountMapper.selectAllAccount();
         for(TbAccount tbAccount : tbAccountList){
             if(tbAccount.getAccount().equals(account)&&tbAccount.getPwd().equals(pwd)){
-                backAccount.setAccount(account);
+                backAccount=tbAccount;
+                backAccount.setPwd("0");
                 backAccount.setMsg(getToken(account,20));
-                backAccount.setPwd("0");
-                backAccount.setStatus(tbAccount.getStatus());
-            }else{
-                backAccount.setAccount("0");
-                backAccount.setMsg("0");
-                backAccount.setPwd("0");
-                backAccount.setStatus(0);
+                indexAccount=backAccount;
+                break;
             }
         }
-        indexAccount=backAccount;
         return backAccount;
     }
 
@@ -46,6 +41,37 @@ public class TbAccountServiceImpl implements TbAccountService {
     @Override
     public TbAccount getIndexAccount() {
         return indexAccount;
+    }
+
+    /**
+     * 添加管理员
+     * @param account
+     * @param pwd
+     */
+    @Override
+    public TbAccount insertAccount(String account, String pwd) {
+        List<TbAccount> tbAccountList=tbAccountMapper.selectAllAccount();
+        TbAccount tbAccount=new TbAccount();
+        for(TbAccount account1:tbAccountList){
+            if(account1.getAccount().equals(account)){
+                tbAccount.setMsg("该账号已存在");
+                return tbAccount;
+            }else{
+                tbAccountMapper.insertAccount(account, pwd);
+                tbAccount.setMsg("添加成功");
+            }
+        }
+        return tbAccount;
+    }
+
+    /**
+     * 修改密码
+     * @param account
+     * @param pwd
+     */
+    @Override
+    public void updateAccount(String account, String pwd) {
+        tbAccountMapper.updateAccount(account, pwd);
     }
 
 
@@ -61,7 +87,6 @@ public class TbAccountServiceImpl implements TbAccountService {
             int number=random.nextInt(62);
             sb.append(str.charAt(number));
         }
-
         return sb.toString()+value;
     }
 }

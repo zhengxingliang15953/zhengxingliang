@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @CrossOrigin
@@ -45,5 +46,14 @@ public class TbStudentController {
     @RequestMapping(value = "api/getUpdatePwd",method = RequestMethod.POST)
     public void updatePwd(String sno,String pwd){
         tbStudentService.updatePwd(sno, pwd);
+    }
+
+    /**
+     * 获取所有的学生
+     * @return
+     */
+    @RequestMapping(value = "api/getAllStudent",method = RequestMethod.GET)
+    public List<TbStudent> selectAllStudent(){
+        return tbStudentService.selectAllStudent();
     }
 }

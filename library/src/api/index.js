@@ -32,3 +32,7 @@ export let getUpdatePwd = data => {
 export let getOneReadMessage = (sno) => {
     return Http.get(`/api/getOneReadMessage?sno=${sno}`);
 };    
+/*获取所有的导航资源*/
+export let getAllResource = () => {
+    return Http.get(`/api/getAllResource`);
+};    

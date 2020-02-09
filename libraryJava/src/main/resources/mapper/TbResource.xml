@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbResourceMapper">
+
+    <select id="selectAllResource" resultType="com.example.demo.entity.TbResource">
+        select * from tb_resource
+    </select>
+
+    <delete id="deleteResource">
+        delete from tb_resource where resourceId like #{resourceId}
+    </delete>
+
+    <insert id="insertResource">
+        insert into tb_resource(title,resourceUrl,resourceId)
+        values (#{title},#{resourceUrl},#{resourceId})
+    </insert>
+</mapper>

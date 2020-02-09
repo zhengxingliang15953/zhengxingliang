@@ -3,7 +3,7 @@
     <Layout>
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
         <Menu active-name="1-1" theme="dark" width="auto" :class="menuitemClasses">
-          <MenuItem name="1-1" >
+          <MenuItem name="1-1" to="/index/book">
             <Icon type="ios-book"></Icon>
             <span>图书管理</span>
           </MenuItem>
@@ -19,7 +19,7 @@
             <Icon type="md-chatbubbles"></Icon>
             <span>留言管理</span>
           </MenuItem>
-          <MenuItem name="1-5">
+          <MenuItem name="1-5" to="/index/resource">
             <Icon type="md-briefcase"></Icon>
             <span>资源管理</span>
           </MenuItem>
@@ -42,7 +42,7 @@
             type="md-menu"
             size="24"
           ></Icon>
-          <Button type="primary" style="margin-right:70%;" @click="back">退出</Button><span style="font-size:0.08rem;color:#1E90FF;">超级管理员</span>
+          <Button type="primary" style="margin-right:70%;" @click="back">退出</Button><span style="font-size:0.08rem;color:#1E90FF;">{{value1}}</span>
         </Header>
         <Content id="content" :style="{margin: '20px', background: '#fff',minHeight:`622px`}">
             <router-view></router-view>
@@ -65,7 +65,7 @@ export default {
   },
   created(){
     getIndexAccount().then((data)=>{
-      if(data.data.status==1){
+      if(data.data.status=='1'){
         this.value1='超级管理员';
       }else{
         this.value1='普通管理员';

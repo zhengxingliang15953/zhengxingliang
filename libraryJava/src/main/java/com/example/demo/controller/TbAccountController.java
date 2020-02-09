@@ -40,5 +40,24 @@ public class TbAccountController {
         return tbAccountService.getIndexAccount();
     }
 
+    /**
+     * 添加管理员
+     * @param account
+     * @param pwd
+     */
+    @RequestMapping(value = "api/getAddAccount",method = RequestMethod.POST)
+    public TbAccount insertAccount(String account,String pwd){
+        return tbAccountService.insertAccount(account, pwd);
+    }
+
+    /**
+     * 修改密码
+     * @param account
+     * @param pwd
+     */
+    @RequestMapping(value = "api/getUpdateAccountPwd",method = RequestMethod.POST)
+    public void updatePwd(String account,String pwd){
+        tbAccountService.updateAccount(account, pwd);
+    }
 
 }

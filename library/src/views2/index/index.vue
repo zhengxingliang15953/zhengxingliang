@@ -1,28 +1,27 @@
 <template>
   <div id="index">
-
     <!--登录弹窗-->
     <Modal v-model="modal1" width="400">
-        <p slot="header" style="color:#4876FF;text-align:center">
-            <span>欢迎登录湖州师范学院图书馆</span>
-        </p>
-        <div >
-            <Form :model="formItem" :label-width="38">
-              <FormItem label="账号">
-                <Input v-model="formItem.sno" placeholder="请输入你的账号"></Input>
-              </FormItem>
-              <FormItem label="密码">
-                <Input v-model="formItem.pwd" placeholder="请输入你的密码" type="password"></Input>
-              </FormItem>
-            </Form>
-        </div>
-        <div slot="footer">
-            <Button type="primary" size="large" long @click="studentLogin">登录</Button>
-        </div>
+      <p slot="header" style="color:#4876FF;text-align:center">
+        <span>欢迎登录湖州师范学院图书馆</span>
+      </p>
+      <div>
+        <Form :model="formItem" :label-width="38">
+          <FormItem label="账号">
+            <Input v-model="formItem.sno" placeholder="请输入你的账号"></Input>
+          </FormItem>
+          <FormItem label="密码">
+            <Input v-model="formItem.pwd" placeholder="请输入你的密码" type="password"></Input>
+          </FormItem>
+        </Form>
+      </div>
+      <div slot="footer">
+        <Button type="primary" size="large" long @click="studentLogin">登录</Button>
+      </div>
     </Modal>
     <!--登录弹窗-->
 
-     <!--header-->
+    <!--header-->
     <el-menu
       default-active="/index"
       class="el-menu-demo"
@@ -31,7 +30,6 @@
       active-text-color="white"
     >
       <img src="../../assets/logo.png" height="60px" alt style="float:left;" />
-      
     </el-menu>
     <!--header-->
 
@@ -43,51 +41,54 @@
             <li>电子图书</li>
           </ul>
           <div style="height:240px;">
-<el-input placeholder="请输入内容" class="input-with-select">
-    <el-select  slot="prepend" placeholder="请选择" v-model="select" style="width:100px;">
-      <el-option label="题名" value="1"></el-option>
-      <el-option label="著者" value="2"></el-option>
-      <el-option label="ISSN" value="3"></el-option>
-    </el-select>
-    <el-button slot="append" icon="el-icon-search" @click="toLend" style="background-color:orange;color:white"></el-button>
-  </el-input>
-          <p style="color:white;font-size:15px;margin-left:80px;margin-top:2px;">说明:查找馆藏的纸质图书</p>
+            <el-input placeholder="请输入内容" class="input-with-select">
+              <el-select slot="prepend" placeholder="请选择" v-model="select" style="width:100px;">
+                <el-option label="题名(精确)" value="1"></el-option>
+                <el-option label="题名(模糊)" value="2"></el-option>
+                <el-option label="著者" value="3"></el-option>
+                <el-option label="ISBN" value="4"></el-option>
+              </el-select>
+              <el-button
+                slot="append"
+                icon="el-icon-search"
+                @click="toLend"
+                style="background-color:orange;color:white"
+              ></el-button>
+            </el-input>
+            <p style="color:white;font-size:15px;margin-left:80px;margin-top:2px;">说明:查找馆藏的纸质图书</p>
           </div>
         </Col>
-          
 
-
-        
         <Col :lg="8" class="three">
           <Row type="flex" justify="center">
             <Col :lg="8" v-if="this.isToken=='1'">
-              <img src="../../assets/six1.png" alt="" width="70%" @click="loginBtn">
+              <img src="../../assets/six1.png" alt width="70%" @click="loginBtn" />
               <p>登录</p>
             </Col>
             <Col :lg="8" v-if="this.isToken=='2'">
-              <img src="../../assets/six1.png" alt="" width="70%" @click="personBtn">
+              <img src="../../assets/six1.png" alt width="70%" @click="personBtn" />
               <p>个人中心</p>
             </Col>
             <Col :lg="8">
-              <img src="../../assets/six2.png" alt="" width="70%" @click="openTimeBtn">
+              <img src="../../assets/six2.png" alt width="70%" @click="openTimeBtn" />
               <p>开放时间</p>
             </Col>
             <Col :lg="8">
-              <img src="../../assets/six3.png" alt="" width="70%" @click="messageBtn">
+              <img src="../../assets/six3.png" alt width="70%" @click="messageBtn" />
               <p>我要留言</p>
             </Col>
             <Col :lg="8">
-              <img src="../../assets/six3.png" alt="" width="70%">
+              <img src="../../assets/six3.png" alt width="70%" />
               <p>我要留言</p>
             </Col>
             <Col :lg="8">
-              <img src="../../assets/six5.png" alt="" width="70%" @click="hutuBtn">
+              <img src="../../assets/six5.png" alt width="70%" @click="hutuBtn" />
               <p>关于湖图</p>
             </Col>
             <Col :lg="8">
-              <a href="http://www.zjhu.edu.cn" target="_blank" >
-                <img src="../../assets/six6.png" alt="" width="70%">
-              <p>湖师官网</p>
+              <a href="http://www.zjhu.edu.cn" target="_blank">
+                <img src="../../assets/six6.png" alt width="70%" />
+                <p>湖师官网</p>
               </a>
             </Col>
           </Row>
@@ -114,49 +115,37 @@
       <Col :lg="11">
         <Row type="flex" justify="center">
           <Col :lg="6">
-            <Menu mode="vertical" :active-name="name" width="100%" class="left" @on-select="selectName">
-            <MenuItem name="1">
-              <Icon type="ios-paper" />
-              资源导航
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-paper" />
-              热门新书
-            </MenuItem>
-         </Menu>  
+            <Menu
+              mode="vertical"
+              :active-name="name"
+              width="100%"
+              class="left"
+              @on-select="selectName"
+            >
+              <MenuItem name="1">
+                <Icon type="ios-paper" />资源导航
+              </MenuItem>
+              <MenuItem name="2">
+                <Icon type="ios-paper" />热门新书
+              </MenuItem>
+            </Menu>
           </Col>
           <Col :lg="18" class="resource" v-if="this.name=='1'">
             <ul class="left">
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="http://www.ireadweek.com/index.php/Index/index.html" target="_blank">周读</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
+              <li v-for="(item,index) in resourceList1" :key="index">
+                <a :href="item.resourceUrl" target="_blank">{{item.title}}</a>
+              </li>
             </ul>
 
             <ul class="left">
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="http://www.ireadweek.com/index.php/Index/index.html" target="_blank">周读</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
-              <li><a href="https://www.jiumodiary.com/" target="_blank">摩鸠搜书</a></li>
+              <li v-for="(item,index) in resourceList2" :key="index">
+                <a :href="item.resourceUrl" target="_blank">{{item.title}}</a>
+              </li>
             </ul>
           </Col>
 
-          <Col :lg="18" class="resource" v-if="this.name=='2'">
-          
-          </Col>
-        </Row>  
+          <Col :lg="18" class="resource" v-if="this.name=='2'"></Col>
+        </Row>
       </Col>
 
       <Col :lg="7">
@@ -191,91 +180,134 @@
       </Col>
       <Col :lg="3"></Col>
     </Row>
-    <hr style="width:75%;margin:0 auto;"></hr>
+    <hr style="width:75%;margin:0 auto;" />
     <Row type="flex">
-    <Col :lg="3"></Col>
+      <Col :lg="3"></Col>
       <h2>友情链接</h2>
-      <el-link type="primary" href="http://lib.tsinghua.edu.cn/about/branch.html" target="_blank" class="friendly">清华大学图书馆</el-link>
-      <el-link type="primary" href="http://www.library.fudan.edu.cn" target="_blank" class="friendly">复旦大学图书馆</el-link>
-      <el-link type="primary" href="http://libweb.zju.edu.cn" target="_blank" class="friendly">浙江大学图书馆</el-link>
-      <el-link type="primary" href="https://www.lib.tongji.edu.cn" target="_blank" class="friendly">同济大学图书馆</el-link>
+      <el-link
+        type="primary"
+        href="http://lib.tsinghua.edu.cn/about/branch.html"
+        target="_blank"
+        class="friendly"
+      >清华大学图书馆</el-link>
+      <el-link
+        type="primary"
+        href="http://www.library.fudan.edu.cn"
+        target="_blank"
+        class="friendly"
+      >复旦大学图书馆</el-link>
+      <el-link
+        type="primary"
+        href="http://libweb.zju.edu.cn"
+        target="_blank"
+        class="friendly"
+      >浙江大学图书馆</el-link>
+      <el-link
+        type="primary"
+        href="https://www.lib.tongji.edu.cn"
+        target="_blank"
+        class="friendly"
+      >同济大学图书馆</el-link>
       <el-link type="primary" href="http://lib.imu.edu.cn" target="_blank" class="friendly">内蒙古大学图书馆</el-link>
-      <el-link type="primary" href="http://library.nudt.edu.cn" target="_blank" class="friendly">国防科技大学图书馆</el-link>
-    
-    <Col :lg="3"></Col>
+      <el-link
+        type="primary"
+        href="http://library.nudt.edu.cn"
+        target="_blank"
+        class="friendly"
+      >国防科技大学图书馆</el-link>
+
+      <Col :lg="3"></Col>
     </Row>
 
     <p class="footer">湖ICP备20182841 湖州师范学院图书馆</p>
   </div>
 </template>
 
-<script> 
-import {getStudentLogin,getAllNotice,getAllReadMessage} from '../../api';
+<script>
+import {
+  getStudentLogin,
+  getAllNotice,
+  getAllReadMessage,
+  getAllResource
+} from "../../api";
 export default {
   name: "index",
   data() {
     return {
-      split1:0.5,
-      name:'1',//资源导航/热门新书
-      modal1:false,//登录弹窗控制
-      formItem:{//账号密码
-        sno:'',
-        pwd:''
+      split1: 0.5,
+      name: "1", //资源导航/热门新书
+      modal1: false, //登录弹窗控制
+      formItem: {
+        //账号密码
+        sno: "",
+        pwd: ""
       },
-      select:'',
-      noticeList:[],//通知公告
-      readMessageList:[],//读者列表
+      select: "",
+      noticeList: [], //通知公告
+      readMessageList: [], //读者列表
+      resourceList1: [], //资源导航列表1
+      resourceList2: [] //资源导航列表2
     };
   },
-  created(){
-    getAllNotice().then((data)=>{
-      this.noticeList=data.data.slice(0,5);
-    })
-    getAllReadMessage().then(data=>{
-      this.readMessageList=data.data.slice(0,5);
-    })
+  created() {
+    getAllNotice().then(data => {
+      this.noticeList = data.data.slice(0, 5);
+    });
+    getAllReadMessage().then(data => {
+      this.readMessageList = data.data.slice(0, 5);
+    });
+    getAllResource().then(data => {
+      this.resourceList1 = data.data.slice(0, 15);
+      this.resourceList2 = data.data.slice(15, 30);
+    });
   },
   methods: {
-    selectName(value){
-      this.name=value;
+    selectName(value) {
+      this.name = value;
     },
-    loginBtn(){//登录弹窗
-      this.modal1=true;
+    loginBtn() {
+      //登录弹窗
+      this.modal1 = true;
     },
-    openTimeBtn(){//开放时间跳转
-      this.$router.push('/header/opentime');
+    openTimeBtn() {
+      //开放时间跳转
+      this.$router.push("/header/opentime");
     },
-    hutuBtn(){//关于湖图跳转
-      this.$router.push('/header/hutu');
+    hutuBtn() {
+      //关于湖图跳转
+      this.$router.push("/header/hutu");
     },
-    messageBtn(){//我要留言跳转
-      this.$router.push('/header/readMessage');
+    messageBtn() {
+      //我要留言跳转
+      this.$router.push("/header/readMessage");
     },
-    toLend(){//检索跳转
-      this.$router.push('/lend');
+    toLend() {
+      //检索跳转
+      this.$router.push("/lend");
     },
-    personBtn(){
-      this.$router.push('/header/person');
+    personBtn() {
+      this.$router.push("/header/person");
     },
-    studentLogin(){//登录
-      getStudentLogin(this.formItem).then(data=>{
-        if(data.data.msg!='0'){
-          this.$message.success('登录成功');
-          window.sessionStorage.setItem('token',data.data.msg);
+    studentLogin() {
+      //登录
+      getStudentLogin(this.formItem).then(data => {
+        if (data.data.msg != "0") {
+          this.$message.success("登录成功");
+          window.sessionStorage.setItem("token", data.data.msg);
           location.reload();
-        }else{
-          this.$message.warning('账号获密码错误');
+        } else {
+          this.$message.warning("账号获密码错误");
         }
-      })
-      this.modal1=false;
+      });
+      this.modal1 = false;
     }
   },
-  computed:{
-    isToken(){
-      if(window.sessionStorage.getItem('token')){
-        return '2';
-      }else{
-        return '1';
+  computed: {
+    isToken() {
+      if (window.sessionStorage.getItem("token")) {
+        return "2";
+      } else {
+        return "1";
       }
     }
   }
@@ -297,69 +329,69 @@ export default {
 .logoItem {
   float: right;
 }
-.left{
+.left {
   display: inline-block;
 }
-.resource{
+.resource {
   padding: 3%;
-  ul{
+  ul {
     width: 42%;
-    li{
-      a{
+    li {
+      a {
         font-size: 15px;
-        color: #4F4F4F;
+        color: #4f4f4f;
       }
     }
   }
 }
-.friendly{
-  margin-left:15px;
+.friendly {
+  margin-left: 15px;
 }
 
-.lendBack{
-        height: 430px;
-        margin-top:30px;
-        margin-bottom:30px;
-        padding-top:65px;
-        background: url('../../assets/lendback.jpg') no-repeat;
-        background-size:100%; 
-        .lendItem{
-          width:75%;
-          height: 300px;
-          margin:auto;
-          background: #363636;
-          opacity: 0.7;
-          ul{
-            list-style: none;
-            height: 60px;
-            background-color: #104E8B;
-            li{
-              float: left;
-              color: white;
-              font-size: 20px;
-              line-height: 60px;
-              width: 100px;
-              text-align: center;
-            }
-          }
-        }
-    }
-    .three{
-      background-color:#E8E8E8;
-      padding-left:3px;
-      padding-top:20px;
-      p{
+.lendBack {
+  height: 430px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top: 65px;
+  background: url("../../assets/lendback.jpg") no-repeat;
+  background-size: 100%;
+  .lendItem {
+    width: 75%;
+    height: 300px;
+    margin: auto;
+    background: #363636;
+    opacity: 0.7;
+    ul {
+      list-style: none;
+      height: 60px;
+      background-color: #104e8b;
+      li {
+        float: left;
+        color: white;
+        font-size: 20px;
+        line-height: 60px;
+        width: 100px;
         text-align: center;
-        font-size: 15px;
-        color:black;
-      }
-      img{
-        margin-left:13%;
-        transition: 0.2s all;
-      }
-      img:hover{
-        cursor: pointer;
-        transform: scale(0.9);
       }
     }
+  }
+}
+.three {
+  background-color: #e8e8e8;
+  padding-left: 3px;
+  padding-top: 20px;
+  p {
+    text-align: center;
+    font-size: 15px;
+    color: black;
+  }
+  img {
+    margin-left: 13%;
+    transition: 0.2s all;
+  }
+  img:hover {
+    cursor: pointer;
+    transform: scale(0.9);
+  }
+}
 </style>

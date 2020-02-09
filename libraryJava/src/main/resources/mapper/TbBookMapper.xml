@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbBookMapper">
+    <select id="selectIsbnBook" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book where isbn like #{isbn}
+    </select>
+
+    <select id="selectAllBook" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book
+    </select>
+</mapper>
