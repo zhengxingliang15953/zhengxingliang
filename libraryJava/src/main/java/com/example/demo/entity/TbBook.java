@@ -5,12 +5,13 @@ public class TbBook {
     private String name;
     private String author;
     private String press;
-    private String data;
+    private String date;
     private String bookUrl;
     private Integer number;
     private Integer appNumber;
     private Integer readNumber;
     private String address;
+    private String msg;
 
     public void setName(String name) {
         this.name = name;
@@ -41,7 +42,7 @@ public class TbBook {
     }
 
     public String getData() {
-        return data;
+        return date;
     }
 
     public String getIsbn() {
@@ -64,8 +65,8 @@ public class TbBook {
         this.bookUrl = bookUrl;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setData(String date) {
+        this.date = date;
     }
 
     public void setIsbn(String isbn) {
@@ -90,5 +91,13 @@ public class TbBook {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getMsg() {
+        return msg;
     }
 }

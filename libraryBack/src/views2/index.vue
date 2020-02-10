@@ -70,7 +70,6 @@ export default {
       }else{
         this.value1='普通管理员';
       }
-      console.log(this.value1);
     })
   },
   mounted() {

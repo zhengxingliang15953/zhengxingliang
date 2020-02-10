@@ -64,3 +64,7 @@ export let getAddResource = (title,resourceUrl,resourceId) => {
 export let getAllBook = (title,resourceUrl,resourceId) => {
     return Http.get(`/api/getAllBook?`);
 };    
+/*添加图书*/
+export let getAddBook = data => {
+    return Http.post(`/api/getAddBook`, qs.stringify(data));
+};

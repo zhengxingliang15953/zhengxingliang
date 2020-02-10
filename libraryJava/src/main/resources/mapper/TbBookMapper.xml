@@ -8,4 +8,9 @@
     <select id="selectAllBook" resultType="com.example.demo.entity.TbBook">
         select * from tb_book
     </select>
+
+    <insert id="insertBook">
+        inset into tb_book
+        values (#{isbn},#{name},#{author},#{press},#{date},#{number},0,0,#{bookUrl},#{address})
+    </insert>
 </mapper>

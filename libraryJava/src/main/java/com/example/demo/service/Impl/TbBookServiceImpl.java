@@ -32,4 +32,27 @@ public class TbBookServiceImpl implements TbBookService {
     public TbBook selectIsbnBook(String isbn) {
         return tbBookMapper.selectIsbnBook(isbn);
     }
+
+    /**
+     * 添加图书
+     * @param isbn
+     * @param name
+     * @param author
+     * @param press
+     * @param date
+     * @param number
+     * @param bookUrl
+     * @param address
+     */
+    @Override
+    public TbBook insertBook(String isbn, String name, String author, String press, String date, Integer number, String bookUrl, String address) {
+        TbBook book=new TbBook();
+        if(tbBookMapper.selectIsbnBook(isbn).getIsbn().equals(isbn)){
+            tbBookMapper.insertBook(isbn, name, author, press, date, number, bookUrl, address);
+            book.setMsg("添加成功");
+        }else{
+            book.setMsg("添加失败");
+        }
+        return book;
+    }
 }

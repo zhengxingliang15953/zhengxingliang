@@ -36,4 +36,20 @@ public class TbBookController {
     public TbBook selectIsbnBook(String isbn){
         return tbBookService.selectIsbnBook(isbn);
     }
+
+    /**
+     * 添加书籍
+     * @param isbn
+     * @param name
+     * @param author
+     * @param press
+     * @param date
+     * @param number
+     * @param bookUrl
+     * @param address
+     */
+    @RequestMapping(value = "api/getAddBook",method = RequestMethod.POST)
+    public TbBook insertBook(String isbn,String name,String author,String press,String date,Integer number,String bookUrl,String address){
+       return tbBookService.insertBook(isbn, name, author, press, date, number, bookUrl, address);
+    }
 }
