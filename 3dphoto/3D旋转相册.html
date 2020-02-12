@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>3D旋转相册</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            #perspective{
+                perspective: 800px;
+            }
+            #wrap{
+                position: relative;
+                height: 150px;
+                width: 110px;
+                margin: 250px auto;
+                transform-style: preserve-3d;
+                transform: rotateX(-17deg) rotateY(0deg);
+            }
+            #wrap img{
+                position:absolute;
+                height: 150px;
+                width: 110px;
+                border: 6px solid floralwhite;
+                border-radius: 7px;
+            }
+        </style>
+    </head>
+    <body style="background-color: black;">
+        <div id="perspective">
+            <div id="wrap">
+                <img src="dongwu1.jpg">
+                <img src="dongwu6.jpg">
+                <img src="dongwu7.jpg">
+                <img src="dongwu4.jpg">
+                <img src="dongwu5.jpg">
+                <img src="dongwu2.jpg">
+                <img src="dongwu8.jpg">
+                <img src="dongwu9.jpg">
+                <img src="dongwu10.jpg">
+                <img src="dongwu11.jpg">
+                <img src="dongwu3.jpg">
+            </div>
+        </div>
+        <script>
+            window.onload=function(){
+                var dushu=360/11;
+                var wr=document.getElementById('wrap');
+                var oImg=document.getElementsByTagName('img');
+                Array.prototype.forEach.call(oImg,function(el,index){
+                    el.style.transform="rotateY("+index*dushu+"deg) translateZ(320px)";
+                    el.style.zIndex=-index;
+                    el.style.transition="transform 1s "+index*0.1+"s";
+                })
+                var xLength=yLength=yInter=0;
+                var tt=setInterval(function(){
+                    yInter++;
+                    wr.style.transform="rotateY("+yInter+"deg) rotateX(0deg)";
+                    if(yInter>=360){
+                        yInter=0;
+                    }
+                },50)
+                document.onmousedown=function(ev){
+                    clearInterval(tt);
+                    var e1=ev||window.event;
+                    var x1=e1.clientX;
+                    var y1=e1.clientY;
+                    this.onmousemove=function(ev){
+                        var e2=ev||window.event;
+                        var x2=e2.clientX;
+                        var y2=e2.clientY;
+                        xLength+=(x2-x1)/100;
+                        yLength+=(y2-y1)/100;
+                        wr.style.transform="rotateX("+xLength+"deg) rotateY("+yLength+"deg)";
+                    }
+                    this.onmouseup=function(){
+                        this.onmousemove=null;
+
+                        this.onmouseup=null;
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
