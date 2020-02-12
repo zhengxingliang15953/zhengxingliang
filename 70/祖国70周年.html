@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>祖国70周年</title>
+        <meta charset="utf-8">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            #toop{
+                position: relative;
+                height:300px;
+                width: 180px;
+                margin: 150px auto;
+                transform-style: preserve-3d;
+                transform-origin: 50% 50% -90px;
+                animation: rot 10s linear infinite;
+            }
+            .ai{
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 300px;
+                width: 180px;
+                border: 1px solid red;
+                border-bottom: 0;
+                border-left: 0; 
+                border-radius: 50% 50% 0/40% 50% 0;    
+            }
+            @keyframes rot{
+                from{
+                    transform: rotateX(0deg) rotateY(0deg);
+                }to{
+                    transform: rotateX(360deg) rotateY(360deg);
+                }
+            }
+            #mozi div{
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100px;
+                width: 100px;
+                border: 1px solid yellow;
+                color: yellow;            
+            }   
+            #mozi div:nth-child(1){
+                top:-101px;
+                transform-origin: bottom;
+                transform:rotateX(90deg);
+            } 
+            #mozi div:nth-child(2){
+                transform-origin: top;
+                transform: rotateX(-90deg);
+                top:101px;
+            }
+            #mozi div:nth-child(3){
+                transform-origin: right;
+                transform: rotateY(-90deg);
+                left: -101px;
+            }
+            #mozi div:nth-child(4){
+                transform-origin: left;
+                transform:rotateY(90deg);
+                left:101px;
+            }
+            #mozi div:nth-child(6){
+                transform:translateZ(-101px);
+            }
+            img{
+                height: 100px;
+                width: 100px;
+            }
+            .ai3{
+                position:relative;
+                width: 101px;
+                height: 101px;
+                left: 40px;
+                top: 100px;
+                transform-style: preserve-3d;
+                transform: rotateY(100px);
+                transform-origin: 50% 50% 0;               
+            }
+            span{
+                position: absolute;
+                top:0;
+                left: 400px;
+                display: block;
+                color: yellow;
+                font-size: 500px;
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            }
+        </style>
+    </head>
+    <body style="background-color: black;perspective: 700px">
+        <span id="sp">7&nbsp;0</span>
+        <div id="toop">
+                <div id="mozi" class="ai3">
+                        <div><img src="MG1.jpg" ></div>
+                        <div><img src="MG1.jpg" ></div>
+                        <div><img src="MG2.jpg" ></div>
+                        <div><img src="MG2.jpg" ></div>
+                        <div><img src="MG3.jpg" ></div>
+                        <div><img src="MG3.jpg" ></div>
+                    </div>
+        </div>
+        
+        <script type="text/javascript">
+            var toop=document.getElementById('toop');
+            for(var i=0;i<36;i++){
+                var hert=document.createElement('div');
+                hert.className='ai';
+                hert.style.transform="rotateY("+i*10+"deg) rotateZ(45deg) translate(60px)";
+                toop.appendChild(hert);
+            }
+            var sp=document.getElementById('sp');
+            var ttt=0;
+            setInterval(function(){
+                if(ttt%2==0){
+                    sp.style.color="red";
+                }else{
+                    sp.style.color="yellow";
+                }
+                ttt++;
+            },500)
+            /*var ss=0;
+            setInterval(function(){
+                ss+=10;
+                toop.style.transform="rotateX("+ss+"deg)";
+                if(ss>=360){
+                    ss=0;
+                }
+            },10000/60)*/
+        </script>
+    </body>
+</html>
