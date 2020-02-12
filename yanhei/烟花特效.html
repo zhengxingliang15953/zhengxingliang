@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>烟花特效</title>
+        <style type="text/css">
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                background-color: black;
+                height: 100%;
+            }
+            .yanhua{
+                height: 20px;
+                width: 10px;
+                background-color: red;
+                border-radius: 50%;
+                position: absolute;
+            }
+            .yanhua2{
+                height: 15px;
+                width: 10px;
+                position: absolute;
+                border-radius: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <p style="color: royalblue;height: 10px;width: 115px">鼠标点击放烟花</p>
+        <script type="text/javascript">
+            document.onclick=function(e){
+                var e=e||window.event;
+                //获取鼠标的点击坐标
+                var x=e.clientX;
+                var y=e.clientY;
+                var h=window.document.body.clientHeight;
+                console.log(x);
+                console.log(y);
+                console.log(h);
+                //生成烟花
+                firework(x,y,700);
+            }
+            function firework(x,y,h,dd3){
+                var dd=document.createElement("div");
+                dd.className="yanhua";
+                dd.style.top=h+"px";
+                dd.style.left=x+"px";
+                document.body.appendChild(dd);
+                //烟花上升
+                var timer=setInterval(function(){
+                    dd.style.top=dd.offsetTop-10+"px";
+                    if(dd.style.top<=y+"px"){
+                        clearInterval(timer);
+                        document.body.removeChild(dd);
+                        //烟花炸开
+                        var dd3=[];
+                        for(var i=0;i<75;i++){
+                            var co='#';
+                            for(var j=1;j<=6;j++){
+                                co+=parseInt(Math.random()*15).toString(16);
+                            }
+                            dd3[i]=document.createElement("div");
+                            dd3[i].className="yanhua2";
+                            dd3[i].style.top=y+"px";
+                            dd3[i].style.left=x+"px";
+                            dd3[i].style.backgroundColor=co;
+                            dd3[i].speedX=randomNumber();
+                            dd3[i].speedY=randomNumber();
+                            document.body.appendChild(dd3[i]);
+                        }
+                        var timer3=setInterval(function(){
+                            for(var i=0;i<75;i++){ 
+                                dd3[i].style.left=dd3[i].offsetLeft+dd3[i].speedX+'px';
+                                dd3[i].style.top=dd3[i].offsetTop+dd3[i].speedY+'px';  
+                                if(dd3[i].offsetTop>700||dd3[i].offsetTop<0||dd3[i].offsetLeft<0||dd3[i].offsetLeft>1400){
+                                    document.body.removeChild(dd3[i]);
+                                }
+                            }                             
+                        },1000/60)
+                    }
+                    
+                },1000/60)
+                clearInterval(timer3);
+            }
+            function randomNumber(){//随机生成加速度
+                var n=0;
+                while(n<=1&&n>=-1){
+                    n=Math.random()*20-10;
+                }
+                return n;
+            }
+        </script>
+    </body>
+</html>

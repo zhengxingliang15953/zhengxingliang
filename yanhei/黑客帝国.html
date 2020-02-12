@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>黑客帝国</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <audio src="heike.mp3" loop id="aud"></audio>
+        <div><canvas id="can"></canvas></div>
+        <script type="text/javascript">
+            var aud=document.getElementById('aud');
+            var s=window.screen;//获取浏览器的分辨率
+            var h=s.height;
+            var w=s.width;
+            var can=document.getElementById('can');
+            var ctx=can.getContext('2d');
+            can.width=w;
+            can.height=h;
+            var str="天空飘来五个字那都不事";
+            var fontSize=14;
+            var cols=w/fontSize;
+            var drop=[];
+            aud.play();
+            for(var i=0;i<cols;i++){
+                drop.push(0);
+            }
+            function draw(){//绘画
+                ctx.fillStyle="rgba(0,0,0,0.05)";
+                ctx.fillRect(0,0,w,h);
+                ctx.fillStyle="green";
+                ctx.font="600 "+fontSize+"px 微软雅黑";
+                for(var i=0;i<cols;i++){
+                    var index=Math.floor(Math.random()*str.length);
+                    var x=i*fontSize;
+                    var y=drop[i]*fontSize;
+                    ctx.fillText(str[index],x,y);
+                    if(y>h&&Math.random()>0.89){
+                        drop[i]=0;
+                    }
+                    drop[i]++;
+                }
+            }
+            setInterval(draw,33);
+        </script>
+    </body>
+</html>
