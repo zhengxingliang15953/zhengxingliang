@@ -61,10 +61,19 @@ export let getAddResource = (title,resourceUrl,resourceId) => {
     return Http.get(`/api/getAddResource?title=${title}&resourceUrl=${resourceUrl}&resourceId=${resourceId}`);
 };   
 /*获取所有的图书*/
-export let getAllBook = (title,resourceUrl,resourceId) => {
-    return Http.get(`/api/getAllBook?`);
+export let getAllBook = () => {
+    return Http.get(`/api/getAllBook`);
 };    
 /*添加图书*/
 export let getAddBook = data => {
-    return Http.post(`/api/getAddBook`, qs.stringify(data));
+    return Http.post(`api/getAddBook`,qs.stringify(data));
+    //return Http.get(`/api/getAddBook?isbn=${data.isbn}&bookName=${data.bookName}&author=${data.author}&press=${data.press}&bookDate=${data.bookDate}&bookNumber=${data.bookNumber}&bookUrl=${data.bookUrl}&address=${data.address}`);
 };
+/*删除图书*/
+export let getDeleteBook = (isbn) => {
+    return Http.get(`/api/getDeleteBook?isbn=${isbn}`);
+};   
+/*修改图书*/
+export let getUpdateBook = (data) => {
+    return Http.post(`/api/getUpdateBook`,qs.stringify(data));
+};     

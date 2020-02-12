@@ -2,34 +2,24 @@ package com.example.demo.entity;
 
 public class TbBook {
     private String isbn;
-    private String name;
+    private String bookName;
     private String author;
     private String press;
-    private String date;
+    private int bookDate;
     private String bookUrl;
-    private Integer number;
-    private Integer appNumber;
-    private Integer readNumber;
+    private int bookNumber;
+    private int appNumber;
+    private int readNumber;
     private String address;
     private String msg;
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getName() {
-        return name;
-    }
 
-    public Integer getAppNumber() {
+    public int getAppNumber() {
         return appNumber;
     }
 
-    public Integer getNumber() {
-        return number;
-    }
-
-    public Integer getReadNumber() {
+    public int getReadNumber() {
         return readNumber;
     }
 
@@ -41,10 +31,6 @@ public class TbBook {
         return bookUrl;
     }
 
-    public String getData() {
-        return date;
-    }
-
     public String getIsbn() {
         return isbn;
     }
@@ -53,7 +39,7 @@ public class TbBook {
         return press;
     }
 
-    public void setAppNumber(Integer appNumber) {
+    public void setAppNumber(int appNumber) {
         this.appNumber = appNumber;
     }
 
@@ -65,23 +51,15 @@ public class TbBook {
         this.bookUrl = bookUrl;
     }
 
-    public void setData(String date) {
-        this.date = date;
-    }
-
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
     }
 
     public void setPress(String press) {
         this.press = press;
     }
 
-    public void setReadNumber(Integer readNumber) {
+    public void setReadNumber(int readNumber) {
         this.readNumber = readNumber;
     }
 
@@ -99,5 +77,29 @@ public class TbBook {
 
     public String getMsg() {
         return msg;
+    }
+
+    public int getBookDate() {
+        return bookDate;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookDate(int bookDate) {
+        this.bookDate = bookDate;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public int getBookNumber() {
+        return bookNumber;
+    }
+
+    public void setBookNumber(int bookNumber) {
+        this.bookNumber = bookNumber;
     }
 }

@@ -7,5 +7,8 @@ import java.util.List;
 public interface TbBookService {
     List<TbBook> selectAllBook();
     TbBook selectIsbnBook(String isbn);
-    TbBook insertBook(String isbn,String name,String author,String press,String date,Integer number,String bookUrl,String address);
+    TbBook insertBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address);
+    void deleteBook(String isbn);
+    TbBook updateBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address);
+
 }

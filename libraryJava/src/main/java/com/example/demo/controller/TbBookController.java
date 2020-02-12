@@ -40,16 +40,42 @@ public class TbBookController {
     /**
      * 添加书籍
      * @param isbn
-     * @param name
+     * @param bookName
      * @param author
      * @param press
-     * @param date
-     * @param number
+     * @param bookDate
+     * @param bookNumber
      * @param bookUrl
      * @param address
      */
     @RequestMapping(value = "api/getAddBook",method = RequestMethod.POST)
-    public TbBook insertBook(String isbn,String name,String author,String press,String date,Integer number,String bookUrl,String address){
-       return tbBookService.insertBook(isbn, name, author, press, date, number, bookUrl, address);
+    public TbBook insertBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address){
+       return tbBookService.insertBook(isbn, bookName, author, press, bookDate, bookNumber, bookUrl, address);
+    }
+
+    /**
+     * 删除图书
+     * @param isbn
+     */
+    @RequestMapping(value = "api/getDeleteBook",method = RequestMethod.GET)
+    public void deleteBook(String isbn){
+        tbBookService.deleteBook(isbn);
+    }
+
+    /**
+     * 修改图书
+     * @param isbn
+     * @param bookName
+     * @param author
+     * @param press
+     * @param bookDate
+     * @param bookNumber
+     * @param bookUrl
+     * @param address
+     * @return
+     */
+    @RequestMapping(value = "api/getUpdateBook",method = RequestMethod.POST)
+    public TbBook updateBook(String isbn, String bookName, String author, String press, int bookDate, int bookNumber, String bookUrl, String address) {
+        return tbBookService.updateBook(isbn, bookName, author, press, bookDate, bookNumber, bookUrl, address);
     }
 }

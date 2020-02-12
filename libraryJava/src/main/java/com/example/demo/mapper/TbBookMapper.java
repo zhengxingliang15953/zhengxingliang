@@ -9,5 +9,7 @@ import java.util.List;
 public interface TbBookMapper {
     TbBook selectIsbnBook(String isbn);
     List<TbBook> selectAllBook();
-    void insertBook(String isbn,String name,String author,String press,String date,Integer number,String bookUrl,String address);
+    void insertBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,int appNumber,int readNumber,String bookUrl,String address);
+    void deleteBook(String isbn);
+    void updateBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address);
 }

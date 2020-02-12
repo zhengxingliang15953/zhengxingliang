@@ -10,7 +10,17 @@
     </select>
 
     <insert id="insertBook">
-        inset into tb_book
-        values (#{isbn},#{name},#{author},#{press},#{date},#{number},0,0,#{bookUrl},#{address})
+        insert into tb_book(isbn,bookName,author,press,bookDate,bookNumber,appNumber,readNumber,bookUrl,address)
+        values (#{isbn},#{bookName},#{author},#{press},#{bookDate},#{bookNumber},#{appNumber},#{readNumber},#{bookUrl},#{address})
     </insert>
+
+    <delete id="deleteBook">
+        delete from tb_book where isbn like #{isbn}
+    </delete>
+
+    <update id="updateBook">
+        update tb_book
+        set isbn=#{isbn},bookName=#{bookName},author=#{author},press=#{press},bookNumber=#{bookNumber},bookUrl=#{bookUrl},address=#{address}
+        where isbn like #{isbn}
+    </update>
 </mapper>

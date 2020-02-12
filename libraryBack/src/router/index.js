@@ -59,7 +59,7 @@ const router = new VueRouter({
   routes
 });
 
-/*var token = '';
+var token = '';
 router.beforeEach((to, from, next) => {
   console.log(to.path);
   getIndexAccount().then((data) => {
@@ -76,7 +76,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   })
-})*/
+})
 
 RouterHooks.init(router);
 Vue.use(VueRouter);
