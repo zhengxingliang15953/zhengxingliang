@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "FirstUni",
+  "navigationBarBackgroundColor": "#007AFF",
+  "backgroundColor": "whitesmoke",
   "usingComponents": {}
 }
