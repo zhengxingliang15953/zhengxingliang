@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>贪吃蛇</title> 
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            #canvas{
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body style="background-image: url(snakeBack.jpg);background-size: 100% 100%;">
+        <button style="height: 50px;width: 100px;background-color: green;">开始游戏</button>
+        <button style="height: 50px;width: 100px;background-color:hotpink;">重置</button>
+        <button style="height: 50px;width: 100px;background-color: chartreuse;" id="grade">得分:0</button>
+        <audio src="game.mp3" loop></audio>
+        <audio src="eat.mp3"></audio>
+        <audio src="baozha.mp3"></audio>
+        <div id="divId" style="margin: 20px auto;width: 600px;background-image:url(snake.jpg);height: 600px;">
+            <canvas id="canvas" width="600px" height="600px"></canvas>
+        </div>
+        <script type="text/javascript">
+            var g=0;
+            var tt2=null;
+            var can=document.getElementById('canvas');
+            var ctx=can.getContext('2d');
+            var snakeBodyLength=4;
+            var snakeBody=[];
+            var foodX=0;
+            var foodY=0;//初始化失误位置
+            var toGo=39;//初始化移动方向
+            var audStart=document.getElementsByTagName('audio')[0];
+            var audEat=document.getElementsByTagName('audio')[1];
+            var audGameOver=document.getElementsByTagName('audio')[2];
+            var grade=document.getElementById('grade');
+            function draw(){//绘画
+                for(var i=0;i<600;i+=40){//绘画网格
+                    ctx.strokeStyle="white";
+                    ctx.lineWidth="1";
+                    ctx.moveTo(0,i+40);
+                    ctx.lineTo(600,i+40);
+                    ctx.moveTo(i+40,0);
+                    ctx.lineTo(i+40,600);
+                    ctx.stroke();
+                }
+                //绘画蛇身
+                for(var i=0;i<snakeBodyLength;i++){
+                    ctx.fillRect(snakeBody[i].x,snakeBody[i].y,40,40);
+                }
+                ctx.fillRect(foodX,foodY,40,40);
+                ctx.stroke();
+            }
+            function addFood(){//添加食物
+                foodX=Math.floor(Math.random()*15)*40;
+                foodY=Math.floor(Math.random()*15)*40;
+                for(var i=0;i<snakeBodyLength;i++){
+                    if(snakeBody[i].x!=foodX&&snakeBody[i].y!=foodY){
+                        continue;
+                    }else if(snakeBody[i].x!=foodX&&snakeBody[i].y!=foodY){
+                        break;
+                    }
+                }
+                if(i!=snakeBodyLength){
+                    foodX=Math.floor(Math.random()*15)*40;
+                    foodY=Math.floor(Math.random()*15)*40;
+                }
+            }
+
+            function move(){//蛇默认移动
+            switch(toGo){
+                case 39:snakeBody.push({x:snakeBody[snakeBodyLength-1].x+40,y:snakeBody[snakeBodyLength-1].y});break;
+                case 37:snakeBody.push({x:snakeBody[snakeBodyLength-1].x-40,y:snakeBody[snakeBodyLength-1].y});break;
+                case 38:snakeBody.push({x:snakeBody[snakeBodyLength-1].x,y:snakeBody[snakeBodyLength-1].y-40});break;
+                case 40:snakeBody.push({x:snakeBody[snakeBodyLength-1].x,y:snakeBody[snakeBodyLength-1].y+40});break;
+            }
+                
+                var tt=snakeBody.shift();
+                ctx.clearRect(0,0,600,600);
+                if(snakeBody[snakeBodyLength-1].x==foodX&&snakeBody[snakeBodyLength-1].y==foodY){
+                    audEat.play();
+                    snakeBodyLength++;
+                    snakeBody.unshift(tt);
+                    ctx.clearRect(foodX,foodY,40,40);
+                    addFood();
+                    g+=10;
+                    grade.innerHTML="得分"+g;
+                }
+                draw();
+                if(snakeBody[snakeBodyLength-1].x<0||snakeBody[snakeBodyLength-1].y<0||snakeBody[snakeBodyLength-1].x>=600||snakeBody[snakeBodyLength-1].y>=600||body()){
+                    audStart.pause();
+                    audGameOver.play();
+                    clearInterval(tt2);
+                    var dd=document.getElementById('divId');
+                    dd.style.backgroundImage="url(gameOver.jpg)";
+                    ctx.clearRect(0,0,600,600);
+                    setTimeout(function(){
+                        audGameOver.pause();
+                        document.body.removeChild(audGameOver);
+                    },1000)
+                }
+                //draw();
+            }
+            function body(){//判断是否碰到自己
+                for(var i=0;i<snakeBodyLength-1;i++){
+                    if(snakeBody[snakeBodyLength-1].x==snakeBody[i].x&&snakeBody[snakeBodyLength-1].y==snakeBody[i].y){
+                        return true;
+                    }
+                }
+                return false;
+            }
+            function key(){//获取键盘事件
+                document.onkeydown=function(event){
+                    if(toGo+event.keyCode!=76&&toGo+event.keyCode!=78){
+                        toGo=event.keyCode;
+                    }
+                }
+            }
+            function start(){//游戏开始
+                for(var i=0;i<snakeBodyLength;i++){
+                    snakeBody[i]={x:i*40,y:0};
+                }
+                addFood();
+                draw();
+            }
+            window.onload=function(){
+                var btn1=document.getElementsByTagName('button')[0];
+                var btn2=document.getElementsByTagName('button')[1];
+                btn1.onclick=function(){
+                    audStart.play();
+                    start();
+                    tt2=setInterval(move,300);
+                    key();
+                }
+                btn2.onclick=function(){//重新加载点击事件
+                    document.location.reload();
+                }
+            }
+        </script>
+    </body>
+</html>
