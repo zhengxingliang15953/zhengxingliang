@@ -13,7 +13,7 @@ const routes = [
     name:'index',
     path:'/index',
     component:()=>import('../views2/index.vue'),
-    redirect:'/index/notice',
+    redirect:'/index/book',
     children:[
       {
         name:'notice',//公告管理

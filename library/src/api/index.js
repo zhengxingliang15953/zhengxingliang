@@ -36,3 +36,23 @@ export let getOneReadMessage = (sno) => {
 export let getAllResource = () => {
     return Http.get(`/api/getAllResource`);
 };    
+/*获取所有的图书*/
+export let getAllBook = () => {
+    return Http.get(`/api/getAllBook`);
+};    
+/*根据ISBN获取图书*/
+export let getIsbnBook = (isbn) => {
+    return Http.get(`/api/getIsbnBook?isbn=${isbn}`);
+};    
+/*根据书名获取图书(精确)*/
+export let getBookName1 = (bookName) => {
+    return Http.get(`/api/getBookName1?bookName=${bookName}`);
+};    
+/*根据书名获取图书(模糊)*/
+export let getBookName2 = (bookName) => {
+    return Http.get(`/api/getBookName2?bookName=${bookName}`);
+}; 
+/*根据著者获取图书*/
+export let getAuthorBook = (author) => {
+    return Http.get(`/api/getAuthorBook?author=${author}`);
+};       

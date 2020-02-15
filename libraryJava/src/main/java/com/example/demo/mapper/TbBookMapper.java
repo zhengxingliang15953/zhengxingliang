@@ -12,4 +12,7 @@ public interface TbBookMapper {
     void insertBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,int appNumber,int readNumber,String bookUrl,String address);
     void deleteBook(String isbn);
     void updateBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address);
+    List<TbBook> selectBookNameBook1(String bookName);
+    List<TbBook> selectAuthorBook(String author);
+    List<TbBook> selectBookNameBook2(String bookName);
 }

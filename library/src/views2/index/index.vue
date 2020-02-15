@@ -41,10 +41,10 @@
             <li>电子图书</li>
           </ul>
           <div style="height:240px;">
-            <el-input placeholder="请输入内容" class="input-with-select">
+            <el-input placeholder="请输入内容" class="input-with-select" v-model="searchItem" type="text">
               <el-select slot="prepend" placeholder="请选择" v-model="select" style="width:100px;">
-                <el-option label="题名(精确)" value="1"></el-option>
-                <el-option label="题名(模糊)" value="2"></el-option>
+                <el-option label="题名(精)" value="1"></el-option>
+                <el-option label="题名(糊)" value="2"></el-option>
                 <el-option label="著者" value="3"></el-option>
                 <el-option label="ISBN" value="4"></el-option>
               </el-select>
@@ -242,7 +242,8 @@ export default {
         sno: "",
         pwd: ""
       },
-      select: "",
+      select: "1",//四选一
+      searchItem:'',//检索内容
       noticeList: [], //通知公告
       readMessageList: [], //读者列表
       resourceList1: [], //资源导航列表1
@@ -283,7 +284,7 @@ export default {
     },
     toLend() {
       //检索跳转
-      this.$router.push("/lend");
+      this.$router.push({path:'/lend',query:{select:this.select,searchItem:this.searchItem}});
     },
     personBtn() {
       this.$router.push("/header/person");

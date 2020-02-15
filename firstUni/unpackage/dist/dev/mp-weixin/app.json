@@ -10,5 +10,6 @@
     "backgroundColor": "#F8F8F8",
     "enablePullDownRefresh": true
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap98.json"
 }

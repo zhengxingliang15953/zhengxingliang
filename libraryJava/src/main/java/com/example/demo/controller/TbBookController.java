@@ -78,4 +78,34 @@ public class TbBookController {
     public TbBook updateBook(String isbn, String bookName, String author, String press, int bookDate, int bookNumber, String bookUrl, String address) {
         return tbBookService.updateBook(isbn, bookName, author, press, bookDate, bookNumber, bookUrl, address);
     }
+
+    /**
+     * 根据bookName精确查询
+     * @param bookName
+     * @return
+     */
+    @RequestMapping(value = "api/getBookName1",method = RequestMethod.GET)
+    public List<TbBook> selectBookName1(String bookName){
+        return tbBookService.selectBookNameBook1(bookName);
+    }
+
+    /**
+     * 根据author查询
+     * @param author
+     * @return
+     */
+    @RequestMapping(value = "api/getAuthorBook",method = RequestMethod.GET)
+    public List<TbBook> selectAuthor(String author){
+        return tbBookService.selectAuthorBook(author);
+    }
+
+    /**
+     * 根据bookName查询（模糊）
+     * @param bookName
+     * @return
+     */
+    @RequestMapping(value = "api/getBookName2",method = RequestMethod.GET)
+    public List<TbBook> selectBookName2(String bookName){
+        return tbBookService.selectBookNameBook2(bookName);
+    }
 }

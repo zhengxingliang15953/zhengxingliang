@@ -9,11 +9,13 @@
               <Input v-model="formData.bookName" placeholder="请输入题名"></Input>
             </FormItem>
           </Col>
-          <Col :lg="12">
-            <FormItem label="ISBN" prop="isbn" v-show="modal2=='添加图书'">
+          <Col :lg="12" v-if="modal2=='添加图书'">
+            <FormItem label="ISBN" prop="isbn">
               <Input v-model="formData.isbn" placeholder="请输入ISBN"></Input>
             </FormItem>
-            <FormItem label="ISBN" prop="isbn" v-show="modal2=='修改图书'">
+          </Col>
+          <Col :lg="12" v-if="modal2=='修改图书'">
+            <FormItem label="ISBN" prop="isbn">
               <span>{{formData.isbn}}</span>
             </FormItem>
           </Col>
@@ -87,7 +89,7 @@
       @on-search="search"
     />
     <p style="text-align:right;padding-right:10px;">
-      <a href="#" @click="modal1=true">添加图书</a>
+      <a href="#" @click="add">添加图书</a>
     </p>
     <Row
       type="flex"
@@ -223,6 +225,11 @@ export default {
     },
     updateBookSubmit(){//修改图书提交
 
+    },
+    add(){//添加图书
+      this.modal1=true;
+      this.modal2='添加图书';
+      this.formData.isbn='';this.formData.bookName='';this.formData.author='';this.formData.press='';this.formData.bookNumber=1;this.formData.bookUrl='';this.formData.address='';
     }
   },
   computed: {}

@@ -88,4 +88,34 @@ public class TbBookServiceImpl implements TbBookService {
         }
         return book;
     }
+
+    /**
+     * 根据书名查询(精确)
+     * @param bookName
+     * @return
+     */
+    @Override
+    public List<TbBook> selectBookNameBook1(String bookName) {
+        return tbBookMapper.selectBookNameBook1(bookName);
+    }
+
+    /**
+     * 根据author查询
+     * @param author
+     * @return
+     */
+    @Override
+    public List<TbBook> selectAuthorBook(String author) {
+        return tbBookMapper.selectAuthorBook(author);
+    }
+
+    /**
+     * 根据书名查询(模糊)
+     * @param bookName
+     * @return
+     */
+    @Override
+    public List<TbBook> selectBookNameBook2(String bookName) {
+        return tbBookMapper.selectBookNameBook2(bookName);
+    }
 }

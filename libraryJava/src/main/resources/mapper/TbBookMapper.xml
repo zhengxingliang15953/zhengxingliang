@@ -23,4 +23,16 @@
         set isbn=#{isbn},bookName=#{bookName},author=#{author},press=#{press},bookNumber=#{bookNumber},bookUrl=#{bookUrl},address=#{address}
         where isbn like #{isbn}
     </update>
+
+    <select id="selectBookNameBook1" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book where bookName like #{bookName}
+    </select>
+
+    <select id="selectAuthorBook" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book where author like #{author}
+    </select>
+
+    <select id="selectBookNameBook2" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book where bookName like concat('%',#{bookName},'%')
+    </select>
 </mapper>
