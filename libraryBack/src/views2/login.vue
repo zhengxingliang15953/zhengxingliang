@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <h1>湖州师范学院图书馆预约系统管理</h1>
+    <h1>湖州师范学院图书馆预约系统后台管理</h1>
     <Form ref="formCustom" :model="formCustom" style="width:300px;margin:10px auto;">
       <FormItem label="账号" prop="account">
         <Input v-model="formCustom.account"></Input>
