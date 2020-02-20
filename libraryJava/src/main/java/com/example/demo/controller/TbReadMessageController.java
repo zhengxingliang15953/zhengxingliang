@@ -24,8 +24,9 @@ public class TbReadMessageController {
      * @return
      */
     @RequestMapping(value = "api/getAllReadMessage",method = RequestMethod.GET)
-    public List<TbReadMessage> selectAllReadMessage(){
-       return tbReadMessageService.selectAllReadMessage();
+    public List<TbReadMessage> selectAllReadMessage(Integer start){
+       return tbReadMessageService.selectAllReadMessage(start);
+
     }
 
     /**

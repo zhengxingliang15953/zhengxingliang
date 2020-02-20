@@ -12,6 +12,7 @@ public class TbBook {
     private int readNumber;
     private String address;
     private String msg;
+    private Integer status;
 
 
 
@@ -101,5 +102,13 @@ public class TbBook {
 
     public void setBookNumber(int bookNumber) {
         this.bookNumber = bookNumber;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

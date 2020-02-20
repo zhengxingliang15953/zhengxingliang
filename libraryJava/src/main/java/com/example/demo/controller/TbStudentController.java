@@ -53,7 +53,7 @@ public class TbStudentController {
      * @return
      */
     @RequestMapping(value = "api/getAllStudent",method = RequestMethod.GET)
-    public List<TbStudent> selectAllStudent(){
-        return tbStudentService.selectAllStudent();
+    public List<TbStudent> selectAllStudent(String sno,Integer start){
+        return tbStudentService.selectAllStudent(sno, start);
     }
 }

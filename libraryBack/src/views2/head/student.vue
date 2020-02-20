@@ -1,14 +1,27 @@
 <template>
-  <div id="studnt">
-    <Input
-      v-model="value1"
-      search
-      enter-button
-      placeholder="请输入学号搜索"
-      style="width:300px"
-      @on-search="search"
-    />
-    <Table stripe :columns="columns1" :data="studentList"></Table>
+  <div id="student">
+    <Row type="flex" style="margin-bottom:10px;">
+      <Col :lg="8" style="padding-left:10px;">
+        <Input
+          v-model="value1"
+          search
+          enter-button
+          placeholder="请输入学号搜索"
+          style="width:300px;"
+          @on-search="search"
+        />
+      </Col>
+      <Col :lg="8"></Col>
+      <Col :lg="8">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="sum"
+          @current-change="pageChange"
+        ></el-pagination>
+      </Col>
+    </Row>
+    <Table stripe :columns="columns1" :data="data1" style="height:520px;"></Table>
   </div>
 </template>
 
@@ -29,39 +42,34 @@ export default {
       ],
       data1: [], //学生列表
       value1: "", //搜索值
-      modal1: false
+      sum: 1
     };
   },
   created() {
-    getAllStudent().then(data => {
+    getAllStudent(this.value1, 1).then(data => {
       this.data1 = data.data;
+      this.sum = this.data1[0].status;
     });
   },
   methods: {
     search() {
       //搜索
-      this.modal1 = true;
-    }
-  },
-  computed: {
-    studentList() {
-      if (this.value1 == "") {
-        this.modal1 = false;
-        return this.data1;
-      } else if(this.modal1==true){
-        for (let i = 0; i < this.data1.length; i++) {
-          if (this.value1 == this.data1[i].sno) {
-            return [this.data1[i]];
-          }
-        }
-        return [];
-      }else{
-          return this.data1;
-      }
+      getAllStudent(this.value1, 1).then(data => {
+        this.data1 = data.data;
+        this.sum = this.data1[0].status;
+      });
+    },
+    pageChange(value) {
+      getAllStudent(this.value1, value).then(data => {
+        this.data1 = data.data;
+      });
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+#student{
+  padding-top:10px;
+}
 </style>

@@ -23,8 +23,8 @@ public class TbBookController {
      * @return
      */
     @RequestMapping(value = "api/getAllBook",method = RequestMethod.GET)
-    public List<TbBook> selectAllBook(){
-        return tbBookService.selectAllBook();
+    public List<TbBook> selectAllBook(String isbn,Integer start){
+        return tbBookService.selectAllBook(isbn, start);
     }
 
     /**
@@ -33,7 +33,7 @@ public class TbBookController {
      * @return
      */
     @RequestMapping(value = "api/getIsbnBook",method = RequestMethod.GET)
-    public TbBook selectIsbnBook(String isbn){
+    public List<TbBook> selectIsbnBook(String isbn){
         return tbBookService.selectIsbnBook(isbn);
     }
 

@@ -1,5 +1,17 @@
 <template>
   <div id="readMessage">
+    <Row type="flex">
+      <Col :lg="16"></Col>
+      <Col :lg="8">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="sum"
+          @current-change="pageChange"
+          :current-page="page"
+        ></el-pagination>
+      </Col>
+    </Row>
     <!--读者留言-->
     <List>
       <ListItem v-for="(item,index) in readMessageList" :key="index">
@@ -28,12 +40,15 @@ export default {
   name: "readMessage",
   data() {
     return {
-      readMessageList: [] //读者留言
+      readMessageList: [], //读者留言
+      sum: 1,
+      page: 1 //当前页码
     };
   },
   created() {
-    getAllReadMessage().then(data => {
+    getAllReadMessage(this.page).then(data => {
       this.readMessageList = data.data;
+      this.sum = this.readMessageList[0].status;
     });
   },
   methods: {
@@ -43,15 +58,27 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
+        if (this.readMessageList.length == 1 && this.page > 1) {
+          this.page--;
+        }
         getDeleteReadMessage(readId).then(() => {
           this.$message({
             type: "success",
             message: "删除成功!"
           });
-          getAllReadMessage().then(data => {
+          console.log(this.page);
+          getAllReadMessage(this.page).then(data => {
             this.readMessageList = data.data;
+            this.sum = this.readMessageList[0].status;
           });
         });
+      });
+    },
+    pageChange(value) {
+      this.page = value;
+      getAllReadMessage(this.page).then(data => {
+        this.readMessageList = data.data;
+        this.sum = this.readMessageList[0].status;
       });
     }
   }
@@ -59,4 +86,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+#readMessage {
+  height: 100%;
+}
 </style>

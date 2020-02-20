@@ -17,8 +17,8 @@ export let getAllNotice = () => {
     return Http.get(`/api/selectAllNotice`);
 };
 /**获取所有的读者留言 */
-export let getAllReadMessage = () => {
-    return Http.get(`/api/getAllReadMessage`);
+export let getAllReadMessage = (start) => {
+    return Http.get(`/api/getAllReadMessage?start=${start}`);
 };  
 /**添加读者留言 */
 export let addReadMessage = (sno,message,readId) => {

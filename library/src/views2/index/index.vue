@@ -254,7 +254,7 @@ export default {
     getAllNotice().then(data => {
       this.noticeList = data.data.slice(0, 5);
     });
-    getAllReadMessage().then(data => {
+    getAllReadMessage(1).then(data => {
       this.readMessageList = data.data.slice(0, 5);
     });
     getAllResource().then(data => {

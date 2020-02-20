@@ -19,5 +19,7 @@
         select * from tb_readMessage where sno like #{sno} order by readId desc
     </select>
 
-
+    <select id="selectNumberReadMessage" resultType="com.example.demo.entity.TbReadMessage">
+        select * from tb_readMessage order by readId desc
+    </select>
 </mapper>

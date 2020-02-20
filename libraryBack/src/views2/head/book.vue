@@ -80,24 +80,36 @@
     </Modal>
     <!--添加图书弹出框-->
 
-    <Input
-      v-model="value1"
-      search
-      enter-button
-      placeholder="请输入ISBN搜索"
-      style="width:300px;"
-      @on-search="search"
-    />
-    <p style="text-align:right;padding-right:10px;">
-      <a href="#" @click="add">添加图书</a>
-    </p>
+    <Row type="flex" style="padding-top:10px;padding-left:10px;">
+      <Col :lg="8">
+        <Input
+          v-model="value1"
+          search
+          enter-button
+          placeholder="请输入ISBN搜索"
+          style="width:300px;"
+          @on-search="search"
+        />
+      </Col>
+      <Col :lg="8">
+        <Button type="primary" @click="add">添加图书</Button>
+      </Col>
+      <Col :lg="8">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="sum"
+          @current-change="pageChange"
+          :current-page="page"
+        ></el-pagination>
+      </Col>
+    </Row>
     <Row
       type="flex"
       justify="center"
       v-for="(item,index) in bookList"
       :key="index"
       style="width:95%;margin:10px auto;"
-      v-show="value1==''||value1==item.isbn"
     >
       <Col :lg="5">
         <img :src="item.bookUrl" width="90px" height="100px" alt="错误,请检查链接" />
@@ -139,7 +151,12 @@
 </template>
 
 <script>
-import { getAllBook, getAddBook, getDeleteBook ,getUpdateBook} from "../../api";
+import {
+  getAllBook,
+  getAddBook,
+  getDeleteBook,
+  getUpdateBook
+} from "../../api";
 import { pressData } from "../../components/press.js"; //出版社列表
 export default {
   name: "book",
@@ -148,7 +165,7 @@ export default {
       value1: "", //搜索内容
       bookList: [], //图书列表
       modal1: false,
-      modal2:'添加图书',//添加图书or修改图书
+      modal2: "添加图书", //添加图书or修改图书
       formData: {
         //添加图书表单
         isbn: "",
@@ -160,21 +177,26 @@ export default {
         bookUrl: "",
         address: ""
       },
-      data1: [] //搜索源
+      data1: [], //自动填写列表
+      sum: 1,
+      value2: "", //当前搜索值
+      page: 1 //当前页码
     };
   },
   created() {
-    getAllBook().then(data => {
+    getAllBook(this.value2, this.page).then(data => {
       this.bookList = data.data;
+      this.sum = this.bookList[0].status;
     });
   },
   methods: {
     handleSearch1(value) {
+      //自动填写完整列表
       this.data1 = pressData;
     },
     addSubmit() {
       //添加图书提交
-      this.modal2='添加图书';
+      this.modal2 = "添加图书";
       if (
         this.formData.isbn == "" ||
         this.formData.name == "" ||
@@ -188,8 +210,9 @@ export default {
             if (data.data.msg == "添加成功") {
               this.$message.success("添加成功");
               this.modal1 = false;
-              getAllBook().then(data => {
+              getAllBook(this.value2, this.page).then(data => {
                 this.bookList = data.data;
+                this.sum = this.bookList[0].status;
               });
             } else {
               this.$message.error("改ISBN已存在,请检查");
@@ -207,29 +230,58 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
+        if (this.bookList.length == 1 && this.page > 1) {
+          this.page--;
+        }
         getDeleteBook(value).then(() => {
           this.$message({
             type: "success",
             message: "删除成功!"
           });
-          getAllBook().then(data => {
+          getAllBook(this.value2, this.page).then(data => {
             this.bookList = data.data;
+            this.sum = this.bookList[0].status;
           });
         });
       });
     },
-    updateBook(data){//修改图书
-      this.modal2='修改图书';
-      this.modal1=true;
-      this.formData=data;
+    updateBook(data) {
+      //修改图书
+      this.modal2 = "修改图书";
+      this.modal1 = true;
+      this.formData = data;
     },
-    updateBookSubmit(){//修改图书提交
-
+    updateBookSubmit() {
+      //修改图书提交
     },
-    add(){//添加图书
-      this.modal1=true;
-      this.modal2='添加图书';
-      this.formData.isbn='';this.formData.bookName='';this.formData.author='';this.formData.press='';this.formData.bookNumber=1;this.formData.bookUrl='';this.formData.address='';
+    add() {
+      //添加图书
+      this.modal1 = true;
+      this.modal2 = "添加图书";
+      this.formData.isbn = "";
+      this.formData.bookName = "";
+      this.formData.author = "";
+      this.formData.press = "";
+      this.formData.bookNumber = 1;
+      this.formData.bookUrl = "";
+      this.formData.address = "";
+    },
+    pageChange(value) {
+      //页码回调
+      this.page = value;
+      getAllBook(this.value2, this.page).then(data => {
+        this.bookList = data.data;
+        this.sum = this.bookList[0].status;
+      });
+    },
+    search() {
+      //搜索
+      this.value2 = this.value1;
+      this.page = 1;
+      getAllBook(this.value2, this.page).then(data => {
+        this.bookList = data.data;
+        this.sum = this.bookList[0].status;
+      });
     }
   },
   computed: {}

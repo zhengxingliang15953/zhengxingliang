@@ -8,6 +8,6 @@ public interface TbStudentService {
     TbStudent studentLogin(String sno,String pwd);
     public TbStudent getIndexStudent();
     public void updatePwd(String sno,String pwd);
-    List<TbStudent> selectAllStudent();
+    List<TbStudent> selectAllStudent(String sno,Integer start);
 
 }

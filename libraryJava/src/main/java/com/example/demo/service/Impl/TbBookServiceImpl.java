@@ -3,6 +3,7 @@ package com.example.demo.service.Impl;
 import com.example.demo.entity.TbBook;
 import com.example.demo.mapper.TbBookMapper;
 import com.example.demo.service.TbBookService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,8 +20,16 @@ public class TbBookServiceImpl implements TbBookService {
      * @return
      */
     @Override
-    public List<TbBook> selectAllBook() {
-        return tbBookMapper.selectAllBook();
+    public List<TbBook> selectAllBook(String isbn,Integer start) {
+        List<TbBook> tbBookList=null;
+        if(isbn.equals("")){
+            tbBookList=tbBookMapper.selectAllBook(new RowBounds((start-1)*10,10));
+            tbBookList.get(0).setStatus(tbBookMapper.selectAllJiShu().size());
+        }else{
+            tbBookList=tbBookMapper.selectIsbnBook(isbn);
+            tbBookList.get(0).setStatus(1);
+        }
+        return tbBookList;
     }
 
     /**
@@ -29,7 +38,7 @@ public class TbBookServiceImpl implements TbBookService {
      * @return
      */
     @Override
-    public TbBook selectIsbnBook(String isbn) {
+    public List<TbBook> selectIsbnBook(String isbn) {
         return tbBookMapper.selectIsbnBook(isbn);
     }
 
@@ -47,7 +56,7 @@ public class TbBookServiceImpl implements TbBookService {
     @Override
     public TbBook insertBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address) {
         TbBook book=new TbBook();
-        if(tbBookMapper.selectIsbnBook(isbn)==null){
+        if(tbBookMapper.selectIsbnBook(isbn).size()==0){
             tbBookMapper.insertBook(isbn, bookName, author, press, bookDate, bookNumber,0,0, bookUrl, address);
             book.setMsg("添加成功");
         }else{

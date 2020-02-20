@@ -3,6 +3,7 @@ package com.example.demo.service.Impl;
 import com.example.demo.entity.TbReadMessage;
 import com.example.demo.mapper.TbReadMessageMapper;
 import com.example.demo.service.TbReadMessageService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,8 +20,10 @@ public class TbReadMessageServiceImpl implements TbReadMessageService {
      * @return
      */
     @Override
-    public List<TbReadMessage> selectAllReadMessage() {
-        return tbReadMessageMapper.selectAllReadMessage();
+    public List<TbReadMessage> selectAllReadMessage(Integer start) {
+        List<TbReadMessage> tbReadMessageList= tbReadMessageMapper.selectAllReadMessage(new RowBounds((start-1)*10,10));
+        tbReadMessageList.get(0).setStatus(tbReadMessageMapper.selectNumberReadMessage().size());
+        return tbReadMessageList;
     }
 
     /**

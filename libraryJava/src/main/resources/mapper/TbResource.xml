@@ -14,4 +14,8 @@
         insert into tb_resource(title,resourceUrl,resourceId)
         values (#{title},#{resourceUrl},#{resourceId})
     </insert>
+
+    <select id="selectNumberResource" resultType="com.example.demo.entity.TbResource">
+        select * from tb_resource
+    </select>
 </mapper>

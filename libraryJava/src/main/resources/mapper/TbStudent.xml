@@ -16,4 +16,12 @@
         select * from tb_student
         where sno like #{sno}
     </select>
+
+    <select id="selectNumberStudent" resultType="com.example.demo.entity.TbStudent">
+        select * from tb_student
+    </select>
+
+    <select id="selectSnoStudent" resultType="com.example.demo.entity.TbStudent">
+        select * from tb_student where sno like #{sno}
+    </select>
 </mapper>

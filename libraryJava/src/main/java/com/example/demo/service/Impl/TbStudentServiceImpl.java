@@ -3,6 +3,7 @@ package com.example.demo.service.Impl;
 import com.example.demo.entity.TbStudent;
 import com.example.demo.mapper.TbStudentMapper;
 import com.example.demo.service.TbStudentService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -68,11 +69,22 @@ public class TbStudentServiceImpl implements TbStudentService {
      * @return
      */
     @Override
-    public List<TbStudent> selectAllStudent() {
-        List<TbStudent> studentList= tbStudentMapper.selectAllStudent();
-        for(TbStudent student:studentList){
-            student.setPwd("0");
-            student.setMsg("0");
+    public List<TbStudent> selectAllStudent(String sno,Integer start) {
+        List<TbStudent> studentList=null;
+        if(sno.equals("")){
+            studentList= tbStudentMapper.selectAllStudent(new RowBounds((start-1)*10,10));
+            for(TbStudent student:studentList){
+                student.setPwd("0");
+                student.setMsg("0");
+                student.setStatus(tbStudentMapper.selectNumberStudent().size());
+            }
+        }else{
+            studentList=tbStudentMapper.selectSnoStudent(sno);
+            for(TbStudent student:studentList){
+                student.setPwd("0");
+                student.setMsg("0");
+                student.setStatus(1);
+            }
         }
         return studentList;
     }

@@ -3,6 +3,7 @@ package com.example.demo.service.Impl;
 import com.example.demo.entity.TbResource;
 import com.example.demo.mapper.TbResourceMapper;
 import com.example.demo.service.TbResourceService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,8 +20,10 @@ public class TbResourceServiceImpl implements TbResourceService {
      * @return
      */
     @Override
-    public List<TbResource> selectAllResource() {
-        return tbResourceMapper.selectAllResource();
+    public List<TbResource> selectAllResource(Integer start) {
+        List<TbResource> tbResourceList=tbResourceMapper.selectAllResource(new RowBounds((start-1)*10,10));
+        tbResourceList.get(0).setStatus(tbResourceMapper.selectNumberResource().size());
+        return tbResourceList;
     }
 
     /**

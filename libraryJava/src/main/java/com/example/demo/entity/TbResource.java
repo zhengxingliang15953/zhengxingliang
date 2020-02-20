@@ -4,6 +4,7 @@ public class TbResource {
     private String title;
     private String resourceUrl;
     private String resourceId;
+    private Integer status;
 
     public String getResourceUrl() {
         return resourceUrl;
@@ -27,5 +28,13 @@ public class TbResource {
 
     public void setResourceId(String resourceId) {
         this.resourceId = resourceId;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getStatus() {
+        return status;
     }
 }

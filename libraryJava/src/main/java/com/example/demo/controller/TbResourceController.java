@@ -24,8 +24,8 @@ public class TbResourceController {
      * @return
      */
     @RequestMapping(value = "api/getAllResource",method = RequestMethod.GET)
-    public List<TbResource> selectAllResource(){
-        return tbResourceService.selectAllResource();
+    public List<TbResource> selectAllResource(Integer start){
+        return tbResourceService.selectAllResource(start);
     }
 
     /**

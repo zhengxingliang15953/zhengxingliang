@@ -5,7 +5,7 @@
         select * from tb_book where isbn like #{isbn}
     </select>
 
-    <select id="selectAllBook" resultType="com.example.demo.entity.TbBook">
+    <select id="selectAllBook" resultType="com.example.demo.entity.TbBook" >
         select * from tb_book
     </select>
 
@@ -34,5 +34,10 @@
 
     <select id="selectBookNameBook2" resultType="com.example.demo.entity.TbBook">
         select * from tb_book where bookName like concat('%',#{bookName},'%')
+    </select>
+
+    <!--查询所有的书本计数-->
+    <select id="selectAllJiShu" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book
     </select>
 </mapper>

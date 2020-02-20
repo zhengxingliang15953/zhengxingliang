@@ -11,6 +11,7 @@ public class TbStudent {
     private String pwd;
     private String msg;
     private String tel;
+    private Integer status;
 
     public String getAge() {
         return age;
@@ -90,5 +91,13 @@ public class TbStudent {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
