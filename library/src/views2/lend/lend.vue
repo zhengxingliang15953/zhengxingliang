@@ -16,7 +16,8 @@
     <Row type="flex" justify="center">
       <Col :lg="1"></Col>
       <Col :lg="17">
-        <p class="headBar">检索记录(100条)</p>
+          <span style="width:80%;background:#5d8fb6;">检索记录({{sum}}条)</span>
+          <Page :current="page" :total="sum" simple @on-change="pageChange" style="display:inline-block;"/>
         <Row
           type="flex"
           v-for="(item,index) in searchBookList"
@@ -59,7 +60,7 @@
       <Col :lg="4" style="margin-left:10px;">
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px;">
           <p class="headBar">读者信息>></p>
-          <p class="headBarItem">您好!匿名用户</p>
+          <p class="headBarItem">您好!{{user}}用户</p>
         </div>
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px">
           <p class="headBar">当前检索>></p>
@@ -83,7 +84,7 @@ import {
   getBookName1,
   getAuthorBook,
   getBookName2,
-  getIndexStudent
+  getIndexStudent,
 } from "../../api";
 export default {
   name: "lend",
@@ -91,15 +92,26 @@ export default {
     return {
       select: "",
       searchItem: "",
-      searchBookList: [] //检索列表
+      searchBookList: [] ,//检索列表
+      page:1,//当前页码
+      sum:1,//检索总数
+      user:'匿名',//当前登录id
     };
   },
   created() {
     this.select = this.$route.query.select || "1";
     this.searchItem = this.$route.query.searchItem || "";
+    getIndexStudent().then(data=>{
+      if(data.data.msg==0){
+        this.user='匿名';
+      }else{
+        this.user=data.data.sno;
+      }
+    })
     if (this.searchItem == "") {
-      getAllBook().then(data => {
+      getAllBook(this.searchItem,this.page).then(data => {
         this.searchBookList = data.data;
+        this.sum=this.searchBookList[0].status;
       });
     } else {
       switch (this.select) {
@@ -127,8 +139,9 @@ export default {
         case "4": {
           //ISBN
           this.searchBookList = [];
-          getIsbnBook(this.searchItem).then(data => {
-            this.searchBookList.push(data.data);
+          getAllBook(this.searchItem,this.page).then(data => {
+            this.searchBookList=data.data;
+            this.sum=this.searchBookList[0].status;
           });
           break;
         }
@@ -144,10 +157,13 @@ export default {
             title: "预约成功",
             content: "请前往个人中心查看预约详细信息"
           });
-        }else{
-          this.$message.warning('请先登录');
+        } else {
+          this.$message.warning("请先登录");
         }
       });
+    },
+    pageChange(value){//页码改变回调
+      this.page=value;
     }
   },
   filters: {
@@ -189,6 +205,11 @@ span {
   line-height: 25px;
   color: black;
   padding-left: 3px;
+  span{
+    width: 70%;
+    height: 100%;
+    color: black;
+  }
 }
 .headBarItem {
   font-size: 15px;

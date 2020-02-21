@@ -43,8 +43,8 @@ public class TbNoticeController {
      * @return
      */
     @RequestMapping(value = "api/selectAllNotice",method = RequestMethod.GET)
-    public List<TbNotice> selectAll(){
-        return tbNoticeService.selectAll();
+    public List<TbNotice> selectAll(Integer start){
+        return tbNoticeService.selectAll(start);
     }
 
     /**

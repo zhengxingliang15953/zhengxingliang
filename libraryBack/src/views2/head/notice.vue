@@ -17,9 +17,21 @@
       </div>
     </Drawer>
     <!--编辑通知-->
-    <p class="addNotice">
-      <span @click="addNotice">添加公告</span>
-    </p>
+    <Row type="flex" style="padding-top:10px;">
+      <Col :lg="1"></Col>
+      <Col :lg="15">
+        <Button @click="addNotice" type="primary">添加公告</Button>
+      </Col>
+      <Col :lg="8">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="sum"
+          @current-change="pageChange"
+          :current-page="page"
+        ></el-pagination>
+      </Col>
+    </Row>
     <!--通知公告-->
     <List>
       <ListItem v-for="(item,index) in noticeList" :key="index">
@@ -59,12 +71,15 @@ export default {
       noticeMain: "", //编辑修改正文
       message: "修改", //修改、添加
       noticeList: [], //通知公告列表
-      updateId: "" //修改ID
+      updateId: "", //修改ID
+      sum: 1,
+      page: 1
     };
   },
   created() {
-    getAllNotice().then(data => {
+    getAllNotice(this.page).then(data => {
       this.noticeList = data.data;
+      this.sum = this.noticeList[0].status;
     });
   },
   methods: {
@@ -75,14 +90,18 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
+        if (this.noticeList.length == 1 && this.page > 1) {
+          this.page--;
+        }
         getDeleteNotice(value.toString()).then(() => {
           this.$message({
             type: "success",
             message: "删除成功!"
           });
-          getAllNotice().then(data => {
-          this.noticeList = data.data;
-        });
+          getAllNotice(this.page).then(data => {
+            this.noticeList = data.data;
+            this.sum = this.noticeList[0].status;
+          });
         });
       });
     },
@@ -111,8 +130,9 @@ export default {
           let noticeId = new Date().getTime().toString();
           getAddNotice(this.noticeHead, this.noticeMain, noticeId)
             .then(() => {
-              getAllNotice().then(data => {
+              getAllNotice(this.page).then(data => {
                 this.noticeList = data.data;
+                this.sum = this.noticeList[0].status;
               });
               this.$message.success("添加成功");
             })
@@ -128,8 +148,9 @@ export default {
           this.value1 = false;
           getUpdateNotice(this.noticeHead, this.noticeMain, this.updateId)
             .then(() => {
-              getAllNotice().then(data => {
+              getAllNotice(this.page).then(data => {
                 this.noticeList = data.data;
+                this.sum = this.noticeList[0].status;
               });
               this.$message.success("修改成功");
             })
@@ -138,6 +159,14 @@ export default {
             });
         }
       }
+    },
+    pageChange(value) {
+      //页码改变回调
+      this.page = value;
+      getAllNotice(this.page).then(data => {
+        this.noticeList = data.data;
+        this.sum = this.noticeList[0].status;
+      });
     }
   },
   computed: {}

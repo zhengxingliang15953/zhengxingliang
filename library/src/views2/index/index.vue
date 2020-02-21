@@ -251,15 +251,17 @@ export default {
     };
   },
   created() {
-    getAllNotice().then(data => {
+    getAllNotice(1).then(data => {
       this.noticeList = data.data.slice(0, 5);
     });
     getAllReadMessage(1).then(data => {
       this.readMessageList = data.data.slice(0, 5);
     });
-    getAllResource().then(data => {
+    getAllResource(1).then(data => {
       this.resourceList1 = data.data.slice(0, 15);
-      this.resourceList2 = data.data.slice(15, 30);
+    });
+    getAllResource(2).then(data => {
+      this.resourceList2 = data.data.slice(0, 15);
     });
   },
   methods: {

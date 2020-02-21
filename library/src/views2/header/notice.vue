@@ -1,7 +1,7 @@
 <template>
   <div id="notice">
     <!--详细公告-->
-    <Drawer  placement="left" :closable="false" v-model="value1" width="40%">
+    <Drawer placement="left" :closable="false" v-model="value1" width="40%">
       <h2 style="text-align:center">{{itemDetail.title}}</h2>
       <p style="font-size:13px;">{{itemDetail.message}}</p>
     </Drawer>
@@ -14,8 +14,15 @@
     </el-breadcrumb>
     <!--标签-->
     <br />
-    <hr >
+    <hr />
     <!--通知公告-->
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="sum"
+      @current-change="pageChange"
+      :current-page="page"
+    ></el-pagination>
     <List>
       <ListItem v-for="(item,index) in noticeList" :key="index">
         <ListItemMeta
@@ -33,25 +40,37 @@
 </template>
 
 <script>
-import {getAllNotice} from '../../api';
+import { getAllNotice } from "../../api";
 export default {
   name: "notice",
   data() {
     return {
       value1: false,
-      noticeList:[],//通知公告
-      itemDetail:{},//去看看的详细
+      noticeList: [], //通知公告
+      itemDetail: {}, //去看看的详细
+      sum: 1,
+      page: 1
     };
   },
-  created(){
-    getAllNotice().then((data)=>{
-      this.noticeList=data.data;
-    })
+  created() {
+    getAllNotice(this.page).then(data => {
+      this.noticeList = data.data;
+      this.sum = this.noticeList[0].status;
+    });
   },
   methods: {
-    look(item){//去看看
-      this.value1=true;
-      this.itemDetail=item;
+    look(item) {
+      //去看看
+      this.value1 = true;
+      this.itemDetail = item;
+    },
+    pageChange(value) {
+      //页码改变回调
+      this.page = value;
+      getAllNotice(this.page).then(data => {
+        this.noticeList = data.data;
+        this.sum = this.noticeList[0].status;
+      });
     }
   }
 };

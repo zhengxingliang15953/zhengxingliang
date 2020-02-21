@@ -24,6 +24,13 @@
     <br />
     <hr />
     <!--读者留言-->
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="sum"
+      @current-change="pageChange"
+      :current-page="page"
+    ></el-pagination>
     <List>
       <ListItem v-for="(item,index) in readMessageList" :key="index">
         <ListItemMeta
@@ -46,12 +53,15 @@ export default {
       modal1: false,
       readMessageList: [], //读者留言
       addReadMessageText: "", //添加留言值
-      studentId: "" //当前登陆ID
+      studentId: "", //当前登陆ID
+      sum: 1,
+      page: 1
     };
   },
   created() {
-    getAllReadMessage().then(data => {
+    getAllReadMessage(1).then(data => {
       this.readMessageList = data.data;
+      this.sum = this.readMessageList[0].status;
     });
   },
   methods: {
@@ -60,20 +70,32 @@ export default {
       let str = new Date().getTime().toString();
       addReadMessage(this.studentId, this.addReadMessageText, str).then(() => {
         this.$Message.success("提交成功!");
-        getAllReadMessage().then(data => {
+        getAllReadMessage(this.page).then(data => {
           this.readMessageList = data.data;
+          this.sum = this.readMessageList[0].status;
         });
       });
     },
     myselfMessage() {
       //我要留言
       getIndexStudent().then(data => {
-        if(window.sessionStorage.getItem('token')==data.data.msg&&window.sessionStorage.getItem('token')){
+        if (
+          window.sessionStorage.getItem("token") == data.data.msg &&
+          window.sessionStorage.getItem("token")
+        ) {
           this.studentId = data.data.sno;
-          this.modal1=true;
-        }else{
-          this.$message.warning('请先前往首页登陆');
+          this.modal1 = true;
+        } else {
+          this.$message.warning("请先前往首页登陆");
         }
+      });
+    },
+    pageChange(value) {
+      //页码改变回调
+      this.page = value;
+      getAllReadMessage(this.page).then(data => {
+        this.readMessageList = data.data;
+        this.sum = this.readMessageList[0].status;
       });
     }
   }

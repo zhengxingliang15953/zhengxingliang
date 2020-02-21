@@ -20,4 +20,7 @@
         set title=#{title},message=#{message}
         where noticeId like #{noticeId}
     </update>
+    <select id="selectNumberNotice" resultType="com.example.demo.entity.TbNotice">
+        select * from tb_notice
+    </select>
 </mapper>

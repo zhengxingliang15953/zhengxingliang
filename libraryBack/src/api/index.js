@@ -21,8 +21,8 @@ export let getDeleteNotice = (noticeId) => {
     return Http.get(`/api/getDeleteNotice?noticeId=${noticeId}`);
 }
 /*获取所有公告通知*/
-export let getAllNotice = () => {
-    return Http.get(`/api/selectAllNotice`);
+export let getAllNotice = (start) => {
+    return Http.get(`/api/selectAllNotice?start=${start}`);
 }
 /*修改公告*/
 export let getUpdateNotice = (title,message,noticeId) => {

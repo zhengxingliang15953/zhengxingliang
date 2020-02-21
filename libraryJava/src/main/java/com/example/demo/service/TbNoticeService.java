@@ -8,6 +8,6 @@ public interface TbNoticeService {
 
     void insertNotice(String title,String message,String noticeId);
     void deleteNotice(String noticeId);
-    List<TbNotice> selectAll();
+    List<TbNotice> selectAll(Integer start);
     void updateNotice(String title,String message,String noticeId);
 }

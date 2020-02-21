@@ -13,8 +13,8 @@ export let getIndexStudent = () => {
     return Http.get(`/api/getIndexStudent`);
 };
 /*获取所有公告通知*/
-export let getAllNotice = () => {
-    return Http.get(`/api/selectAllNotice`);
+export let getAllNotice = (start) => {
+    return Http.get(`/api/selectAllNotice?start=${start}`);
 };
 /**获取所有的读者留言 */
 export let getAllReadMessage = (start) => {
@@ -33,12 +33,12 @@ export let getOneReadMessage = (sno) => {
     return Http.get(`/api/getOneReadMessage?sno=${sno}`);
 };    
 /*获取所有的导航资源*/
-export let getAllResource = () => {
-    return Http.get(`/api/getAllResource`);
+export let getAllResource = (start) => {
+    return Http.get(`/api/getAllResource?start=${start}`);
 };    
 /*获取所有的图书*/
-export let getAllBook = () => {
-    return Http.get(`/api/getAllBook`);
+export let getAllBook = (isbn,start) => {
+    return Http.get(`/api/getAllBook?isbn=${isbn}&start=${start}`);
 };    
 /*根据ISBN获取图书*/
 export let getIsbnBook = (isbn) => {

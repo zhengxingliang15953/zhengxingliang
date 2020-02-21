@@ -4,6 +4,7 @@ public class TbNotice {
     private String title;
     private String message;
     private String noticeId;
+    private Integer status;
 
     public String getMessage() {
         return message;
@@ -27,5 +28,13 @@ public class TbNotice {
 
     public void setNoticeId(String noticeId) {
         this.noticeId = noticeId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
