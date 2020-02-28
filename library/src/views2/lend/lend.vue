@@ -9,15 +9,26 @@
           <el-option label="著者" value="3"></el-option>
           <el-option label="ISSN" value="4"></el-option>
         </el-select>
-        <el-button slot="append" icon="el-icon-search" style="background-color:orange;color:white"></el-button>
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          style="background-color:orange;color:white"
+          @click="searchBtn"
+        ></el-button>
       </el-input>
     </div>
     <br />
     <Row type="flex" justify="center">
       <Col :lg="1"></Col>
       <Col :lg="17">
-          <span style="width:80%;background:#5d8fb6;">检索记录({{sum}}条)</span>
-          <Page :current="page" :total="sum" simple @on-change="pageChange" style="display:inline-block;"/>
+        <span style="width:80%;background:#5d8fb6;">检索记录({{count}}条)</span>
+        <Page
+          :current="page"
+          :total="sum"
+          simple
+          @on-change="pageChange"
+          style="display:inline-block;"
+        />
         <Row
           type="flex"
           v-for="(item,index) in searchBookList"
@@ -64,7 +75,7 @@
         </div>
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px">
           <p class="headBar">当前检索>></p>
-          <p class="headBarItem">{{select | selectFil}}=({{searchItem}})</p>
+          <p class="headBarItem">{{select | selectFil}}=({{searchItemShow}})</p>
         </div>
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px">
           <p class="headBar">主题词>></p>
@@ -84,7 +95,7 @@ import {
   getBookName1,
   getAuthorBook,
   getBookName2,
-  getIndexStudent,
+  getIndexStudent
 } from "../../api";
 export default {
   name: "lend",
@@ -92,60 +103,31 @@ export default {
     return {
       select: "",
       searchItem: "",
-      searchBookList: [] ,//检索列表
-      page:1,//当前页码
-      sum:1,//检索总数
-      user:'匿名',//当前登录id
+      searchBookList: [], //检索列表
+      page: 1, //当前页码
+      sum: 0, //检索总数
+      user: "匿名", //当前登录id
+      searchItemShow: "" //当前检索
     };
   },
   created() {
     this.select = this.$route.query.select || "1";
     this.searchItem = this.$route.query.searchItem || "";
-    getIndexStudent().then(data=>{
-      if(data.data.msg==0){
-        this.user='匿名';
-      }else{
-        this.user=data.data.sno;
+    this.searchItemShow = this.searchItem;
+    getIndexStudent().then(data => {
+      if (data.data.msg == 0) {
+        this.user = "匿名";
+      } else {
+        this.user = data.data.sno;
       }
-    })
+    });
     if (this.searchItem == "") {
-      getAllBook(this.searchItem,this.page).then(data => {
+      getAllBook(this.searchItem, this.page).then(data => {
         this.searchBookList = data.data;
-        this.sum=this.searchBookList[0].status;
+        this.sum = this.searchBookList[0].status;
       });
     } else {
-      switch (this.select) {
-        case "1": {
-          //题目(精)
-          getBookName1(this.searchItem).then(data => {
-            this.searchBookList = data.data;
-          });
-          break;
-        }
-        case "2": {
-          //题目(模糊)
-          getBookName2(this.searchItem).then(data => {
-            this.searchBookList = data.data;
-          });
-          break;
-        }
-        case "3": {
-          //著者
-          getAuthorBook(this.searchItem).then(data => {
-            this.searchBookList = data.data;
-          });
-          break;
-        }
-        case "4": {
-          //ISBN
-          this.searchBookList = [];
-          getAllBook(this.searchItem,this.page).then(data => {
-            this.searchBookList=data.data;
-            this.sum=this.searchBookList[0].status;
-          });
-          break;
-        }
-      }
+      this.startChanceBook();
     }
   },
   methods: {
@@ -162,12 +144,73 @@ export default {
         }
       });
     },
-    pageChange(value){//页码改变回调
-      this.page=value;
+    pageChange(value) {
+      //页码改变回调
+      this.page = value;
+      if (this.searchItemShow == "") {
+        getAllBook(this.searchItemShow, this.page).then(data => {
+          this.searchBookList = data.data;
+          this.sum = this.searchBookList[0].status;
+        });
+      } else {
+        this.startChanceBook();
+      }
+    },
+    startChanceBook() {
+      //检索4者选择
+      switch (this.select) {
+        case "1": {
+          //题目(精)
+          getBookName1(this.searchItemShow, this.page).then(data => {
+            this.searchBookList = data.data;
+            this.sum = this.searchBookList[0].status||0;
+          });
+          break;
+        }
+        case "2": {
+          //题目(模糊)
+          getBookName2(this.searchItem, this.page).then(data => {
+            this.searchBookList = data.data;
+            this.sum = this.searchBookList[0].status||0;
+          });
+          break;
+        }
+        case "3": {
+          //著者
+          getAuthorBook(this.searchItem, this.page).then(data => {
+            this.searchBookList = data.data;
+            this.sum = this.searchBookList[0].status||0;
+          });
+          break;
+        }
+        case "4": {
+          //ISBN
+          this.searchBookList = [];
+          getAllBook(this.searchItem, this.page).then(data => {
+            this.searchBookList = data.data;
+            this.sum = this.searchBookList[0].status||0;
+          });
+          break;
+        }
+      }
+    },
+    searchBtn() {
+      //当前页面检索
+      this.searchItemShow = this.searchItem;
+      this.page = 1;
+      if (this.searchItem == "") {
+        getAllBook(this.searchItem, this.page).then(data => {
+          this.searchBookList = data.data;
+          this.sum = this.searchBookList[0].status;
+        });
+      } else {
+        this.startChanceBook();
+      }
     }
   },
   filters: {
     selectFil(value) {
+      //4者显示过滤器
       switch (value) {
         case "1":
           return "题名(精)";
@@ -181,6 +224,15 @@ export default {
         case "4":
           return "ISBN";
           break;
+      }
+    }
+  },
+  computed:{
+    count(){
+      if(this.searchBookList.length==0){
+        return 0;
+      }else{
+        return this.sum;
       }
     }
   }
@@ -205,7 +257,7 @@ span {
   line-height: 25px;
   color: black;
   padding-left: 3px;
-  span{
+  span {
     width: 70%;
     height: 100%;
     color: black;

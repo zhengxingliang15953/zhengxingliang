@@ -104,8 +104,14 @@ public class TbBookServiceImpl implements TbBookService {
      * @return
      */
     @Override
-    public List<TbBook> selectBookNameBook1(String bookName) {
-        return tbBookMapper.selectBookNameBook1(bookName);
+    public List<TbBook> selectBookNameBook1(String bookName,Integer start) {
+        List<TbBook> tbBookList=tbBookMapper.selectBookNameBook1(bookName,new RowBounds((start-1)*10,10));
+        if(tbBookList.size()<=0){
+
+            return tbBookList;
+        }
+        tbBookList.get(0).setStatus(tbBookMapper.selectBook1Number(bookName).size());
+        return tbBookList;
     }
 
     /**
@@ -114,8 +120,14 @@ public class TbBookServiceImpl implements TbBookService {
      * @return
      */
     @Override
-    public List<TbBook> selectAuthorBook(String author) {
-        return tbBookMapper.selectAuthorBook(author);
+    public List<TbBook> selectAuthorBook(String author,Integer start) {
+        List<TbBook> tbBookList=tbBookMapper.selectAuthorBook(author,new RowBounds((start-1)*10,10));
+        if(tbBookList.size()<=0){
+
+            return tbBookList;
+        }
+        tbBookList.get(0).setStatus(tbBookMapper.selectAuthorNumber(author).size());
+        return tbBookList;
     }
 
     /**
@@ -124,7 +136,12 @@ public class TbBookServiceImpl implements TbBookService {
      * @return
      */
     @Override
-    public List<TbBook> selectBookNameBook2(String bookName) {
-        return tbBookMapper.selectBookNameBook2(bookName);
+    public List<TbBook> selectBookNameBook2(String bookName,Integer start) {
+        List<TbBook> tbBookList=tbBookMapper.selectBookNameBook2(bookName,new RowBounds((start-1)*10,10));
+        if(tbBookList.size()<=0){
+            return tbBookList;
+        }
+        tbBookList.get(0).setStatus(tbBookMapper.selectBook2Number(bookName).size());
+        return tbBookList;
     }
 }

@@ -85,8 +85,8 @@ public class TbBookController {
      * @return
      */
     @RequestMapping(value = "api/getBookName1",method = RequestMethod.GET)
-    public List<TbBook> selectBookName1(String bookName){
-        return tbBookService.selectBookNameBook1(bookName);
+    public List<TbBook> selectBookName1(String bookName,Integer start){
+        return tbBookService.selectBookNameBook1(bookName, start);
     }
 
     /**
@@ -95,8 +95,8 @@ public class TbBookController {
      * @return
      */
     @RequestMapping(value = "api/getAuthorBook",method = RequestMethod.GET)
-    public List<TbBook> selectAuthor(String author){
-        return tbBookService.selectAuthorBook(author);
+    public List<TbBook> selectAuthor(String author,Integer start){
+        return tbBookService.selectAuthorBook(author,start);
     }
 
     /**
@@ -105,7 +105,7 @@ public class TbBookController {
      * @return
      */
     @RequestMapping(value = "api/getBookName2",method = RequestMethod.GET)
-    public List<TbBook> selectBookName2(String bookName){
-        return tbBookService.selectBookNameBook2(bookName);
+    public List<TbBook> selectBookName2(String bookName,Integer start){
+        return tbBookService.selectBookNameBook2(bookName,start);
     }
 }

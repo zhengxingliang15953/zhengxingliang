@@ -10,8 +10,8 @@ public interface TbBookService {
     TbBook insertBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address);
     void deleteBook(String isbn);
     TbBook updateBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address);
-    List<TbBook> selectBookNameBook1(String bookName);
-    List<TbBook> selectAuthorBook(String author);
-    List<TbBook> selectBookNameBook2(String bookName);
+    List<TbBook> selectBookNameBook1(String bookName,Integer start);
+    List<TbBook> selectAuthorBook(String author,Integer start);
+    List<TbBook> selectBookNameBook2(String bookName,Integer start);
 
 }

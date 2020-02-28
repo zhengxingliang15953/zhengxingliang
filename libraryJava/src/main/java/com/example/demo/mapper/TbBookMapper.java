@@ -13,10 +13,13 @@ public interface TbBookMapper {
     void insertBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,int appNumber,int readNumber,String bookUrl,String address);
     void deleteBook(String isbn);
     void updateBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address);
-    List<TbBook> selectBookNameBook1(String bookName);
-    List<TbBook> selectAuthorBook(String author);
-    List<TbBook> selectBookNameBook2(String bookName);
+    List<TbBook> selectBookNameBook1(String bookName,RowBounds rowBounds);
+    List<TbBook> selectAuthorBook(String author,RowBounds rowBounds);
+    List<TbBook> selectBookNameBook2(String bookName,RowBounds rowBounds);
 
 
     List<TbBook> selectAllJiShu();
+    List<TbBook> selectBook1Number(String bookName);
+    List<TbBook> selectBook2Number(String bookName);
+    List<TbBook> selectAuthorNumber(String author);
 }

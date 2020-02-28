@@ -45,14 +45,14 @@ export let getIsbnBook = (isbn) => {
     return Http.get(`/api/getIsbnBook?isbn=${isbn}`);
 };    
 /*根据书名获取图书(精确)*/
-export let getBookName1 = (bookName) => {
-    return Http.get(`/api/getBookName1?bookName=${bookName}`);
+export let getBookName1 = (bookName,start) => {
+    return Http.get(`/api/getBookName1?bookName=${bookName}&start=${start}`);
 };    
 /*根据书名获取图书(模糊)*/
-export let getBookName2 = (bookName) => {
-    return Http.get(`/api/getBookName2?bookName=${bookName}`);
+export let getBookName2 = (bookName,start) => {
+    return Http.get(`/api/getBookName2?bookName=${bookName}&start=${start}`);
 }; 
 /*根据著者获取图书*/
-export let getAuthorBook = (author) => {
-    return Http.get(`/api/getAuthorBook?author=${author}`);
+export let getAuthorBook = (author,start) => {
+    return Http.get(`/api/getAuthorBook?author=${author}&start=${start}`);
 };       

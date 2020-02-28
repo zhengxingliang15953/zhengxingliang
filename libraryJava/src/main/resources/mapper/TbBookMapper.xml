@@ -40,4 +40,19 @@
     <select id="selectAllJiShu" resultType="com.example.demo.entity.TbBook">
         select * from tb_book
     </select>
+
+    <!--根据书名精确查找计数-->
+    <select id="selectBook1Number" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book where bookName like #{bookName}
+    </select>
+
+    <!--根据书名(模糊)查找计数-->
+    <select id="selectBook2Number" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book where bookName like concat('%',#{bookName},'%')
+    </select>
+
+    <!--根据作者查找计数-->
+    <select id="selectAuthorNumber" resultType="com.example.demo.entity.TbBook">
+        select * from tb_book where author like #{author}
+    </select>
 </mapper>
