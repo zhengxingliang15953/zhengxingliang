@@ -8,7 +8,14 @@
 				"backgroundColor":"whitesmoke"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/index/index2",
+            "style" : {
+				"navigationBarTitleText":"index2",
+				"navigationBarBackgroundColor":"#4CD964"
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

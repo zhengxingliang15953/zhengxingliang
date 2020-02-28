@@ -2,8 +2,5 @@
   "navigationBarTitleText": "FirstUni",
   "navigationBarBackgroundColor": "#007AFF",
   "backgroundColor": "whitesmoke",
-  "usingComponents": {
-    "uni-rate": "/component/uni-rate/uni-rate",
-    "uni-icons": "/component/uni-icons/uni-icons"
-  }
+  "usingComponents": {}
 }

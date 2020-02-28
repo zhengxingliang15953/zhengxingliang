@@ -28,17 +28,10 @@
 		<picker mode="selector" :range="richList" value="0">
 			<view>{{richList[1]}}</view>
 		</picker>
-		<navigator url="http://www.baidu.com">
-			<button type="primary" size="mini">我的</button> 
-		</navigator>
-		<uniRate value="2"></uniRate>
-		<uni-icons type="contact" size="50"></uni-icons>
-	</view>
+	</view>	
 </template>
 
 <script>
-	import uniRate from '../../component/uni-rate/uni-rate.vue';
-	import uniIcons from '../../component/uni-icons/uni-icons.vue';
 	export default {
 		data() {
 			return {
@@ -47,26 +40,29 @@
 				richList: [1, 2, 3, 4],
 			}
 		},
+		onLoad(){
+		
+		},
 		methods: {
 			swiperChange(event) {
 				this.index = event.detail.current;
 			},
 			btn() {
 				console.log('点击了');
+				uni.navigateTo({//页面跳转，保留当前页面
+					url:'index2',
+					animationType:'pop-in',
+				})
 			},
 			checkChange(value){
 				console.log(value.detail.value);
 			}
 		},
-		components:{
-			uniRate,uniIcons
-		}
 	}
 </script>
 
 <style scoped >
 	.swiperImage {
-
 		width: 100%;
 	}
 </style>

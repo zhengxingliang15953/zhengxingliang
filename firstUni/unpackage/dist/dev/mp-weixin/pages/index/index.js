@@ -131,47 +131,40 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniRate = function uniRate() {return __webpack_require__.e(/*! import() | component/uni-rate/uni-rate */ "component/uni-rate/uni-rate").then(__webpack_require__.bind(null, /*! ../../component/uni-rate/uni-rate.vue */ 23));};var uniIcons = function uniIcons() {return Promise.all(/*! import() | component/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("component/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! ../../component/uni-icons/uni-icons.vue */ 30));};var _default =
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default =
 {
   data: function data() {
     return {
@@ -180,19 +173,24 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       richList: [1, 2, 3, 4] };
 
   },
+  onLoad: function onLoad() {
+
+  },
   methods: {
     swiperChange: function swiperChange(event) {
       this.index = event.detail.current;
     },
     btn: function btn() {
       console.log('点击了');
+      uni.navigateTo({ //页面跳转，保留当前页面
+        url: 'index2',
+        animationType: 'pop-in' });
+
     },
     checkChange: function checkChange(value) {
       console.log(value.detail.value);
-    } },
-
-  components: {
-    uniRate: uniRate, uniIcons: uniIcons } };exports.default = _default;
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 21 */
