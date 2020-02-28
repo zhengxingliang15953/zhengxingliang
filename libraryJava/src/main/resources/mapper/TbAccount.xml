@@ -7,8 +7,8 @@
     </select>
 
     <insert id="insertAccount">
-        insert into tb_account(account,pwd,status)
-        values (#{account},#{pwd},2)
+        insert into tb_account
+        values (#{account},#{pwd},#{status},1)
     </insert>
 
     <update id="updateAccount">
@@ -16,4 +16,16 @@
         set pwd=#{pwd}
         where account like #{account}
     </update>
+
+    <update id="updateAccountType">
+        update tb_account set type=#{type} where account like #{account}
+    </update>
+
+    <delete id="deleteAccount">
+        delete from tb_account where account like #{account}
+    </delete>
+
+    <select id="selectOneAccount" resultType="com.example.demo.entity.TbAccount">
+        select * from tb_account where account like #{account}
+    </select>
 </mapper>

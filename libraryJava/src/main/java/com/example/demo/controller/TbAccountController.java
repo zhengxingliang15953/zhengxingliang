@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @Controller
@@ -46,8 +47,8 @@ public class TbAccountController {
      * @param pwd
      */
     @RequestMapping(value = "api/getAddAccount",method = RequestMethod.POST)
-    public TbAccount insertAccount(String account,String pwd){
-        return tbAccountService.insertAccount(account, pwd);
+    public TbAccount insertAccount(String account,String pwd,String role){
+        return tbAccountService.insertAccount(account, pwd,role);
     }
 
     /**
@@ -60,4 +61,31 @@ public class TbAccountController {
         tbAccountService.updateAccount(account, pwd);
     }
 
+    /**
+     * 获取所有的管理员
+     * @return
+     */
+    @RequestMapping(value = "api/getAllAccount",method = RequestMethod.GET)
+    public List<TbAccount> selectAllAccount(){
+        return tbAccountService.selectAllAccount();
+    }
+
+    /**
+     * 冻结账号or解冻账号
+     * @param account
+     * @param type
+     */
+    @RequestMapping(value = "api/getUpdateType",method = RequestMethod.GET)
+    public void updateType(String account,Integer type){
+        tbAccountService.updateAccountType(account, type);
+    }
+
+    /**
+     * 删除管理员
+     * @param account
+     */
+    @RequestMapping(value = "api/getDeleteAccount",method = RequestMethod.GET)
+    public void deleteAccount(String account){
+        tbAccountService.deleteAccount(account);
+    }
 }

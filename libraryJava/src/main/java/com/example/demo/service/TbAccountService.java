@@ -11,7 +11,11 @@ public interface TbAccountService {
     //获取当前登陆信息
     public TbAccount getIndexAccount();
 
-    TbAccount insertAccount(String account,String pwd);
+    TbAccount insertAccount(String account,String pwd,String role);
 
     void updateAccount(String account,String pwd);
+
+    List<TbAccount> selectAllAccount();
+    void updateAccountType(String account,Integer type);
+    void deleteAccount(String account);
 }

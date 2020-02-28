@@ -4,6 +4,7 @@ public class TbAccount {
     private String account;
     private String pwd;
     private Integer status;
+    private Integer type;
     private String msg;
     public Integer getStatus() {
         return status;
@@ -35,5 +36,13 @@ public class TbAccount {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

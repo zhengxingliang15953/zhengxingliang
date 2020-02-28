@@ -34,9 +34,13 @@ export default {
       } else {
         getLogin(this.formCustom).then(data => {
           if (data.data.msg != null) {
-            window.sessionStorage.setItem("token", data.data.msg);
-            this.$Message.success("登陆成功");
-            this.$router.push("/index");
+            if (data.data.type == 2) {
+              this.$Message.error("该账号被冻结");
+            } else {
+              window.sessionStorage.setItem("token", data.data.msg);
+              this.$Message.success("登陆成功");
+              this.$router.push("/index");
+            }
           } else {
             this.$Message.error("登陆失败");
           }

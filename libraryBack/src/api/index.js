@@ -77,3 +77,15 @@ export let getDeleteBook = (isbn) => {
 export let getUpdateBook = (data) => {
     return Http.post(`/api/getUpdateBook`,qs.stringify(data));
 };     
+/**获取所有的管理员 */
+export let getAllAccount = () => {
+    return Http.get(`/api/getAllAccount`);
+}
+/*冻结or解冻管理员账号 */
+export let getUpdateType = (account,type) => {
+    return Http.get(`/api/getUpdateType?account=${account}&type=${type}`);
+}
+/*删除管理员账号 */
+export let getDeleteAccount = (account) => {
+    return Http.get(`/api/getDeleteAccount?account=${account}`);
+}

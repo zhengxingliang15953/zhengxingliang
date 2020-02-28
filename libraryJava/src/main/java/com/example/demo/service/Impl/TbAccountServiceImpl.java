@@ -49,18 +49,20 @@ public class TbAccountServiceImpl implements TbAccountService {
      * @param pwd
      */
     @Override
-    public TbAccount insertAccount(String account, String pwd) {
-        List<TbAccount> tbAccountList=tbAccountMapper.selectAllAccount();
+    public TbAccount insertAccount(String account, String pwd,String role) {
         TbAccount tbAccount=new TbAccount();
-        for(TbAccount account1:tbAccountList){
+        for(TbAccount account1:tbAccountMapper.selectAllAccount()){
             if(account1.getAccount().equals(account)){
                 tbAccount.setMsg("该账号已存在");
                 return tbAccount;
-            }else{
-                tbAccountMapper.insertAccount(account, pwd);
-                tbAccount.setMsg("添加成功");
             }
         }
+        if(role.equals("普通管理员")){
+            tbAccountMapper.insertAccount(account,pwd,2);
+        }else{
+            tbAccountMapper.insertAccount(account,pwd,1);
+        }
+        tbAccount.setMsg("添加成功");
         return tbAccount;
     }
 
@@ -72,6 +74,38 @@ public class TbAccountServiceImpl implements TbAccountService {
     @Override
     public void updateAccount(String account, String pwd) {
         tbAccountMapper.updateAccount(account, pwd);
+    }
+
+    /**
+     * 获取所有的管理员信息
+     * @return
+     */
+    @Override
+    public List<TbAccount> selectAllAccount() {
+        return tbAccountMapper.selectAllAccount();
+    }
+
+    /**
+     * 冻结账号or解冻账号
+     * @param account
+     * @param type
+     */
+    @Override
+    public void updateAccountType(String account, Integer type) {
+        if(type==1){
+            tbAccountMapper.updateAccountType(account,2);
+        }else{
+            tbAccountMapper.updateAccountType(account,1);
+        }
+    }
+
+    /**
+     * 删除管理员
+     * @param account
+     */
+    @Override
+    public void deleteAccount(String account) {
+        tbAccountMapper.deleteAccount(account);
     }
 
 
