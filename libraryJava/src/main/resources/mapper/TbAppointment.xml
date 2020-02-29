@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbAppointmentMapper">
+
+    <insert id="insertAppointment">
+        insert into tb_Appointment(appId,bookName,isbn,studentName,sno,appTime,status,lendingNumber)
+        values (#{appId},#{bookName},#{isbn},#{studentName},#{sno},#{appTime},1,#{lendingNumber})
+    </insert>
+
+    <select id="selectIfAppointment" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_Appointment where sno like #{sno} and isbn like #{isbn}
+    </select>
+</mapper>

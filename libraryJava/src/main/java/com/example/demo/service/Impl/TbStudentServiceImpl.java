@@ -3,11 +3,15 @@ package com.example.demo.service.Impl;
 import com.example.demo.entity.TbStudent;
 import com.example.demo.mapper.TbStudentMapper;
 import com.example.demo.service.TbStudentService;
+import com.sun.tools.javac.util.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TbStudentServiceImpl implements TbStudentService {
@@ -27,14 +31,16 @@ public class TbStudentServiceImpl implements TbStudentService {
      */
     @Override
     public TbStudent studentLogin(String sno, String pwd) {
-        TbStudent student=tbStudentMapper.selectOneStudent(sno);
-        if(student==null){
+        TbStudent student=new TbStudent();
+        List<TbStudent> tbStudentList=tbStudentMapper.selectSnoStudent(sno);
+        if(tbStudentList.size()<=0){
             student.setMsg("0");
         }else{
-            if(student.getPwd().isEmpty()){
-                tbStudentMapper.updatePwd(sno,student.getIdCard().substring(12));
+            if(tbStudentList.get(0).getPwd().isEmpty()){
+                tbStudentMapper.updatePwd(sno,tbStudentList.get(0).getIdCard().substring(12));
             }
-            if(pwd.equals(tbStudentMapper.selectOneStudent(sno).getPwd())){
+            if(pwd.equals(tbStudentMapper.selectSnoStudent(sno).get(0).getPwd())){
+                student=tbStudentMapper.selectSnoStudent(sno).get(0);
                 student.setMsg(tbAccountServiceImpl.getToken(sno,20));
             }else{
                 student.setMsg("0");
@@ -89,5 +95,33 @@ public class TbStudentServiceImpl implements TbStudentService {
         return studentList;
     }
 
+    public static boolean isNullOrEmpty(Object obj) {
+        if (obj == null)
+            return true;
 
+        if (obj instanceof CharSequence)
+            return ((CharSequence) obj).length() == 0;
+
+        if (obj instanceof Collection)
+            return ((Collection) obj).isEmpty();
+
+        if (obj instanceof Map)
+            return ((Map) obj).isEmpty();
+
+        if (obj instanceof Object[]) {
+            Object[] object = (Object[]) obj;
+            if (object.length == 0) {
+                return true;
+            }
+            boolean empty = true;
+            for (int i = 0; i < object.length; i++) {
+                if (!isNullOrEmpty(object[i])) {
+                    empty = false;
+                    break;
+                }
+            }
+            return empty;
+        }
+        return false;
+    }
 }

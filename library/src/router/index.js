@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import RouterHooks from "./hooks";
+import {getIndexStudent} from '../api';
 
 const routes = [
   {
@@ -52,6 +53,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+router.beforeEach((to, from, next) => {
+  getIndexStudent().then(data=>{
+    if(window.sessionStorage.getItem("token") != data.data.msg ||typeof data.data.msg == "undefined"){
+      window.sessionStorage.removeItem('token');
+    }
+  })
+  next();
+})
 
 RouterHooks.init(router);
 Vue.use(VueRouter);

@@ -56,3 +56,7 @@ export let getBookName2 = (bookName, start) => {
 export let getAuthorBook = (author, start) => {
     return Http.get(`/api/getAuthorBook?author=${author}&start=${start}`);
 };
+/*预约图书*/
+export let getAppointment = (appId,bookName,isbn,name,sno,appTime) => {
+    return Http.get(`/api/getAppointment?appId=${appId}&bookname=${bookName}&isbn=${isbn}&name=${name}&sno=${sno}&appTime=${appTime}`);
+};

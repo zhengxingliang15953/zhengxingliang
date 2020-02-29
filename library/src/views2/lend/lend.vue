@@ -52,7 +52,7 @@
             <p>
               <span>作者:{{item.author}}</span>
               <span>ISBN:{{item.isbn}}</span>
-              <Button type="primary" @click="appointmentBtn">预约图书</Button>
+              <Button type="primary" @click="appointmentBtn(item)">预约图书</Button>
             </p>
             <p>
               <span>出版社:{{item.press}}</span>
@@ -95,7 +95,8 @@ import {
   getBookName1,
   getAuthorBook,
   getBookName2,
-  getIndexStudent
+  getIndexStudent,
+  getAppointment
 } from "../../api";
 export default {
   name: "lend",
@@ -107,7 +108,8 @@ export default {
       page: 1, //当前页码
       sum: 0, //检索总数
       user: "匿名", //当前登录id
-      searchItemShow: "" //当前检索
+      searchItemShow: "", //当前检索
+      studentName: "" //登录姓名
     };
   },
   created() {
@@ -119,6 +121,7 @@ export default {
         this.user = "匿名";
       } else {
         this.user = data.data.sno;
+        this.studentName = data.data.name;
       }
     });
     if (this.searchItem == "") {
@@ -131,18 +134,35 @@ export default {
     }
   },
   methods: {
-    appointmentBtn() {
+    appointmentBtn(value) {
       //预约按钮
-      getIndexStudent().then(data => {
-        if (window.sessionStorage.getItem("token") == data.data.msg) {
-          this.$Modal.success({
-            title: "预约成功",
-            content: "请前往个人中心查看预约详细信息"
-          });
-        } else {
-          this.$message.warning("请先登录");
-        }
-      });
+      if (!window.sessionStorage.getItem("token")) {
+        this.$message.warning("请先登录");
+      } else {
+        var appid = `${value.isbn}${this.user}${new Date().getTime().toString()}`;
+        var apptime = `${new Date().toString()}`;
+        console.log(`${new Date().toString()}`);
+        getAppointment(
+          appid,
+          value.bookName,
+          value.isbn,
+          this.studentName,
+          this.user,
+          apptime
+        ).then(data => {
+          if (data.data.msg == 1) {
+            this.$Modal.success({
+              title: "预约成功",
+              content: "请前往个人中心查看预约详细信息"
+            });
+          } else if (data.data.msg == 2) {
+            /*this.$Modal.error({
+                title: "预约成功",
+                content: "请前往个人中心查看预约详细信息"
+              });*/
+          }
+        });
+      }
     },
     pageChange(value) {
       //页码改变回调
@@ -163,7 +183,7 @@ export default {
           //题目(精)
           getBookName1(this.searchItemShow, this.page).then(data => {
             this.searchBookList = data.data;
-            this.sum = this.searchBookList[0].status||0;
+            this.sum = this.searchBookList[0].status || 0;
           });
           break;
         }
@@ -171,7 +191,7 @@ export default {
           //题目(模糊)
           getBookName2(this.searchItem, this.page).then(data => {
             this.searchBookList = data.data;
-            this.sum = this.searchBookList[0].status||0;
+            this.sum = this.searchBookList[0].status || 0;
           });
           break;
         }
@@ -179,7 +199,7 @@ export default {
           //著者
           getAuthorBook(this.searchItem, this.page).then(data => {
             this.searchBookList = data.data;
-            this.sum = this.searchBookList[0].status||0;
+            this.sum = this.searchBookList[0].status || 0;
           });
           break;
         }
@@ -188,7 +208,7 @@ export default {
           this.searchBookList = [];
           getAllBook(this.searchItem, this.page).then(data => {
             this.searchBookList = data.data;
-            this.sum = this.searchBookList[0].status||0;
+            this.sum = this.searchBookList[0].status || 0;
           });
           break;
         }
@@ -227,11 +247,11 @@ export default {
       }
     }
   },
-  computed:{
-    count(){
-      if(this.searchBookList.length==0){
+  computed: {
+    count() {
+      if (this.searchBookList.length == 0) {
         return 0;
-      }else{
+      } else {
         return this.sum;
       }
     }

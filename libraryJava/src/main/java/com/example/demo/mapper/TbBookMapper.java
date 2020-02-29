@@ -16,7 +16,7 @@ public interface TbBookMapper {
     List<TbBook> selectBookNameBook1(String bookName,RowBounds rowBounds);
     List<TbBook> selectAuthorBook(String author,RowBounds rowBounds);
     List<TbBook> selectBookNameBook2(String bookName,RowBounds rowBounds);
-
+    void updateList(String isbn,String lendingList);
 
     List<TbBook> selectAllJiShu();
     List<TbBook> selectBook1Number(String bookName);

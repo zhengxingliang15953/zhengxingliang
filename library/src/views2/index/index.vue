@@ -1,5 +1,9 @@
 <template>
   <div id="index">
+    <!--回到顶部-->
+    <BackTop></BackTop>
+    <!--回到顶部-->
+
     <!--登录弹窗-->
     <Modal v-model="modal1" width="400">
       <p slot="header" style="color:#4876FF;text-align:center">
@@ -33,6 +37,7 @@
     </el-menu>
     <!--header-->
 
+    <!--搜索区-->
     <div class="lendBack">
       <Row type="flex" justify="center" class="lendItem">
         <Col :lg="16">
@@ -41,7 +46,12 @@
             <li>电子图书</li>
           </ul>
           <div style="height:240px;">
-            <el-input placeholder="请输入内容" class="input-with-select" v-model="searchItem" type="text">
+            <el-input
+              placeholder="请输入内容"
+              class="input-with-select"
+              v-model="searchItem"
+              type="text"
+            >
               <el-select slot="prepend" placeholder="请选择" v-model="select" style="width:100px;">
                 <el-option label="题名(精)" value="1"></el-option>
                 <el-option label="题名(糊)" value="2"></el-option>
@@ -95,7 +105,10 @@
         </Col>
       </Row>
     </div>
-
+    <!--搜索区-->
+    <p
+      style="font-size:40px;width:220px;text-align:center;margin:0 auto;border-bottom:3px solid orange;margin-bottom:20px;color:#4876FF;font-family:library;"
+    >馆园风光</p>
     <Row id="sixImg" type="flex" justify="center">
       <Col :lg="3"></Col>
       <Col :lg="6" class="sixImgItem">
@@ -110,6 +123,9 @@
       <Col :lg="3"></Col>
     </Row>
 
+    <p
+      style="font-size:40px;width:220px;text-align:center;margin:30px auto;border-bottom:3px solid orange;margin-bottom:20px;color:#4876FF;font-family:library;"
+    >共享平台</p>
     <Row type="flex" justify="center" style="margin-top:2%;">
       <Col :lg="3"></Col>
       <Col :lg="11">
@@ -149,6 +165,7 @@
       </Col>
 
       <Col :lg="7">
+        <el-link id="more" type="danger" @click="moreResource">更多</el-link>
         <Tabs type="card">
           <TabPane label="通知公告">
             <!--通知公告-->
@@ -242,8 +259,8 @@ export default {
         sno: "",
         pwd: ""
       },
-      select: "1",//四选一
-      searchItem:'',//检索内容
+      select: "1", //四选一
+      searchItem: "", //检索内容
       noticeList: [], //通知公告
       readMessageList: [], //读者列表
       resourceList1: [], //资源导航列表1
@@ -286,7 +303,10 @@ export default {
     },
     toLend() {
       //检索跳转
-      this.$router.push({path:'/lend',query:{select:this.select,searchItem:this.searchItem}});
+      this.$router.push({
+        path: "/lend",
+        query: { select: this.select, searchItem: this.searchItem }
+      });
     },
     personBtn() {
       this.$router.push("/header/person");
@@ -303,6 +323,10 @@ export default {
         }
       });
       this.modal1 = false;
+    },
+    moreResource() {
+      //更多
+      this.$router.push("/header/notice");
     }
   },
   computed: {
@@ -396,5 +420,11 @@ export default {
     cursor: pointer;
     transform: scale(0.9);
   }
+}
+#more:hover {
+  cursor: pointer;
+}
+#more {
+  float: right;
 }
 </style>

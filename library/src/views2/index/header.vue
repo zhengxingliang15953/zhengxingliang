@@ -27,7 +27,7 @@
     <Row type="flex" justify="center">
       <Col :lg="2"></Col>
       <Col :lg="3">
-        <Menu active-name="1" theme="primary">
+        <Menu :active-name="model1" theme="primary" @on-select="selectItem">
           <MenuItem name="1" to="/header/hutu">关于湖图</MenuItem>
           <MenuItem name="2" to="/header/opentime">开放时间</MenuItem>
           <MenuItem name="3" to="/header/notice">通知公告</MenuItem>
@@ -51,10 +51,12 @@ export default {
   name: "header",
   data() {
     return {
-      value1: true
+      value1: true,
+      model1:"",
     };
   },
   created() {
+    this.model1=window.sessionStorage.getItem('index')||"1";
     getIndexStudent().then(data => {
       if (
         window.sessionStorage.getItem("token") == data.data.msg &&
@@ -65,6 +67,12 @@ export default {
         this.value1=false;
       }
     });
+  },
+  methods:{
+    selectItem(data){
+      this.model1=data;
+      window.sessionStorage.setItem('index',data);
+    }
   }
 };
 </script>

@@ -10,8 +10,8 @@
     </select>
 
     <insert id="insertBook">
-        insert into tb_book(isbn,bookName,author,press,bookDate,bookNumber,appNumber,readNumber,bookUrl,address)
-        values (#{isbn},#{bookName},#{author},#{press},#{bookDate},#{bookNumber},#{appNumber},#{readNumber},#{bookUrl},#{address})
+        insert into tb_book(isbn,bookName,author,press,bookDate,bookNumber,appNumber,readNumber,bookUrl,address,lendingNumber)
+        values (#{isbn},#{bookName},#{author},#{press},#{bookDate},#{bookNumber},#{appNumber},#{readNumber},#{bookUrl},#{address},0)
     </insert>
 
     <delete id="deleteBook">
@@ -35,6 +35,12 @@
     <select id="selectBookNameBook2" resultType="com.example.demo.entity.TbBook">
         select * from tb_book where bookName like concat('%',#{bookName},'%')
     </select>
+
+    <update id="updateList">
+        update tb_book
+        set lendingList=#{lendingList}
+        where isbn=#{isbn}
+    </update>
 
     <!--查询所有的书本计数-->
     <select id="selectAllJiShu" resultType="com.example.demo.entity.TbBook">

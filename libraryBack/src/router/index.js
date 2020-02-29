@@ -29,6 +29,14 @@ const routes = [
         name:'appointment',//预约管理
         path:'/index/appointment',
         component:()=>import('../views2/head/appointment.vue'),
+        redirect:'/index/appointment/appint',
+        children:[
+          {
+            name:'appint',//预约列表
+            path:'/index/appointment/appint',
+            component:()=>import('../views2/appointment/appint.vue'),
+          },
+        ]
       },
       {
         name:'readMessage',//留言管理
@@ -61,11 +69,8 @@ const router = new VueRouter({
 
 var token = '';
 router.beforeEach((to, from, next) => {
-  console.log(to.path);
   getIndexAccount().then((data) => {
     token = data.data.msg;
-    console.log(token);
-    console.log(window.sessionStorage.getItem('token'));
     if (to.path == '/') {
       next();
     } else {
