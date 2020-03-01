@@ -139,9 +139,10 @@ export default {
       if (!window.sessionStorage.getItem("token")) {
         this.$message.warning("请先登录");
       } else {
-        var appid = `${value.isbn}${this.user}${new Date().getTime().toString()}`;
-        var apptime = `${new Date().toString()}`;
-        console.log(`${new Date().toString()}`);
+        var appid = `${value.isbn}${
+          this.user
+        }${new Date().getTime().toString()}`;
+        var apptime = this.timeFilter(new Date().toString());
         getAppointment(
           appid,
           value.bookName,
@@ -150,16 +151,19 @@ export default {
           this.user,
           apptime
         ).then(data => {
-          if (data.data.msg == 1) {
+          if (data.data.msg == 0) {
+            this.$Message.warning("你已经预约该书,不可再预约");
+          } else if (data.data.msg == 1) {
+            this.$Message.error("该书预约人数过多,暂时不可预约");
+          } else if (data.data.msg == 2) {
+            this.$Message.warning(
+              `该书以被预约,您前面还有${data.data.lendingNumber}位`
+            );
+          } else {
             this.$Modal.success({
               title: "预约成功",
               content: "请前往个人中心查看预约详细信息"
             });
-          } else if (data.data.msg == 2) {
-            /*this.$Modal.error({
-                title: "预约成功",
-                content: "请前往个人中心查看预约详细信息"
-              });*/
           }
         });
       }
@@ -226,6 +230,50 @@ export default {
       } else {
         this.startChanceBook();
       }
+    },
+    timeFilter(value) {
+      let list = [];
+      let str = "";
+      list = value.split(" ");
+      switch (list[1]) {
+        case "Jan":
+          str = "01";
+          break;
+        case "Feb":
+          str = "02";
+          break;
+        case "Mar":
+          str = "03";
+          break;
+        case "Apr":
+          str = "04";
+          break;
+        case "May":
+          str = "05";
+          break;
+        case "Jun":
+          str = "06";
+          break;
+        case "Jul":
+          str = "07";
+          break;
+        case "Aug":
+          str = "08";
+          break;
+        case "Sept":
+          str = "09";
+          break;
+        case "Oct":
+          str = "10";
+          break;
+        case "Nov":
+          str = "11";
+          break;
+        case "Dec":
+          str = "12";
+          break;
+      }
+      return `${list[3]}-${str}-${str}`;
     }
   },
   filters: {

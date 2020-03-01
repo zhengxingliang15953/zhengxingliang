@@ -3,11 +3,68 @@
 <mapper namespace="com.example.demo.mapper.TbAppointmentMapper">
 
     <insert id="insertAppointment">
-        insert into tb_Appointment(appId,bookName,isbn,studentName,sno,appTime,status,lendingNumber)
+        insert into tb_appointment(appId,bookName,isbn,studentName,sno,appTime,status,lendingNumber)
         values (#{appId},#{bookName},#{isbn},#{studentName},#{sno},#{appTime},1,#{lendingNumber})
     </insert>
 
     <select id="selectIfAppointment" resultType="com.example.demo.entity.TbAppointment">
-        select * from tb_Appointment where sno like #{sno} and isbn like #{isbn}
+        select * from tb_appointment where sno like #{sno} and isbn like #{isbn}
+    </select>
+
+    <select id="selectSnoAppointment" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where sno like #{sno}
+    </select>
+
+    <delete id="deleteAppointment">
+        delete from tb_appointment where appId like #{appId}
+    </delete>
+
+    <select id="selectAllAppointment" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment
+    </select>
+
+    <select id="selectThreeAppointment" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment
+        <where>
+            <if test="sno != ''">
+                and sno like #{sno}
+            </if>
+            <if test="isbn != ''">
+                and isbn like #{isbn}
+            </if>
+            <if test="appTime != ''">
+                and appTime like #{appTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectThreeAppointmentNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment
+        <where>
+            <if test="sno != ''">
+                and sno like #{sno}
+            </if>
+            <if test="isbn != ''">
+                and isbn like #{isbn}
+            </if>
+            <if test="appTime != ''">
+                and appTime like #{appTime}
+            </if>
+        </where>
+    </select>
+    <!--状态改变-->
+    <update id="updateAppointment">
+        update tb_appointment
+        set status=#{status}
+        where appId like #{appId}
+    </update>
+
+
+
+
+
+    <!--查询所有的计数-->
+    <select id="selectAllAppointmentNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment
     </select>
 </mapper>

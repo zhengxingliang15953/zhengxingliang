@@ -36,11 +36,12 @@
         select * from tb_book where bookName like concat('%',#{bookName},'%')
     </select>
 
-    <update id="updateList">
+    <update id="updateReadLend">
         update tb_book
-        set lendingList=#{lendingList}
-        where isbn=#{isbn}
+        set appNumber=#{appNumber},readNumber=#{readNumber}
+        where isbn like #{isbn}
     </update>
+
 
     <!--查询所有的书本计数-->
     <select id="selectAllJiShu" resultType="com.example.demo.entity.TbBook">

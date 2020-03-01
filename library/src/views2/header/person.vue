@@ -9,7 +9,7 @@
     <br />
     <hr />
     <Button type="primary" @click="value1='1'">个人中心</Button>
-    <Button type="primary" @click="value1='2'">我的预约</Button>
+    <Button type="primary" @click="myAppointment">我的预约</Button>
     <Button type="primary" @click="myReadMessageBtn">我的留言</Button>
     <Button type="primary" @click="value1='4'">预约制度</Button>
     <Button type="warning" style="float:right;" @click="back">退出登陆</Button>
@@ -64,7 +64,54 @@
     </div>
 
     <div v-if="value1==2" class="personItem">
-      <h2>我的预约</h2>
+      <van-notice-bar
+        mode="closeable"
+        text="同学你好!欢迎使用湖州师范学院图书馆借阅系统,这里是您预约的图书,请在3日之内前往指定位置向图书馆管理员借阅.如果在规定时间内没有前往借阅,系统将视为预期预约,该书会自动判定为后者预约人。本馆的图书预约周期为30天,如果还有图书需求,请在后3天续借。"
+      />
+      <List border id="listItem">
+        <ListItem v-for="(item,index) in myAppointmentList" :key="index">
+          <Poptip trigger="hover" title="预约号" :content="item.appId" style="width:10%;">
+            <Button>序号:{{index+1}}</Button>
+          </Poptip>
+          <span>书名:{{item.tbBook.bookName}}</span>
+          <span>ISBN:{{item.tbBook.isbn}}</span>
+          <span>预约时间{{item.appTime}}</span>
+          <Poptip trigger="hover" title="地点" :content="item.tbBook.address" style="width:10%;">
+            <Button type="info">地点</Button>
+          </Poptip>
+          <span style="width:10%;color:green;">{{item.status|appType}}</span>
+          <el-button
+            type="success"
+            icon="el-icon-delete"
+            @click="deleteAppointment(item)"
+            v-if="item.status==1||item.status==0"
+          >取消</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-right"
+            v-if="item.status==3"
+          >续借</el-button>
+        </ListItem>
+
+        <ListItem v-for="(item,index) in myWaitList" :key="index">
+          <Poptip trigger="hover" title="预约号" :content="item.waitId" style="width:10%;">
+            <Button>序号:{{index+1}}</Button>
+          </Poptip>
+          <span>书名:{{item.tbBook.bookName}}</span>
+          <span>ISBN:{{item.tbBook.isbn}}</span>
+          <span>预约时间{{item.appTime}}</span>
+          <Poptip trigger="hover" title="地点" content="还在排队中" style="width:10%;">
+            <Button type="info">地点</Button>
+          </Poptip>
+          <span style="width:10%;color:green;">{{item.status|appType}}</span>
+          <el-button
+            type="warning"
+            icon="el-icon-delete"
+            @click="deleteAppointment(item)"
+            v-if="item.status==0||item.status==1"
+          >取消</el-button>
+        </ListItem>
+      </List>
     </div>
 
     <div v-if="value1==3" class="personItem">
@@ -101,7 +148,13 @@
 </template>
 
 <script>
-import { getIndexStudent, getUpdatePwd, getOneReadMessage } from "../../api";
+import {
+  getIndexStudent,
+  getUpdatePwd,
+  getOneReadMessage,
+  getMyAppointment,
+  getDeleteAppointment
+} from "../../api";
 export default {
   name: "person",
   data() {
@@ -110,7 +163,9 @@ export default {
       indexStudent: {}, //当前登录信息
       pwd1: "", //密码1
       pwd2: "", //密码2
-      myReadMessage: [] //我的留言
+      myReadMessage: [], //我的留言
+      myAppointmentList: [], //我的已有预约
+      myWaitList: [] //等待预约
     };
   },
   created() {
@@ -141,9 +196,44 @@ export default {
       }
     },
     myReadMessageBtn() {
-      this.value1 = 3;
+      //我的留言
+      this.value1 = "3";
       getOneReadMessage(this.indexStudent.sno).then(data => {
         this.myReadMessage = data.data;
+      });
+    },
+    myAppointment() {
+      //我的预约
+      this.value1 = "2";
+      getMyAppointment(this.indexStudent.sno).then(data => {
+        this.myAppointmentList = data.data;
+        if (this.myAppointmentList[0].tbWaitList != null) {
+          this.myWaitList = this.myAppointmentList[0].tbWaitList || [];
+        }
+      });
+    },
+    deleteAppointment(value) {
+      //取消预约(已预约)
+      this.$confirm("您确定取消该预约,该书将会自动派送给后面的预约人", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        var app;
+        if(value.status==1){
+          app=value.appId;
+        }else{
+          app=value.waitId;
+        }
+        getDeleteAppointment(value.appId, value.status).then(() => {
+          this.$Message.success("取消成功");
+          getMyAppointment(this.indexStudent.sno).then(data => {
+            this.myAppointmentList = data.data;
+            if (this.myAppointmentList[0].tbWaitList != null) {
+              this.myWaitList = this.myAppointmentList[0].tbWaitList || [];
+            }
+          });
+        });
       });
     }
   }
@@ -164,6 +254,12 @@ tr {
     width: 25%;
     height: 30px;
     text-align: center;
+  }
+}
+#listItem {
+  span {
+    font-size: 14px;
+    width: 20%;
   }
 }
 </style>

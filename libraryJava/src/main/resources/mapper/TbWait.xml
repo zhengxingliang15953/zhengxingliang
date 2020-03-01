@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbWaitMapper">
+
+    <select id="selectSnoWait" resultType="com.example.demo.entity.TbWait">
+        select * from tb_wait where sno like #{sno}
+    </select>
+
+    <select id="selectIsbnWait" resultType="com.example.demo.entity.TbWait">
+        select * from tb_wait where isbn like #{isbn}
+    </select>
+
+    <insert id="insertWait">
+        insert into tb_wait
+        values (#{waitId},#{sno},#{isbn},#{appTime},0)
+    </insert>
+
+    <select id="selectSnoIsbnWait" resultType="com.example.demo.entity.TbWait">
+        select * from tb_wait where sno like #{sno} and isbn like #{isbn}
+    </select>
+
+    <delete id="deleteWait">
+        delete from tb_wait
+        where waitId like #{waitId}
+    </delete>
+</mapper>

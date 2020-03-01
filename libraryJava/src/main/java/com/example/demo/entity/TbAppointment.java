@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 public class TbAppointment {
     private String appId;
     private String bookName;
@@ -14,6 +16,7 @@ public class TbAppointment {
     private Integer lendingNumber;
     private String msg;
     private TbBook tbBook;
+    private List<TbWait> tbWaitList;
 
     public void setStatus(Integer status) {
         this.status = status;
@@ -118,5 +121,13 @@ public class TbAppointment {
 
     public void setTbBook(TbBook tbBook) {
         this.tbBook = tbBook;
+    }
+
+    public List<TbWait> getTbWaitList() {
+        return tbWaitList;
+    }
+
+    public void setTbWaitList(List<TbWait> tbWaitList) {
+        this.tbWaitList = tbWaitList;
     }
 }

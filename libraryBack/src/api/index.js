@@ -89,3 +89,11 @@ export let getUpdateType = (account,type) => {
 export let getDeleteAccount = (account) => {
     return Http.get(`/api/getDeleteAccount?account=${account}`);
 }
+/*预约列表 */
+export let getAllAppointment = (sno,isbn,appTime,start) => {
+    return Http.get(`/api/getAllAppointment?sno=${sno}&isbn=${isbn}&appTime=${appTime}&start=${start}`);
+}
+/*预约状态改变*/
+export let getUpdateAppointment = (appId,status,isbn) => {
+    return Http.get(`/api/getUpdateAppointment?appId=${appId}&status=${status}&isbn=${isbn}`);
+}

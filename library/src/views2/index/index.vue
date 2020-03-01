@@ -292,14 +292,17 @@ export default {
     openTimeBtn() {
       //开放时间跳转
       this.$router.push("/header/opentime");
+      window.sessionStorage.setItem('index',2);
     },
     hutuBtn() {
       //关于湖图跳转
       this.$router.push("/header/hutu");
+      window.sessionStorage.setItem('index',1);
     },
     messageBtn() {
       //我要留言跳转
       this.$router.push("/header/readMessage");
+      window.sessionStorage.setItem('index',4);
     },
     toLend() {
       //检索跳转
@@ -308,8 +311,9 @@ export default {
         query: { select: this.select, searchItem: this.searchItem }
       });
     },
-    personBtn() {
+    personBtn() {//个人中心
       this.$router.push("/header/person");
+      window.sessionStorage.setItem('index',6);
     },
     studentLogin() {
       //登录
@@ -327,6 +331,7 @@ export default {
     moreResource() {
       //更多
       this.$router.push("/header/notice");
+      window.sessionStorage.setItem('index',3);
     }
   },
   computed: {

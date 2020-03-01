@@ -1,5 +1,5 @@
 <template>
-  <div id="header">
+  <div >
     <!--header-->
     <el-menu
       default-active="/index"
@@ -48,10 +48,9 @@
 <script>
 import { getIndexStudent } from "../../api";
 export default {
-  name: "header",
   data() {
     return {
-      value1: true,
+      value1:true,
       model1:"",
     };
   },

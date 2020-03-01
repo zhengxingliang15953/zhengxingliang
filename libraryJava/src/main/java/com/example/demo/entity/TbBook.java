@@ -7,15 +7,14 @@ public class TbBook {
     private String bookName;
     private String author;
     private String press;
-    private int bookDate;
+    private Integer bookDate;
     private String bookUrl;
-    private int bookNumber;
-    private int appNumber;
-    private int readNumber;
+    private Integer bookNumber;
+    private Integer appNumber;
+    private Integer readNumber;
     private String address;
     private String msg;
     private Integer status;
-    private List<TbStudent> lendingList;
 
 
     public int getAppNumber() {
@@ -114,11 +113,4 @@ public class TbBook {
         this.status = status;
     }
 
-    public List<TbStudent> getLendingList() {
-        return lendingList;
-    }
-
-    public void setLendingList(List<TbStudent> lendingList) {
-        this.lendingList = lendingList;
-    }
 }
