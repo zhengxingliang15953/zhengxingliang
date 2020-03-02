@@ -58,7 +58,7 @@
 
 <script>
 import { getAllAppointment, getUpdateAppointment } from "../../api";
-import {timeChange} from '../../components/press';
+import { timeChange } from "../../components/press";
 export default {
   name: "appoint",
   data() {
@@ -67,11 +67,12 @@ export default {
       page: 1, //当前页码
       sum: 0, //总数
       AllAppointmentList: [], //当前显示列表
-      searchSnoItem: "" ,//搜索内容(sno)
+      searchSnoItem: "" ,//搜索内容(sno)v-model
+      searchSno:'',
     };
   },
   created() {
-    getAllAppointment(this.searchSnoItem, "", this.page).then(data => {
+    getAllAppointment("", "", this.page).then(data => {
       if (data.data[0].msg == 0) {
         this.AllAppointmentList = [];
         this.sum = 0;
@@ -84,9 +85,15 @@ export default {
   methods: {
     trueTime(value) {
       //时间回调
-      this.searchSnoItem='';
-      this.page=1;
-      getAllAppointment(this.searchSnoItem,typeof this.time=='object'?timeChange(this.time.toDateString()):'', this.page).then(data => {
+      this.searchSno = "";
+      this.page = 1;
+      getAllAppointment(
+        this.searchSno,
+        typeof this.time == "object"
+          ? timeChange(this.time.toDateString())
+          : "",
+        this.page
+      ).then(data => {
         if (data.data[0].msg == 0) {
           this.AllAppointmentList = [];
           this.sum = 0;
@@ -98,45 +105,78 @@ export default {
     },
     clearTime() {
       //清空时间
-      this.time = null;
+      this.time = undefined;
+      this.searchSno='';
+      this.page=1;
+      getAllAppointment(
+        this.searchSno,
+        typeof this.time == "object"
+          ? timeChange(this.time.toDateString())
+          : "",
+        this.page
+      ).then(data => {
+        if (data.data[0].msg == 0) {
+          this.AllAppointmentList = [];
+          this.sum = 0;
+        } else {
+          this.AllAppointmentList = data.data;
+          this.sum = Number(this.AllAppointmentList[0].msg);
+        }
+      });
     },
     changePage(value) {
       //页码改变回调
       this.page = value;
+      getAllAppointment(
+        this.searchSno,
+        typeof this.time == "object"
+          ? timeChange(this.time.toDateString())
+          : "",
+        this.page
+      ).then(data => {
+        if (data.data[0].msg == 0) {
+          this.AllAppointmentList = [];
+          this.sum = 0;
+        } else {
+          this.AllAppointmentList = data.data;
+          this.sum = Number(this.AllAppointmentList[0].msg);
+        }
+      });
     },
     brrowBook(value) {
       //借阅
       getUpdateAppointment(value.appId, 3, value.isbn).then(() => {
-        getAllAppointment(this.searchSnoItem, typeof this.time=='object'?timeChange(this.time.toDateString()):'', this.page).then(
-          data => {
-            if (data.data[0].msg == 0) {
-              this.AllAppointmentList = [];
-              this.sum = 0;
-            } else {
-              this.AllAppointmentList = data.data;
-              this.sum = Number(this.AllAppointmentList[0].msg);
-            }
+        getAllAppointment(
+          this.searchSno,
+          typeof this.time == "object"
+            ? timeChange(this.time.toDateString())
+            : "",
+          this.page
+        ).then(data => {
+          if (data.data[0].msg == 0) {
+            this.AllAppointmentList = [];
+            this.sum = 0;
+          } else {
+            this.AllAppointmentList = data.data;
+            this.sum = Number(this.AllAppointmentList[0].msg);
           }
-        );
+        });
       });
     },
     searchBtn() {
       //搜索
       this.page = 1;
       this.time = null;
-      getAllAppointment(
-      this.searchSnoItem,
-      '',
-      this.page
-    ).then(data => {
-      if(data.data[0].msg==0){
-        this.AllAppointmentList=[];
-        this.sum=0;
-      }else{
-        this.AllAppointmentList = data.data;
-        this.sum = Number(this.AllAppointmentList[0].msg);
-      }
-    });
+      this.searchSno=this.searchSnoItem;
+      getAllAppointment(this.searchSno, "", this.page).then(data => {
+        if (data.data[0].msg == 0) {
+          this.AllAppointmentList = [];
+          this.sum = 0;
+        } else {
+          this.AllAppointmentList = data.data;
+          this.sum = Number(this.AllAppointmentList[0].msg);
+        }
+      });
     }
   },
   computed: {}
