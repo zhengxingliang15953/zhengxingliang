@@ -57,14 +57,13 @@ public class TbAppointmentController {
     /**
      * 预约列表
      * @param sno
-     * @param isbn
      * @param appTime
      * @param start
      * @return
      */
     @RequestMapping(value = "api/getAllAppointment",method = RequestMethod.GET)
-    public List<TbAppointment> selectAllAppointment(String sno, String isbn, String appTime,Integer start){
-        return tbAppointmentService.selectThreeAppointment(sno, isbn, appTime, start);
+    public List<TbAppointment> selectAllAppointment(String sno,  String appTime,Integer start){
+        return tbAppointmentService.selectThreeAppointment(sno, appTime, start);
     }
 
     /**

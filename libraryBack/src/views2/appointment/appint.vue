@@ -2,44 +2,25 @@
   <div id="appint">
     <!--head-->
     <Row type="flex" class="head">
-      <Col :lg="2">
-        <RadioGroup v-model="snoIsbn" @on-change="radioChange">
-          <Radio label="1">
-            <Icon type="logo-apple"></Icon>
-            <span>学号</span>
-          </Radio>
-          <Radio label="2">
-            <Icon type="logo-android"></Icon>
-            <span>ISBN</span>
-          </Radio>
-        </RadioGroup>
-      </Col>
+      <Col :lg="2"></Col>
       <Col :lg="7">
         <Input
           search
           enter-button
           placeholder="请输入学号"
           v-model="searchSnoItem"
-          v-show="snoIsbn==1"
-          @click="searchBtn"
-        />
-        <Input
-          search
-          enter-button
-          placeholder="请输入ISBN"
-          v-model="searchIsbnItem"
-          v-show="snoIsbn==2"
-          @click="searchBtn"
+          @on-search="searchBtn"
         />
       </Col>
       <Col :lg="1"></Col>
       <Col :lg="8">
         <DatePicker
+          v-model="time"
           type="date"
-          multiple
+          confirm
           placeholder="预约时间选择"
           style="width: 300px"
-          @on-change="trueTime"
+          @on-ok="trueTime"
           @on-clear="clearTime"
         ></DatePicker>
       </Col>
@@ -77,76 +58,85 @@
 
 <script>
 import { getAllAppointment, getUpdateAppointment } from "../../api";
+import {timeChange} from '../../components/press';
 export default {
   name: "appoint",
   data() {
     return {
-      snoIsbn: "1", //学号orISBN
-      time: "", //选择时间
+      time: null, //选择时间
       page: 1, //当前页码
       sum: 0, //总数
       AllAppointmentList: [], //当前显示列表
-      searchSnoItem: "", //搜索内容(sno)
-      searchIsbnItem: "" //搜索内容(isbn)
+      searchSnoItem: "" ,//搜索内容(sno)
     };
   },
   created() {
-    getAllAppointment(
-      this.searchSnoItem,
-      this.searchIsbnItem,
-      this.time,
-      this.page
-    ).then(data => {
-      this.AllAppointmentList = data.data;
-      this.sum = Number(this.AllAppointmentList[0].msg);
+    getAllAppointment(this.searchSnoItem, "", this.page).then(data => {
+      if (data.data[0].msg == 0) {
+        this.AllAppointmentList = [];
+        this.sum = 0;
+      } else {
+        this.AllAppointmentList = data.data;
+        this.sum = Number(this.AllAppointmentList[0].msg);
+      }
     });
   },
   methods: {
     trueTime(value) {
       //时间回调
-      this.time = value;
-      console.log(this.time);
+      this.searchSnoItem='';
+      this.page=1;
+      getAllAppointment(this.searchSnoItem,typeof this.time=='object'?timeChange(this.time.toDateString()):'', this.page).then(data => {
+        if (data.data[0].msg == 0) {
+          this.AllAppointmentList = [];
+          this.sum = 0;
+        } else {
+          this.AllAppointmentList = data.data;
+          this.sum = Number(this.AllAppointmentList[0].msg);
+        }
+      });
     },
     clearTime() {
       //清空时间
-      this.time = "";
+      this.time = null;
     },
     changePage(value) {
       //页码改变回调
       this.page = value;
     },
-    radioChange() {
-      //单选按钮改变回调
-      this.searchSnoItem = "";
-      this.searchIsbnItem = "";
-    },
     brrowBook(value) {
       //借阅
-      getUpdateAppointment(value.appId, 3,value.isbn).then(() => {
-        getAllAppointment(
-          this.searchSnoItem,
-          this.searchIsbnItem,
-          this.time,
-          this.page
-        ).then(data => {
-          this.AllAppointmentList = data.data;
-          this.sum = Number(this.AllAppointmentList[0].msg);
-          this.$Message.success("借阅成功");
-        });
+      getUpdateAppointment(value.appId, 3, value.isbn).then(() => {
+        getAllAppointment(this.searchSnoItem, typeof this.time=='object'?timeChange(this.time.toDateString()):'', this.page).then(
+          data => {
+            if (data.data[0].msg == 0) {
+              this.AllAppointmentList = [];
+              this.sum = 0;
+            } else {
+              this.AllAppointmentList = data.data;
+              this.sum = Number(this.AllAppointmentList[0].msg);
+            }
+          }
+        );
       });
     },
     searchBtn() {
       //搜索
-      this.page=1;
+      this.page = 1;
+      this.time = null;
       getAllAppointment(
-        this.searchSnoItem,
-        this.searchIsbnItem,
-        this.time,
-        this.page
-      ).then(data => {
+      this.searchSnoItem,
+      '',
+      this.page
+    ).then(data => {
+      if(data.data[0].msg==0){
+        this.AllAppointmentList=[];
+        this.sum=0;
+      }else{
         this.AllAppointmentList = data.data;
         this.sum = Number(this.AllAppointmentList[0].msg);
-      });
+      }
+    });
     }
   },
   computed: {}

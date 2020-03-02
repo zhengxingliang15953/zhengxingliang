@@ -13,14 +13,13 @@ public interface TbAppointmentMapper {
     List<TbAppointment> selectSnoAppointment(String sno);
     void deleteAppointment(String appId);
     List<TbAppointment> selectAllAppointment(RowBounds rowBounds);
-    List<TbAppointment> selectThreeAppointment(String sno,String isbn,String appTime,RowBounds rowBounds);
     void updateAppointment(String appId,Integer status);
+    List<TbAppointment> selectSno(String sno,RowBounds rowBounds);
+    List<TbAppointment> selectAppTime(String appTime,RowBounds rowBounds);
 
 
 
 
-
-
-    List<TbAppointment> selectThreeAppointmentNumber(String sno,String isbn,String appTime);//计数
+    List<TbAppointment> selectAppTimeNumber(String appTime);//appTime计数
     List<TbAppointment> selectAllAppointmentNumber();//查询所有计数
 }

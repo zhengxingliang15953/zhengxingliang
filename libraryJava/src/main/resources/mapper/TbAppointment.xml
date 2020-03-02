@@ -23,35 +23,6 @@
         select * from tb_appointment
     </select>
 
-    <select id="selectThreeAppointment" resultType="com.example.demo.entity.TbAppointment">
-        select * from tb_appointment
-        <where>
-            <if test="sno != ''">
-                and sno like #{sno}
-            </if>
-            <if test="isbn != ''">
-                and isbn like #{isbn}
-            </if>
-            <if test="appTime != ''">
-                and appTime like #{appTime}
-            </if>
-        </where>
-    </select>
-
-    <select id="selectThreeAppointmentNumber" resultType="com.example.demo.entity.TbAppointment">
-        select * from tb_appointment
-        <where>
-            <if test="sno != ''">
-                and sno like #{sno}
-            </if>
-            <if test="isbn != ''">
-                and isbn like #{isbn}
-            </if>
-            <if test="appTime != ''">
-                and appTime like #{appTime}
-            </if>
-        </where>
-    </select>
     <!--状态改变-->
     <update id="updateAppointment">
         update tb_appointment
@@ -59,9 +30,21 @@
         where appId like #{appId}
     </update>
 
+    <select id="selectSno" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where sno like #{sno}
+    </select>
+
+    <select id="selectAppTime" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where appTime like #{appTime}
+    </select>
 
 
 
+
+    <!--查询appTimes计数-->
+    <select id="selectAppTimeNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where appTime like #{appTime}
+    </select>
 
     <!--查询所有的计数-->
     <select id="selectAllAppointmentNumber" resultType="com.example.demo.entity.TbAppointment">

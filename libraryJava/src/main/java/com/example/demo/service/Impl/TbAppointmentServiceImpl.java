@@ -97,16 +97,43 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
     /**
      * 预约列表
      * @param sno
-     * @param isbn
      * @param appTime
      * @return
      */
     @Override
-    public List<TbAppointment> selectThreeAppointment(String sno, String isbn, String appTime,Integer start) {
-        List<TbAppointment> tbAppointmentList=tbAppointmentMapper.selectThreeAppointment(sno,isbn,appTime,new RowBounds((start-1)*10,10));
-        String number=tbAppointmentMapper.selectThreeAppointmentNumber(sno, isbn, appTime).size()+"";
-        tbAppointmentList.get(0).setMsg(number);
-        return tbAppointmentList;
+    public List<TbAppointment> selectThreeAppointment(String sno, String appTime,Integer start) {
+       List<TbAppointment> tbAppointmentList=null;
+       if(sno.equals("")&&appTime.equals("")){
+           tbAppointmentList=tbAppointmentMapper.selectAllAppointment(new RowBounds((start-1)*10,10));
+           if(tbAppointmentList.size()<=0){
+               TbAppointment tbAppointment=new TbAppointment();
+               tbAppointment.setMsg("0");
+               tbAppointmentList.add(tbAppointment);
+           }else{
+               tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectAllAppointmentNumber().size()+"");
+           }
+           return tbAppointmentList;
+       }else if(!sno.equals("")){
+           tbAppointmentList=tbAppointmentMapper.selectSno(sno,new RowBounds((start-1)*10,10));
+           if(tbAppointmentList.size()<=0){
+               TbAppointment tbAppointment=new TbAppointment();
+               tbAppointment.setMsg("0");
+               tbAppointmentList.add(tbAppointment);
+           }else{
+               tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectSnoAppointment(sno).size()+"");
+           }
+           return tbAppointmentList;
+       }else{
+           tbAppointmentList=tbAppointmentMapper.selectAppTime(appTime,new RowBounds((start-1)*10,10));
+           if(tbAppointmentList.size()<=0){
+               TbAppointment tbAppointment=new TbAppointment();
+               tbAppointment.setMsg("0");
+               tbAppointmentList.add(tbAppointment);
+           }else{
+               tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectAppTimeNumber(appTime).size()+"");
+           }
+           return tbAppointmentList;
+       }
     }
 
     /**

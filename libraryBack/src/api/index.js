@@ -90,8 +90,8 @@ export let getDeleteAccount = (account) => {
     return Http.get(`/api/getDeleteAccount?account=${account}`);
 }
 /*预约列表 */
-export let getAllAppointment = (sno,isbn,appTime,start) => {
-    return Http.get(`/api/getAllAppointment?sno=${sno}&isbn=${isbn}&appTime=${appTime}&start=${start}`);
+export let getAllAppointment = (sno,appTime,start) => {
+    return Http.get(`/api/getAllAppointment?sno=${sno}&appTime=${appTime}&start=${start}`);
 }
 /*预约状态改变*/
 export let getUpdateAppointment = (appId,status,isbn) => {
