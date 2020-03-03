@@ -123,6 +123,8 @@
               title="馆藏位置"
               :content="item.address"
             >馆藏副本{{item.bookNumber}},已预约{{item.appNumber}},已借阅{{item.readNumber}}</Poptip>
+            <el-button type="success" icon="el-icon-bottom" size="mini" v-if="item.type==1" @click="topBottom(item)">下架</el-button>
+            <el-button type="info" icon="el-icon-top" size="mini" v-if="item.type==0" @click="topBottom(item)">上架</el-button>
           </span>
         </p>
         <p>
@@ -282,6 +284,9 @@ export default {
         this.bookList = data.data;
         this.sum = this.bookList[0].status;
       });
+    },
+    topBottom(value){//上架下架
+      this.$message.success('上架成功');
     }
   },
   computed: {}

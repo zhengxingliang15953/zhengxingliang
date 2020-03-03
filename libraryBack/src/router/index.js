@@ -36,6 +36,16 @@ const routes = [
             path:'/index/appointment/appint',
             component:()=>import('../views2/appointment/appint.vue'),
           },
+          {
+            name:'backBook',//还书列表
+            path:'/index/appointment/backBook',
+            component:()=>import('../views2/appointment/backBook.vue'),
+          },
+          {
+            name:'backingBook',//已还列表
+            path:'/index/appointment/backingBook',
+            component:()=>import('../views2/appointment/backingBook.vue'),
+          }
         ]
       },
       {

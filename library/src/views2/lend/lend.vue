@@ -52,7 +52,8 @@
             <p>
               <span>作者:{{item.author}}</span>
               <span>ISBN:{{item.isbn}}</span>
-              <Button type="primary" @click="appointmentBtn(item)">预约图书</Button>
+              <Button type="primary" @click="appointmentBtn(item)" v-if="item.type==1">预约图书</Button>
+              <el-button type="info" plain disabled="true" v-if="item.type==0">已下架</el-button>
             </p>
             <p>
               <span>出版社:{{item.press}}</span>
@@ -151,7 +152,9 @@ export default {
           this.user,
           apptime
         ).then(data => {
-          if (data.data.msg == 0) {
+          if(data.data.msg==4){
+            this.$Message.warning('该书已下架');
+          }else if (data.data.msg == 0) {
             this.$Message.warning("你已经预约该书,不可再预约");
           } else if (data.data.msg == 1) {
             this.$Message.error("该书预约人数过多,暂时不可预约");

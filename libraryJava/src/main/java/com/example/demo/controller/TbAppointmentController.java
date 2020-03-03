@@ -67,12 +67,46 @@ public class TbAppointmentController {
     }
 
     /**
-     * 状态改变
+     * 借阅改变
      * @param appId
      * @param status
      */
     @RequestMapping(value = "api/getUpdateAppointment",method = RequestMethod.GET)
     public void updateAppointment(String appId,Integer status,String isbn){
         tbAppointmentService.updateAppointment(appId, status,isbn);
+    }
+
+    /**
+     * 图书归还
+     * @param appId
+     * @param isbn
+     */
+    @RequestMapping(value = "api/getBackBookBtn",method = RequestMethod.GET)
+    public void updateBackBook(String appId,String isbn){
+        tbAppointmentService.updateBackBook(appId, isbn);
+    }
+
+    /**
+     * 获取归还列表
+     * @param sno
+     * @param appTime
+     * @param start
+     * @return
+     */
+    @RequestMapping(value = "api/getAllBackBook",method = RequestMethod.GET)
+    public List<TbAppointment> selectBackBook(String sno, String appTime, Integer start){
+        return tbAppointmentService.selectBackBook(sno,appTime,start);
+    }
+
+    /**
+     * 获取已归还列表
+     * @param sno
+     * @param backTime
+     * @param start
+     * @return
+     */
+    @RequestMapping(value = "api/getAllBackingBook",method = RequestMethod.GET)
+    public List<TbAppointment> selectBackingBook(String sno,String backTime,Integer start){
+        return tbAppointmentService.selectBackingBook(sno, backTime, start);
     }
 }

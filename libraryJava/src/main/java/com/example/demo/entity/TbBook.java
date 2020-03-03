@@ -15,15 +15,8 @@ public class TbBook {
     private String address;
     private String msg;
     private Integer status;
+    private Integer type;
 
-
-    public int getAppNumber() {
-        return appNumber;
-    }
-
-    public int getReadNumber() {
-        return readNumber;
-    }
 
     public String getAuthor() {
         return author;
@@ -39,10 +32,6 @@ public class TbBook {
 
     public String getPress() {
         return press;
-    }
-
-    public void setAppNumber(int appNumber) {
-        this.appNumber = appNumber;
     }
 
     public void setAuthor(String author) {
@@ -61,9 +50,6 @@ public class TbBook {
         this.press = press;
     }
 
-    public void setReadNumber(int readNumber) {
-        this.readNumber = readNumber;
-    }
 
     public void setAddress(String address) {
         this.address = address;
@@ -81,28 +67,14 @@ public class TbBook {
         return msg;
     }
 
-    public int getBookDate() {
-        return bookDate;
-    }
 
     public String getBookName() {
         return bookName;
     }
 
-    public void setBookDate(int bookDate) {
-        this.bookDate = bookDate;
-    }
 
     public void setBookName(String bookName) {
         this.bookName = bookName;
-    }
-
-    public int getBookNumber() {
-        return bookNumber;
-    }
-
-    public void setBookNumber(int bookNumber) {
-        this.bookNumber = bookNumber;
     }
 
     public Integer getStatus() {
@@ -113,4 +85,43 @@ public class TbBook {
         this.status = status;
     }
 
+    public void setBookNumber(Integer bookNumber) {
+        this.bookNumber = bookNumber;
+    }
+
+    public void setBookDate(Integer bookDate) {
+        this.bookDate = bookDate;
+    }
+
+    public void setReadNumber(Integer readNumber) {
+        this.readNumber = readNumber;
+    }
+
+    public Integer getBookNumber() {
+        return bookNumber;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public void setAppNumber(Integer appNumber) {
+        this.appNumber = appNumber;
+    }
+
+    public Integer getReadNumber() {
+        return readNumber;
+    }
+
+    public Integer getAppNumber() {
+        return appNumber;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public Integer getBookDate() {
+        return bookDate;
+    }
 }

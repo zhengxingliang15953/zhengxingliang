@@ -23,10 +23,27 @@
         select * from tb_appointment
     </select>
 
-    <!--状态改变-->
+    <select id="selectAllBackBookList" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=3 or status=4
+    </select>
+
+    <select id="selectSnoBackBook" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where sno like #{sno} and (status=3 or status=4)
+     </select>
+
+    <select id="selectAppTimeBackBook" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where appTime like #{appTime} and (status=3 or status=4)
+    </select>
+    <!--借阅状态改变-->
     <update id="updateAppointment">
         update tb_appointment
-        set status=#{status}
+        set status=#{status},lendTime=#{lendTime}
+        where appId like #{appId}
+    </update>
+
+    <!--还书状态修改-->
+    <update id="updateBackBook">
+        update tb_appointment set status=5,backTime=#{backTime}
         where appId like #{appId}
     </update>
 
@@ -37,6 +54,25 @@
     <select id="selectAppTime" resultType="com.example.demo.entity.TbAppointment">
         select * from tb_appointment where appTime like #{appTime}
     </select>
+
+    <select id="selectAllBackingBook" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=5
+    </select>
+
+    <select id="selectSnoBackingBook" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=5 and sno like #{sno}
+    </select>
+
+    <select id="selectBackTimeBackingBook" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=5 and backTime like #{backTime}
+    </select>
+
+
+
+
+
+
+
 
 
 
@@ -49,5 +85,35 @@
     <!--查询所有的计数-->
     <select id="selectAllAppointmentNumber" resultType="com.example.demo.entity.TbAppointment">
         select * from tb_appointment
+    </select>
+
+    <!--归还列表计数-->
+    <select id="selectAllBackBookNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=3 or status=4
+     </select>
+
+    <!--sno归还计数-->
+    <select id="selectSnoBackBookNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where sno like #{sno} and (status=3 or status=4)
+     </select>
+
+    <!--appTime归还计数-->
+    <select id="selectAppTimeBackBookNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where appTime like #{appTime} and (status=3 or status=4)
+    </select>
+
+    <!--查询所有已归还计数-->
+    <select id="selectAllBackingBookNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=5
+    </select>
+
+    <!--查询sno已还计数-->
+    <select id="selectSnoBackingNumberBook" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=5 and sno like #{sno}
+    </select>
+
+    <!--查询backTime已归还计数-->
+    <select id="selectBackTimeBackingBookNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=5 and backTime like #{backTime}
     </select>
 </mapper>

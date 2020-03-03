@@ -97,3 +97,15 @@ export let getAllAppointment = (sno,appTime,start) => {
 export let getUpdateAppointment = (appId,status,isbn) => {
     return Http.get(`/api/getUpdateAppointment?appId=${appId}&status=${status}&isbn=${isbn}`);
 }
+/*获取归还列表*/
+export let getAllBackBook = (sno,appTime,start) => {
+    return Http.get(`/api/getAllBackBook?sno=${sno}&appTime=${appTime}&start=${start}`);
+}
+/*删除管理员账号 */
+export let getBackBookBtn = (appId,isbn) => {
+    return Http.get(`/api/getBackBookBtn?appId=${appId}&isbn=${isbn}`);
+}
+/*获取已归还列表 */
+export let getAllBackingBook = (sno,backTime,start) => {
+    return Http.get(`/api/getAllBackingBook?sno=${sno}&backTime=${backTime}&start=${start}`);
+}

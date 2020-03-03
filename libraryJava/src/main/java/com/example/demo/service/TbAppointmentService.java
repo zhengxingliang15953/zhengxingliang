@@ -11,4 +11,8 @@ public interface TbAppointmentService {
     void deleteAppointment(String appId,Integer status);
     List<TbAppointment> selectThreeAppointment(String sno, String appTime,Integer start);
     void updateAppointment(String appId,Integer status,String isbn);
+    void updateBackBook(String appId,String isbn);
+    List<TbAppointment> selectBackBook(String sno,String appTime,Integer start);
+    List<TbAppointment> selectBackingBook(String sno,String backTime,Integer start);
+
 }
