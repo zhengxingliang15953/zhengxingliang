@@ -319,9 +319,9 @@ export default {
       //登录
       getStudentLogin(this.formItem).then(data => {
         if (data.data.msg != "0") {
-          this.$message.success("登录成功");
           window.sessionStorage.setItem("token", data.data.msg);
           location.reload();
+          this.$message.success("登录成功");
         } else {
           this.$message.warning("账号获密码错误");
         }

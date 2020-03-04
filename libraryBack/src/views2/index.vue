@@ -2,32 +2,32 @@
   <div id="index">
     <Layout>
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-        <Menu active-name="1-1" theme="dark" width="auto" :class="menuitemClasses">
-          <MenuItem name="1-1" to="/index/book">
+        <Menu :active-name="select" @on-select="menuSelect" theme="dark" width="auto" :class="menuitemClasses">
+          <MenuItem name="1" to="/index/book">
             <Icon type="ios-book"></Icon>
             <span>图书管理</span>
           </MenuItem>
-          <MenuItem name="1-2" to="/index/student">
+          <MenuItem name="2" to="/index/student">
             <Icon type="md-contacts"></Icon>
             <span>学生管理</span>
           </MenuItem>
-          <MenuItem name="1-3" to="/index/appointment">
+          <MenuItem name="3" to="/index/appointment">
             <Icon type="md-calculator"></Icon>
             <span>预约管理</span>
           </MenuItem>
-          <MenuItem name="1-4" to="/index/readMessage">
+          <MenuItem name="4" to="/index/readMessage">
             <Icon type="md-chatbubbles"></Icon>
             <span>留言管理</span>
           </MenuItem>
-          <MenuItem name="1-5" to="/index/resource">
+          <MenuItem name="5" to="/index/resource">
             <Icon type="md-briefcase"></Icon>
             <span>资源管理</span>
           </MenuItem>
-          <MenuItem name="1-6" to="/index/notice">
+          <MenuItem name="6" to="/index/notice">
             <Icon type="md-browsers"></Icon>
             <span>公告管理</span>
           </MenuItem>
-          <MenuItem name="1-7" to="/index/person">
+          <MenuItem name="7" to="/index/person">
             <Icon type="md-contact"></Icon>
             <span>个人中心</span>
           </MenuItem>
@@ -60,7 +60,8 @@ export default {
     return {
       isCollapsed: false,
       screenHeight:'',
-      value1:''//超级管理员、普通管理员
+      value1:'',//超级管理员、普通管理员
+      select:''
     };
   },
   created(){
@@ -71,6 +72,7 @@ export default {
         this.value1='普通管理员';
       }
     })
+    this.select=window.sessionStorage.getItem('select')||'1';
   },
   mounted() {
     let _this = this;
@@ -94,6 +96,9 @@ export default {
     back(){//退出
       window.sessionStorage.removeItem('token');
       this.$router.push('/');
+    },
+    menuSelect(value){//menu选择回调
+      window.sessionStorage.setItem('select',value);
     }
   }
 };

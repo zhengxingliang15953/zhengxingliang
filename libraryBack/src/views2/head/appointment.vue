@@ -2,7 +2,7 @@
   <div id="appointment">
     <Row type="flex">
       <Col :lg="3">
-        <Menu active-name="1" style="width:100%;">
+        <Menu :active-name="select" style="width:100%;" @on-select="munuSelect">
           <MenuItem name="1" to="/index/appointment/appint">预约列表</MenuItem>
           <MenuItem name="2">预约预期</MenuItem>
           <MenuItem name="3" to="/index/appointment/backBook">还书列表</MenuItem>
@@ -21,8 +21,19 @@ export default {
   name: "appointment",
   data() {
     return {
-      
+      select:'',
     };
+  },
+  created(){
+    this.select=window.sessionStorage.getItem('select2')||'1';
+  },
+  methods:{
+    munuSelect(value){
+      window.sessionStorage.setItem('select2',value);
+    }
+  },
+  destroyed(){
+    window.sessionStorage.removeItem('select2');
   }
 };
 </script>
