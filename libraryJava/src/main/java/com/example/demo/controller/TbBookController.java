@@ -58,8 +58,8 @@ public class TbBookController {
      * @param isbn
      */
     @RequestMapping(value = "api/getDeleteBook",method = RequestMethod.GET)
-    public void deleteBook(String isbn){
-        tbBookService.deleteBook(isbn);
+    public TbBook deleteBook(String isbn){
+        return tbBookService.deleteBook(isbn);
     }
 
     /**
@@ -107,5 +107,15 @@ public class TbBookController {
     @RequestMapping(value = "api/getBookName2",method = RequestMethod.GET)
     public List<TbBook> selectBookName2(String bookName,Integer start){
         return tbBookService.selectBookNameBook2(bookName,start);
+    }
+
+    /**
+     * 图书的上架下架
+     * @param isbn
+     * @param type
+     */
+    @RequestMapping(value = "api/getUpdateBookType",method = RequestMethod.GET)
+    public void updateBookType(String isbn,Integer type){
+        tbBookService.updateBookType(isbn, type);
     }
 }

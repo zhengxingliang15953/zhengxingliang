@@ -23,8 +23,10 @@ public interface TbAppointmentMapper {
     List<TbAppointment> selectAllBackingBook(RowBounds rowBounds);
     List<TbAppointment> selectSnoBackingBook(String sno,RowBounds rowBounds);
     List<TbAppointment> selectBackTimeBackingBook(String backTime,RowBounds rowBounds);
-
-
+    List<TbAppointment> deleteBookShow(String isbn);
+    List<TbAppointment> selectDeleteList(Integer status,String appId);
+    List<TbAppointment> selectAppIdList(String appId);
+    void updateLendingTime(String appId,String lendingTime);
 
 
     List<TbAppointment> selectAppTimeNumber(String appTime);//appTime计数

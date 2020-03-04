@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -50,8 +51,8 @@ public class TbAppointmentController {
      * @param status
      */
     @RequestMapping(value = "api/getDeleteAppointment",method = RequestMethod.GET)
-    public void deleteAppointment(String appId,Integer status){
-        tbAppointmentService.deleteAppointment(appId, status);
+    public TbAppointment deleteAppointment(String appId,Integer status){
+        return tbAppointmentService.deleteAppointment(appId, status);
     }
 
     /**
@@ -108,5 +109,17 @@ public class TbAppointmentController {
     @RequestMapping(value = "api/getAllBackingBook",method = RequestMethod.GET)
     public List<TbAppointment> selectBackingBook(String sno,String backTime,Integer start){
         return tbAppointmentService.selectBackingBook(sno, backTime, start);
+    }
+
+    /**
+     * 续借
+     * @param appId
+     * @param isbn
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping(value = "api/getUpdateLendingTime",method = RequestMethod.GET)
+    public TbAppointment updateLendingTime(String appId,String isbn) throws ParseException {
+        return tbAppointmentService.continueBrow(appId, isbn);
     }
 }

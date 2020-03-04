@@ -1,7 +1,9 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.TbBook;
+import com.example.demo.mapper.TbAppointmentMapper;
 import com.example.demo.mapper.TbBookMapper;
+import com.example.demo.mapper.TbWaitMapper;
 import com.example.demo.service.TbBookService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,12 @@ public class TbBookServiceImpl implements TbBookService {
 
     @Resource
     private TbBookMapper tbBookMapper;
+
+    @Resource
+    private TbAppointmentMapper tbAppointmentMapper;
+
+    @Resource
+    private TbWaitMapper tbWaitMapper;
 
     /**
      * 获取所有的图书
@@ -70,8 +78,19 @@ public class TbBookServiceImpl implements TbBookService {
      * @param isbn
      */
     @Override
-    public void deleteBook(String isbn) {
-        tbBookMapper.deleteBook(isbn);
+    public TbBook deleteBook(String isbn) {
+        TbBook tbBook=new TbBook();
+        if(tbWaitMapper.selectIsbnWait(isbn).size()>=1){
+            tbBook.setStatus(0);
+            return tbBook;
+        }else if(tbAppointmentMapper.deleteBookShow(isbn).size()>=1){
+            tbBook.setStatus(0);
+            return tbBook;
+        }else{
+            tbBookMapper.deleteBook(isbn);
+            tbBook.setStatus(1);
+            return tbBook;
+        }
     }
 
     /**
@@ -89,11 +108,11 @@ public class TbBookServiceImpl implements TbBookService {
     @Override
     public TbBook updateBook(String isbn, String bookName, String author, String press, int bookDate, int bookNumber, String bookUrl, String address) {
         TbBook book=new TbBook();
-        if(tbBookMapper.selectIsbnBook(isbn)==null){
-            book.setMsg("添加成功");
+        if(tbBookMapper.selectIsbnBook(isbn).size()>=1){
+            book.setMsg("修改成功");
             tbBookMapper.updateBook(isbn, bookName, author, press, bookDate, bookNumber, bookUrl, address);
         }else{
-            book.setMsg("添加失败");
+            book.setMsg("修改失败");
         }
         return book;
     }
@@ -143,5 +162,19 @@ public class TbBookServiceImpl implements TbBookService {
         }
         tbBookList.get(0).setStatus(tbBookMapper.selectBook2Number(bookName).size());
         return tbBookList;
+    }
+
+    /**
+     * 图书上架、下架
+     * @param isbn
+     * @param type
+     */
+    @Override
+    public void updateBookType(String isbn, Integer type) {
+        if(type==0){
+            tbBookMapper.updateBookType(isbn, 1);
+        }else{
+            tbBookMapper.updateBookType(isbn,0);
+        }
     }
 }

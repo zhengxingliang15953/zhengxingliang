@@ -81,16 +81,20 @@
           </Poptip>
           <span style="width:10%;color:green;">{{item.status|appType}}</span>
           <el-button
+            size="small"
             type="success"
             icon="el-icon-delete"
             @click="deleteAppointment(item)"
             v-if="item.status==1||item.status==0"
           >取消</el-button>
-          <el-button
-            type="primary"
-            icon="el-icon-right"
+          <Poptip
+            confirm
+            :title="item.lendingTimeNumber"
+            @on-ok="lendingTime(item)"
             v-if="item.status==3"
-          >续借</el-button>
+          >
+            <Button type="primary">续借</Button>
+          </Poptip>
         </ListItem>
 
         <ListItem v-for="(item,index) in myWaitList" :key="index">
@@ -105,6 +109,7 @@
           </Poptip>
           <span style="width:10%;color:green;">{{item.status|appType}}</span>
           <el-button
+            size="small"
             type="warning"
             icon="el-icon-delete"
             @click="deleteAppointment(item)"
@@ -153,7 +158,8 @@ import {
   getUpdatePwd,
   getOneReadMessage,
   getMyAppointment,
-  getDeleteAppointment
+  getDeleteAppointment,
+  getUpdateLendingTime
 } from "../../api";
 export default {
   name: "person",
@@ -206,10 +212,14 @@ export default {
       //我的预约
       this.value1 = "2";
       getMyAppointment(this.indexStudent.sno).then(data => {
-        this.myAppointmentList = data.data;
-        if (this.myAppointmentList[0].tbWaitList != null) {
-          this.myWaitList = this.myAppointmentList[0].tbWaitList || [];
+        if (data.data[0].msg == 0) {
+          this.myAppointmentList = [];
+        } else {
+          this.myAppointmentList = data.data;
         }
+        //if (data.data[0].tbWaitList != null) {
+        this.myWaitList = this.data.data[0].tbWaitList || [];
+        //}
       });
     },
     deleteAppointment(value) {
@@ -220,19 +230,53 @@ export default {
         type: "warning"
       }).then(() => {
         var app;
-        if(value.status==1){
-          app=value.appId;
-        }else{
-          app=value.waitId;
+        if (value.status == 1) {
+          app = value.appId;
+        } else {
+          app = value.waitId;
         }
-        getDeleteAppointment(value.appId, value.status).then(() => {
-          this.$Message.success("取消成功");
+        getDeleteAppointment(app, value.status).then(data => {
+          if (data.data.msg == "1") {
+            this.$message.success("取消成功");
+          } else {
+            this.$message.error("改预约状态已改变,无法取消");
+          }
           getMyAppointment(this.indexStudent.sno).then(data => {
-            this.myAppointmentList = data.data;
-            if (this.myAppointmentList[0].tbWaitList != null) {
-              this.myWaitList = this.myAppointmentList[0].tbWaitList || [];
+            if (data.data[0].msg == 0) {
+              this.myAppointmentList = [];
+            } else {
+              this.myAppointmentList = data.data;
             }
+            //if (data.data[0].tbWaitList != null) {
+            this.myWaitList = this.data.data[0].tbWaitList || [];
+            //}
           });
+        });
+      });
+    },
+    lendingTime(value) {
+      //续借
+      getUpdateLendingTime(value.appId, value.isbn).then(data => {
+        if (data.data.msg == "0") {
+          this.$message.error("借阅状态发生改变");
+        } else if (data.data.msg == "1") {
+          this.$message.error("已逾期无法预约");
+        } else if (data.data.msg == "2") {
+          this.$messager.warning("该书后续已有人预约,无法续借");
+        } else if (data.data.msg == "3") {
+          this.$message.warning("后3天才能续借");
+        } else {
+          this.$message.success("续借成功");
+        }
+        getMyAppointment(this.indexStudent.sno).then(data => {
+          if (data.data[0].msg == 0) {
+            this.myAppointmentList = [];
+          } else {
+            this.myAppointmentList = data.data;
+          }
+          //if (data.data[0].tbWaitList != null) {
+          this.myWaitList = this.data.data[0].tbWaitList || [];
+          //}
         });
       });
     }
@@ -261,5 +305,12 @@ tr {
     font-size: 14px;
     width: 20%;
   }
+}
+.demo-badge {
+  width: 42px;
+  height: 42px;
+  background: #eee;
+  border-radius: 6px;
+  display: inline-block;
 }
 </style>

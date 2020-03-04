@@ -47,7 +47,7 @@
             </FormItem>
           </Col>
           <Col :lg="12">
-            <FormItem label="数量">
+            <FormItem label="数量" v-if="modal2=='添加图书'">
               <el-input-number
                 v-model="formData.bookNumber"
                 :min="1"
@@ -55,6 +55,9 @@
                 label="描述文字"
                 size="small"
               ></el-input-number>
+            </FormItem>
+            <FormItem label="数量" prop="bookNumber" v-if="modal2=='修改图书'">
+              <span>{{formData.bookNumber}}</span>
             </FormItem>
           </Col>
         </Row>
@@ -123,8 +126,20 @@
               title="馆藏位置"
               :content="item.address"
             >馆藏副本{{item.bookNumber}},已预约{{item.appNumber}},已借阅{{item.readNumber}}</Poptip>
-            <el-button type="success" icon="el-icon-bottom" size="mini" v-if="item.type==1" @click="topBottom(item)">下架</el-button>
-            <el-button type="info" icon="el-icon-top" size="mini" v-if="item.type==0" @click="topBottom(item)">上架</el-button>
+            <el-button
+              type="success"
+              icon="el-icon-bottom"
+              size="mini"
+              v-if="item.type==1"
+              @click="topBottom(item)"
+            >下架</el-button>
+            <el-button
+              type="info"
+              icon="el-icon-top"
+              size="mini"
+              v-if="item.type==0"
+              @click="topBottom(item)"
+            >上架</el-button>
           </span>
         </p>
         <p>
@@ -157,7 +172,8 @@ import {
   getAllBook,
   getAddBook,
   getDeleteBook,
-  getUpdateBook
+  getUpdateBook,
+  getUpdateBookType
 } from "../../api";
 import { pressData } from "../../components/press.js"; //出版社列表
 export default {
@@ -227,24 +243,32 @@ export default {
     },
     deleteBook(value) {
       //删除图书
-      this.$confirm("确认删除该通知, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        if (this.bookList.length == 1 && this.page > 1) {
-          this.page--;
+      getDeleteBook(value).then(data => {
+        if (data.data.status == 0) {
+          this.$message.warning(
+            "该书已有人预约,您可以先下架，以防止后续有人预约"
+          );
+        } else {
+          this.$confirm("确认删除该通知, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(() => {
+            if (this.bookList.length == 1 && this.page > 1) {
+              this.page--;
+            }
+            getDeleteBook(value).then(() => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              getAllBook(this.value2, this.page).then(data => {
+                this.bookList = data.data;
+                this.sum = this.bookList[0].status;
+              });
+            });
+          });
         }
-        getDeleteBook(value).then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
-          getAllBook(this.value2, this.page).then(data => {
-            this.bookList = data.data;
-            this.sum = this.bookList[0].status;
-          });
-        });
       });
     },
     updateBook(data) {
@@ -255,6 +279,18 @@ export default {
     },
     updateBookSubmit() {
       //修改图书提交
+      this.modal1=false;
+      getUpdateBook(this.formData).then(data => {
+        if (data.data.msg == "修改成功") {
+          this.$message.success("修改成功");
+          getAllBook(this.value2, this.page).then(data => {
+            this.bookList = data.data;
+            this.sum = this.bookList[0].status;
+          });
+        } else {
+          this.$message.error("修改失败");
+        }
+      });
     },
     add() {
       //添加图书
@@ -285,8 +321,20 @@ export default {
         this.sum = this.bookList[0].status;
       });
     },
-    topBottom(value){//上架下架
-      this.$message.success('上架成功');
+    topBottom(value) {
+      //上架下架
+      let a = value.type;
+      getUpdateBookType(value.isbn, value.type).then(() => {
+        if (a == 1) {
+          this.$message.success("下架成功");
+        } else {
+          this.$message.success("上架成功");
+        }
+        getAllBook(this.value2, this.page).then(data => {
+          this.bookList = data.data;
+          this.sum = this.bookList[0].status;
+        });
+      });
     }
   },
   computed: {}

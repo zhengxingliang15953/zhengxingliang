@@ -17,6 +17,7 @@ public class TbAppointment {
     private String msg;
     private TbBook tbBook;
     private List<TbWait> tbWaitList;
+    private Integer lendingTimeNumber;
 
     public void setStatus(Integer status) {
         this.status = status;
@@ -129,5 +130,13 @@ public class TbAppointment {
 
     public void setTbWaitList(List<TbWait> tbWaitList) {
         this.tbWaitList = tbWaitList;
+    }
+
+    public Integer getLendingTimeNumber() {
+        return lendingTimeNumber;
+    }
+
+    public void setLendingTimeNumber(Integer lendingTimeNumber) {
+        this.lendingTimeNumber = lendingTimeNumber;
     }
 }

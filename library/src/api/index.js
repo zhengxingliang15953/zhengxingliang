@@ -68,3 +68,7 @@ export let getMyAppointment = (sno) => {
 export let getDeleteAppointment = (appId,status) => {
     return Http.get(`/api/getDeleteAppointment?appId=${appId}&status=${status}`);
 };
+/*续借*/
+export let getUpdateLendingTime = (appId,isbn) => {
+    return Http.get(`/api/getUpdateLendingTime?appId=${appId}&isbn=${isbn}`);
+};

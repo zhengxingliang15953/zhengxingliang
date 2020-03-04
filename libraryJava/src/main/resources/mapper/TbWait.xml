@@ -23,4 +23,8 @@
         delete from tb_wait
         where waitId like #{waitId}
     </delete>
+
+    <select id="selectWaitId" resultType="com.example.demo.entity.TbWait">
+        select * from tb_wait where waitId like #{waitId}
+    </select>
 </mapper>

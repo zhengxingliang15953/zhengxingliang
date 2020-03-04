@@ -42,6 +42,10 @@
         where isbn like #{isbn}
     </update>
 
+    <update id="updateBookType">
+        update tb_book set type=#{type} where isbn like #{isbn}
+    </update>
+
 
     <!--查询所有的书本计数-->
     <select id="selectAllJiShu" resultType="com.example.demo.entity.TbBook">

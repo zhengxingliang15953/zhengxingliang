@@ -1,7 +1,5 @@
 package com.example.demo.entity;
 
-import java.util.List;
-
 public class TbBook {
     private String isbn;
     private String bookName;

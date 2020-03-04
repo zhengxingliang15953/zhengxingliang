@@ -3,12 +3,12 @@
 <mapper namespace="com.example.demo.mapper.TbAppointmentMapper">
 
     <insert id="insertAppointment">
-        insert into tb_appointment(appId,bookName,isbn,studentName,sno,appTime,status,lendingNumber)
-        values (#{appId},#{bookName},#{isbn},#{studentName},#{sno},#{appTime},1,#{lendingNumber})
+        insert into tb_appointment(appId,bookName,isbn,studentName,sno,appTime,status,lendingNumber,lendingTimeNumber)
+        values (#{appId},#{bookName},#{isbn},#{studentName},#{sno},#{appTime},1,#{lendingNumber},0)
     </insert>
 
     <select id="selectIfAppointment" resultType="com.example.demo.entity.TbAppointment">
-        select * from tb_appointment where sno like #{sno} and isbn like #{isbn}
+        select * from tb_appointment where sno like #{sno} and isbn like #{isbn} and (status=1 or status=3 or status=4)
     </select>
 
     <select id="selectSnoAppointment" resultType="com.example.demo.entity.TbAppointment">
@@ -67,6 +67,21 @@
         select * from tb_appointment where status=5 and backTime like #{backTime}
     </select>
 
+    <select id="deleteBookShow" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where isbn like #{isbn} and status!=5
+    </select>
+    <select id="selectDeleteList" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=#{status} and appId like #{appId}
+    </select>
+    <select id="selectAppIdList" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where appId like #{appId}
+    </select>
+
+    <update id="updateLendingTime">
+        update tb_appointment
+        set lendingTime=#{lendingTime}
+        where appId like #{appId}
+    </update>
 
 
 

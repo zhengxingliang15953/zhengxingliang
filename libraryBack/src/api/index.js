@@ -109,3 +109,7 @@ export let getBackBookBtn = (appId,isbn) => {
 export let getAllBackingBook = (sno,backTime,start) => {
     return Http.get(`/api/getAllBackingBook?sno=${sno}&backTime=${backTime}&start=${start}`);
 }
+/*删除管理员账号 */
+export let getUpdateBookType = (isbn,type) => {
+    return Http.get(`/api/getUpdateBookType?isbn=${isbn}&type=${type}`);
+}

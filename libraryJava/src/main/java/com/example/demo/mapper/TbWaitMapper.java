@@ -12,4 +12,5 @@ public interface TbWaitMapper {
     void insertWait(String waitId,String sno,String isbn,String appTime);
     List<TbWait> selectSnoIsbnWait(String sno,String isbn);
     void deleteWait(String waitId);
+    List<TbWait> selectWaitId(String waitId);
 }

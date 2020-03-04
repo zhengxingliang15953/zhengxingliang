@@ -2,6 +2,7 @@ package com.example.demo.service.Impl;
 
 import com.example.demo.entity.TbAppointment;
 import com.example.demo.entity.TbBook;
+import com.example.demo.entity.TbStudent;
 import com.example.demo.entity.TbWait;
 import com.example.demo.mapper.TbAppointmentMapper;
 import com.example.demo.mapper.TbBookMapper;
@@ -12,6 +13,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
         TbAppointment tbAppointment=new TbAppointment();
         List<TbBook> tbBookList=tbBookMapper.selectIsbnBook(isbn);
         List<TbWait> tbWaitList=tbWaitMapper.selectIsbnWait(isbn);
-        if(tbBookList.get(0).getType()==0){
+        if(tbBookList.get(0).getType()==0||tbBookList.size()<=0){//该书已经下架
             tbAppointment.setMsg("4");
             return  tbAppointment;
         }else if(tbAppointmentMapper.selectIfAppointment(sno, isbn).size()>=1||tbWaitMapper.selectSnoIsbnWait(sno, isbn).size()>=1){
@@ -59,7 +62,7 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
             tbWaitMapper.insertWait(appId,sno,isbn,appTime);
             return  tbAppointment;
         }else{
-            tbAppointmentMapper.insertAppointment(appId,bookName,isbn,studentName,sno,appTime,tbWaitList.size());
+            tbAppointmentMapper.insertAppointment(appId,bookName,isbn,studentName,sno,getTime(),tbWaitList.size());
             Integer readNumber=tbBookList.get(0).getReadNumber();
             Integer appNumber1=tbBookList.get(0).getAppNumber();
             appNumber1++;
@@ -78,11 +81,19 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
     public List<TbAppointment> selectSnoAppointment(String sno) {
         List<TbAppointment> tbAppointmentList=tbAppointmentMapper.selectSnoAppointment(sno);
         List<TbWait> tbWaitList=tbWaitMapper.selectSnoWait(sno);
-        for(TbAppointment tbAppointment:tbAppointmentList){
-            tbAppointment.setTbBook(tbBookMapper.selectIsbnBook(tbAppointment.getIsbn()).get(0));
+        if(tbAppointmentList.size()>=1){
+            for(TbAppointment tbAppointment:tbAppointmentList){
+                tbAppointment.setTbBook(tbBookMapper.selectIsbnBook(tbAppointment.getIsbn()).get(0));
+            }
+        }else{
+            TbAppointment tbAppointment=new TbAppointment();
+            tbAppointment.setMsg("0");
+            tbAppointmentList.add(tbAppointment);
         }
-        for(TbWait tbWait:tbWaitList){
-            tbWait.setTbBook(tbBookMapper.selectIsbnBook(tbWait.getIsbn()).get(0));
+        if(tbWaitList.size()>=1){
+            for(TbWait tbWait:tbWaitList){
+                tbWait.setTbBook(tbBookMapper.selectIsbnBook(tbWait.getIsbn()).get(0));
+            }
         }
         tbAppointmentList.get(0).setTbWaitList(tbWaitList);
         return tbAppointmentList;
@@ -93,12 +104,35 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
      * @param appId
      */
     @Override
-    public void deleteAppointment(String appId,Integer status) {
-        if(status==0){
-            tbWaitMapper.deleteWait(appId);
-        }else{
-            tbAppointmentMapper.deleteAppointment(appId);
-        }
+    public TbAppointment deleteAppointment(String appId,Integer status) {
+        TbAppointment tbAppointment=new TbAppointment();
+        List<TbAppointment> tbAppointmentList=tbAppointmentMapper.selectDeleteList(1,appId);
+            if(tbWaitMapper.selectWaitId(appId).size()>=1){
+                tbWaitMapper.deleteWait(appId);
+                tbAppointment.setMsg("1");
+                return tbAppointment;
+            }else if(tbAppointmentList.size()>=1){
+                List<TbWait> tbWaitList=tbWaitMapper.selectIsbnWait(tbAppointmentList.get(0).getIsbn());
+                TbBook tbBook=tbBookMapper.selectIsbnBook(tbAppointmentList.get(0).getIsbn()).get(0);
+                Integer appNumber1=tbBook.getAppNumber();
+                Integer readNumber1=tbBook.getReadNumber();
+                if(tbWaitList.size()<=0){
+                    appNumber1--;
+                }
+                tbBookMapper.updateReadLend(tbAppointmentList.get(0).getIsbn(),appNumber1,readNumber1);
+                    tbAppointmentMapper.deleteAppointment(appId);
+                    if(tbWaitList.size()>=1){
+                        TbWait tbWait=tbWaitList.get(0);
+                        tbWaitMapper.deleteWait(tbWait.getWaitId());
+                        TbStudent tbStudent=tbStudentMapper.selectSnoStudent(tbWait.getSno()).get(0);
+                        tbAppointmentMapper.insertAppointment(tbWait.getWaitId(),tbAppointmentList.get(0).getBookName(),tbWait.getIsbn(),tbStudent.getName(),tbWait.getSno(),getTime(),tbWaitList.size()-1>=0?tbWaitList.size():0);
+                    }
+                    tbAppointment.setMsg("1");
+                    return tbAppointment;
+                }else{
+                    tbAppointment.setMsg("0");
+                    return tbAppointment;
+                }
     }
 
     /**
@@ -170,9 +204,17 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
         List<TbBook> tbBookList= tbBookMapper.selectIsbnBook(isbn);
         Integer appNumber1=tbBookList.get(0).getAppNumber();
         Integer readNumber1=tbBookList.get(0).getReadNumber();
-        readNumber1--;
+        List<TbWait> tbWaitList=tbWaitMapper.selectIsbnWait(isbn);
+        if(tbWaitList.size()<=0){
+            readNumber1--;
+        }
         tbBookMapper.updateReadLend(isbn,appNumber1,readNumber1);
-
+        if(tbWaitList.size()>=1){
+            TbWait tbWait=tbWaitList.get(0);
+            tbWaitMapper.deleteWait(tbWait.getWaitId());
+            TbStudent tbStudent=tbStudentMapper.selectSnoStudent(tbWait.getSno()).get(0);
+            tbAppointmentMapper.insertAppointment(tbWait.getWaitId(),tbBookList.get(0).getBookName(),isbn,tbStudent.getName(),tbWait.getSno(),getTime(),tbWaitList.size()-1>=0?tbWaitList.size():0);
+        }
     }
 
     /**
@@ -262,6 +304,34 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
     }
 
     /**
+     * 续借
+     * @param appId
+     * @return
+     */
+    @Override
+    public TbAppointment continueBrow(String appId,String isbn) throws ParseException {
+        System.out.println(betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendTime(),getTime()));
+        TbAppointment tbAppointment=new TbAppointment();
+        if(tbAppointmentMapper.selectDeleteList(5,appId).size()>=1){//状态有问题
+            tbAppointment.setMsg("0");
+            return tbAppointment;
+        }else if(tbAppointmentMapper.selectDeleteList(4,appId).size()>=1){//已逾期无法续借
+            tbAppointment.setMsg("1");
+            return tbAppointment;
+        }else if(tbWaitMapper.selectIsbnWait(isbn).size()>=1){//该书后续已有人预约
+            tbAppointment.setMsg("2");
+            return tbAppointment;
+        }else if(betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendTime(),getTime())<=27){
+            tbAppointment.setMsg("3");//没有在最后三天续借
+            return tbAppointment;
+        }else{
+            tbAppointmentMapper.updateLendingTime(appId,getTime());
+            tbAppointment.setMsg("4");
+            return tbAppointment;
+        }
+    }
+
+    /**
      * 时间格式生成
      * @return
      */
@@ -284,5 +354,19 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
             case "Dec":str="12";break;
         }
         return list[5]+"-"+str+"-"+list[2];
+    }
+
+    /**
+     * 时间相差计算
+     * @param lendTime
+     * @param nowTime
+     * @return
+     * @throws ParseException
+     */
+    public long betweenDate(String lendTime,String nowTime) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd");
+        Date date1=sdf.parse(lendTime);
+        Date date2=sdf.parse(nowTime);
+        return (date2.getTime()-date1.getTime()+1000000)/(60*60*24*1000);
     }
 }
