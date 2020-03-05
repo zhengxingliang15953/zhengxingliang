@@ -113,3 +113,7 @@ export let getAllBackingBook = (sno,backTime,start) => {
 export let getUpdateBookType = (isbn,type) => {
     return Http.get(`/api/getUpdateBookType?isbn=${isbn}&type=${type}`);
 }
+/*获取预约预期列表*/
+export let getAppointmentAfter = (sno,appTime,start) => {
+    return Http.get(`/api/getAppointmentAfter?sno=${sno}&appTime=${appTime}&start=${start}`);
+};   

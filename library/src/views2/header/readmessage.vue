@@ -54,15 +54,20 @@ export default {
       readMessageList: [], //读者留言
       addReadMessageText: "", //添加留言值
       studentId: "", //当前登陆ID
-      sum: 1,
+      sum: 0,
       page: 1
     };
   },
   created() {
-    getAllReadMessage(1).then(data => {
-      this.readMessageList = data.data;
-      this.sum = this.readMessageList[0].status;
-    });
+    getAllReadMessage(this.page).then(data => {
+        if (data.data[0].readId == "0") {
+          this.readMessageList = [];
+          this.sum = 0;
+        } else {
+          this.readMessageList = data.data;
+          this.sum = this.readMessageList[0].status;
+        }
+      });
   },
   methods: {
     onOk() {
@@ -78,6 +83,7 @@ export default {
     },
     myselfMessage() {
       //我要留言
+      this.addReadMessageText='';
       getIndexStudent().then(data => {
         if (
           window.sessionStorage.getItem("token") == data.data.msg &&

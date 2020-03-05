@@ -68,7 +68,7 @@
     </select>
 
     <select id="deleteBookShow" resultType="com.example.demo.entity.TbAppointment">
-        select * from tb_appointment where isbn like #{isbn} and status!=5
+        select * from tb_appointment where isbn like #{isbn} and status!=5 and status!=2
     </select>
     <select id="selectDeleteList" resultType="com.example.demo.entity.TbAppointment">
         select * from tb_appointment where status=#{status} and appId like #{appId}
@@ -82,6 +82,27 @@
         set lendingTime=#{lendingTime}
         where appId like #{appId}
     </update>
+    <select id="selectSchedule" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=#{status}
+    </select>
+
+    <select id="selectAllAfter" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=2
+    </select>
+    <select id="selectSnoAfter" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=2 and sno like #{sno}
+    </select>
+    <select id="selectAppTimeAfter" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=2 and appTime like #{appTime}
+    </select>
+    <update id="updateAfter">
+        update tb_appointment
+        set status=#{status}
+        where appId like #{appId}
+    </update>
+
+
+
 
 
 
@@ -130,5 +151,16 @@
     <!--查询backTime已归还计数-->
     <select id="selectBackTimeBackingBookNumber" resultType="com.example.demo.entity.TbAppointment">
         select * from tb_appointment where status=5 and backTime like #{backTime}
+    </select>
+    <!--查询所有预约预期列表计数-->
+    <select id="selectAllAfterNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=2
+    </select>
+    <!--查询sno预期列表计数-->
+    <select id="selectSnoAfterNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=2 and sno like #{sno}
+    </select>
+    <select id="selectAppTimeAfterNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=2 and appTime like #{appTime}
     </select>
 </mapper>

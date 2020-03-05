@@ -28,7 +28,7 @@
         <ListItemMeta
           avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
           :title="item.title"
-          :description="item.message"
+          :description="item.message.slice(0,100)"
         />
         <li>
           <a @click="look(item)">去看看</a>
@@ -48,14 +48,19 @@ export default {
       value1: false,
       noticeList: [], //通知公告
       itemDetail: {}, //去看看的详细
-      sum: 1,
+      sum: 0,
       page: 1
     };
   },
   created() {
     getAllNotice(this.page).then(data => {
-      this.noticeList = data.data;
-      this.sum = this.noticeList[0].status;
+      if (data.data[0].noticeId == "0") {
+        this.noticeList = [];
+        this.sum = 0;
+      } else {
+        this.noticeList = data.data;
+        this.sum = this.noticeList[0].status;
+      }
     });
   },
   methods: {
@@ -68,8 +73,13 @@ export default {
       //页码改变回调
       this.page = value;
       getAllNotice(this.page).then(data => {
-        this.noticeList = data.data;
-        this.sum = this.noticeList[0].status;
+        if (data.data[0].noticeId == "0") {
+          this.noticeList = [];
+          this.sum = 0;
+        } else {
+          this.noticeList = data.data;
+          this.sum = this.noticeList[0].status;
+        }
       });
     }
   }

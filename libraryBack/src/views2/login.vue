@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <h1>湖州师范学院图书馆预约系统后台管理</h1>
-    <Form ref="formCustom" :model="formCustom" style="width:300px;margin:10px auto;">
+    <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" style="width:300px;margin:10px auto;">
       <FormItem label="账号" prop="account">
         <Input v-model="formCustom.account"></Input>
       </FormItem>
@@ -24,6 +24,14 @@ export default {
       formCustom: {
         account: "",
         pwd: ""
+      },
+      ruleCustom:{//表单验证
+        account:[
+          {validator:this.ruleAccount,trigger:'blur'}
+        ],
+        pwd:[
+          {validator:this.rulePwd,trigger:'blur'}
+        ]
       }
     };
   },
@@ -46,7 +54,21 @@ export default {
           }
         });
       }
+    },
+    ruleAccount(rule,value,callback){//账号表单验证
+      if(value==''){
+        callback(new Error('账号不能为空'));
+      }
+      callback();
+    },
+    rulePwd(rule,value,callBack){//密码表单验证
+      if(value==''){
+        callBack(new Error('密码不能为空'));
+      }
     }
+  },
+  created(){
+    window.sessionStorage.removeItem('select');
   }
 };
 </script>

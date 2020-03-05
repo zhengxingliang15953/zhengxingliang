@@ -41,7 +41,15 @@ public class TbNoticeServiceImpl implements TbNoticeService {
     @Override
     public List<TbNotice> selectAll(Integer start) {
         List<TbNotice> tbNoticeList=tbNoticeMapper.selectAll(new RowBounds((start-1)*10,10));
-        tbNoticeList.get(0).setStatus(tbNoticeMapper.selectNumberNotice().size());
+        if(tbNoticeList.size()>=1){
+            tbNoticeList.get(0).setStatus(tbNoticeMapper.selectNumberNotice().size());
+        }else{
+            TbNotice tbNotice=new TbNotice();
+            tbNotice.setNoticeId("0");
+            tbNotice.setStatus(0);
+            tbNoticeList.add(tbNotice);
+        }
+
         return tbNoticeList;
     }
 

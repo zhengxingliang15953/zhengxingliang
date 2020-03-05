@@ -40,15 +40,20 @@ export default {
     return {
       resourceList: [], //资源列表
       resourceTitle: "",
-      resourceUrl: "http://",
+      resourceUrl: "",
       page: 1, //当前页码
-      sum: 1 //总数
+      sum: 0 //总数
     };
   },
   created() {
     getAllResource(this.page).then(data => {
-      this.resourceList = data.data;
-      this.sum = this.resourceList[0].status;
+      if (data.data[0].resourceId == "0") {
+        this.resourceList = [];
+        this.sum = 0;
+      } else {
+        this.resourceList = data.data;
+        this.sum = this.resourceList[0].status;
+      }
     });
   },
   methods: {
@@ -64,8 +69,13 @@ export default {
         }
         getDetailResource(value).then(() => {
           getAllResource(this.page).then(data => {
-            this.resourceList = data.data;
-            this.sum = this.resourceList[0].status;
+            if (data.data[0].resourceId == "0") {
+              this.resourceList = [];
+              this.sum = 0;
+            } else {
+              this.resourceList = data.data;
+              this.sum = this.resourceList[0].status;
+            }
           });
           this.$message.success("删除成功");
         });
@@ -75,7 +85,7 @@ export default {
       //添加资源
       if (
         this.resourceTitle == "" ||
-        this.resourceUrl == "http://" ||
+        this.resourceUrl == "" ||
         this.resourceUrl == ""
       ) {
         this.$message.warning("不能为空");
@@ -92,7 +102,7 @@ export default {
           });
         });
         this.resourceTitle = "";
-        this.resourceUrl = "http://";
+        this.resourceUrl = "";
       }
     },
     pageChange(value) {

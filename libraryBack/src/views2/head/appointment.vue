@@ -4,7 +4,7 @@
       <Col :lg="3">
         <Menu :active-name="select" style="width:100%;" @on-select="munuSelect">
           <MenuItem name="1" to="/index/appointment/appint">预约列表</MenuItem>
-          <MenuItem name="2">预约预期</MenuItem>
+          <MenuItem name="2" to="/index/appointment/appointmentAfter">预约预期</MenuItem>
           <MenuItem name="3" to="/index/appointment/backBook">还书列表</MenuItem>
           <MenuItem name="4" to="/index/appointment/backingBook">已还列表</MenuItem>    
         </Menu>

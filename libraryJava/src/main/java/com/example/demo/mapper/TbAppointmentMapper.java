@@ -27,7 +27,11 @@ public interface TbAppointmentMapper {
     List<TbAppointment> selectDeleteList(Integer status,String appId);
     List<TbAppointment> selectAppIdList(String appId);
     void updateLendingTime(String appId,String lendingTime);
-
+    List<TbAppointment> selectSchedule(Integer status);
+    List<TbAppointment> selectAllAfter(RowBounds rowBounds);
+    List<TbAppointment> selectSnoAfter(String sno,RowBounds rowBounds);
+    List<TbAppointment> selectAppTimeAfter(String appTime,RowBounds rowBounds);
+    void updateAfter(String appId,Integer status);
 
     List<TbAppointment> selectAppTimeNumber(String appTime);//appTime计数
     List<TbAppointment> selectAllAppointmentNumber();//查询所有计数
@@ -37,4 +41,7 @@ public interface TbAppointmentMapper {
     List<TbAppointment> selectAllBackingBookNumber();//查询所有已归还计数
     List<TbAppointment> selectSnoBackingNumberBook(String sno);//查询sno已归还计数
     List<TbAppointment> selectBackTimeBackingBookNumber(String backTime);//查询backTime已归还计数
+    List<TbAppointment> selectAllAfterNumber();//查询预约预期所有列表计数
+    List<TbAppointment> selectSnoAfterNumber(String sno);//查询sno预约预期计数
+    List<TbAppointment> selectAppTimeAfterNumber(String appTime);//查询appTime预约计数
 }

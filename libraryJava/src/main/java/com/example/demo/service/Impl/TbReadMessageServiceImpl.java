@@ -22,7 +22,15 @@ public class TbReadMessageServiceImpl implements TbReadMessageService {
     @Override
     public List<TbReadMessage> selectAllReadMessage(Integer start) {
         List<TbReadMessage> tbReadMessageList= tbReadMessageMapper.selectAllReadMessage(new RowBounds((start-1)*10,10));
-        tbReadMessageList.get(0).setStatus(tbReadMessageMapper.selectNumberReadMessage().size());
+        if(tbReadMessageList.size()>=1){
+            tbReadMessageList.get(0).setStatus(tbReadMessageMapper.selectNumberReadMessage().size());
+        }else{
+            TbReadMessage tbReadMessage=new TbReadMessage();
+            tbReadMessage.setStatus(0);
+            tbReadMessage.setReadId("0");
+            tbReadMessageList.add(tbReadMessage);
+        }
+
         return tbReadMessageList;
     }
 

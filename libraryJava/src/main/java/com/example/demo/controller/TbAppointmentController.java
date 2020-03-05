@@ -122,4 +122,16 @@ public class TbAppointmentController {
     public TbAppointment updateLendingTime(String appId,String isbn) throws ParseException {
         return tbAppointmentService.continueBrow(appId, isbn);
     }
+
+    /**
+     * 获取预约预期列表
+     * @param sno
+     * @param appTime
+     * @param start
+     * @return
+     */
+    @RequestMapping(value = "api/getAppointmentAfter",method = RequestMethod.GET)
+    public List<TbAppointment> selectAppointmentAfter(String sno,String appTime,Integer start){
+        return tbAppointmentService.selectAppAfter(sno, appTime, start);
+    }
 }

@@ -32,12 +32,29 @@ public class TbBookServiceImpl implements TbBookService {
         List<TbBook> tbBookList=null;
         if(isbn.equals("")){
             tbBookList=tbBookMapper.selectAllBook(new RowBounds((start-1)*10,10));
-            tbBookList.get(0).setStatus(tbBookMapper.selectAllJiShu().size());
+            if(tbBookList.size()>=1){
+                tbBookList.get(0).setMsg("1");
+                tbBookList.get(0).setStatus(tbBookMapper.selectAllJiShu().size());
+            }else{
+                TbBook tbBook=new TbBook();
+                tbBook.setMsg("0");
+                tbBook.setStatus(0);
+                tbBookList.add(tbBook);
+            }
+            return tbBookList;
         }else{
             tbBookList=tbBookMapper.selectIsbnBook(isbn);
-            tbBookList.get(0).setStatus(1);
+            if(tbBookList.size()>=1){
+                tbBookList.get(0).setMsg("1");
+                tbBookList.get(0).setStatus(1);
+            }else{
+                TbBook tbBook=new TbBook();
+                tbBook.setMsg("0");
+                tbBook.setStatus(0);
+                tbBookList.add(tbBook);
+            }
+            return tbBookList;
         }
-        return tbBookList;
     }
 
     /**
@@ -64,7 +81,7 @@ public class TbBookServiceImpl implements TbBookService {
     @Override
     public TbBook insertBook(String isbn,String bookName,String author,String press,int bookDate,int bookNumber,String bookUrl,String address) {
         TbBook book=new TbBook();
-        if(tbBookMapper.selectIsbnBook(isbn).size()==0){
+        if(tbBookMapper.selectIsbnBook(isbn).size()<=0){
             tbBookMapper.insertBook(isbn, bookName, author, press, bookDate, bookNumber,0,0, bookUrl, address);
             book.setMsg("添加成功");
         }else{

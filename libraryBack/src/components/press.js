@@ -2,6 +2,9 @@ export let pressData = [
     "清华大学出版社",
     "北京大学出版社",
     "浙江人民大学出版社",
+    "电子工业出版社",
+    "高等教育出版社",
+    "南京师范大学出版社",
 ];
 
 export let timeChange = (value) => {

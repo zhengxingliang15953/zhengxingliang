@@ -10,12 +10,12 @@
         <span>欢迎登录湖州师范学院图书馆</span>
       </p>
       <div>
-        <Form :model="formItem" :label-width="38">
-          <FormItem label="账号">
-            <Input v-model="formItem.sno" placeholder="请输入你的账号"></Input>
+        <Form :model="formItem" :label-width="38" :rules="ruleModel">
+          <FormItem label="学号" prop="sno">
+            <Input v-model="formItem.sno" placeholder="请输入您的学号"></Input>
           </FormItem>
-          <FormItem label="密码">
-            <Input v-model="formItem.pwd" placeholder="请输入你的密码" type="password"></Input>
+          <FormItem label="密码" prop="pwd">
+            <Input v-model="formItem.pwd" placeholder="默认密码为您身份证后6位" type="password"></Input>
           </FormItem>
         </Form>
       </div>
@@ -45,7 +45,7 @@
             <li>馆藏目录</li>
             <li>电子图书</li>
           </ul>
-          <div style="height:240px;">
+          <div style="100%;">
             <el-input
               placeholder="请输入内容"
               class="input-with-select"
@@ -84,12 +84,12 @@
               <p>开放时间</p>
             </Col>
             <Col :lg="8">
-              <img src="../../assets/six3.png" alt width="70%" @click="messageBtn" />
+              <img src="../../assets/editor.png" alt width="70%" @click="messageBtn" />
               <p>我要留言</p>
             </Col>
             <Col :lg="8">
-              <img src="../../assets/six3.png" alt width="70%" />
-              <p>我要留言</p>
+              <img src="../../assets/six3.png" alt width="70%" @click="noticeBtn"/>
+              <p>通知公告</p>
             </Col>
             <Col :lg="8">
               <img src="../../assets/six5.png" alt width="70%" @click="hutuBtn" />
@@ -115,10 +115,10 @@
         <img src="../../assets/library1.jpg" alt width="90%" />
       </Col>
       <Col :lg="6" class="sixImgItem">
-        <img src="../../assets/library1.jpg" alt width="90%" />
+        <img src="../../assets/library2.jpg" alt width="90%" />
       </Col>
       <Col :lg="6" class="sixImgItem">
-        <img src="../../assets/library1.jpg" alt width="90%" />
+        <img src="../../assets/library3.jpg" alt width="109%" />
       </Col>
       <Col :lg="3"></Col>
     </Row>
@@ -149,18 +149,27 @@
           <Col :lg="18" class="resource" v-if="this.name=='1'">
             <ul class="left">
               <li v-for="(item,index) in resourceList1" :key="index">
-                <a :href="item.resourceUrl" target="_blank">{{item.title}}</a>
+                <el-link type="success" :href="item.resourceUrl">{{item.title}}</el-link>
               </li>
             </ul>
 
             <ul class="left">
               <li v-for="(item,index) in resourceList2" :key="index">
-                <a :href="item.resourceUrl" target="_blank">{{item.title}}</a>
+              <el-link type="success" :href="item.resourceUrl">{{item.title}}</el-link>
               </li>
             </ul>
           </Col>
 
-          <Col :lg="18" class="resource" v-if="this.name=='2'"></Col>
+          <Col :lg="18" class="resource" v-if="this.name=='2'">
+            <Row type="flex">
+              <Col id="newBookItem" :lg="8" v-for="(item,index) in bookList" :key="index" style="margin-bottom:15px;">
+                <img :src="item.bookUrl" @mouseover="newBookOver(item)" alt="加载错误" height="110px" width="100%">
+              </Col>
+              <Col :lg="24" style="padding-top:20px">
+                <p style="text-align:center;font-size:25px;font-family:library;color:red;">{{newBookName}}</p>
+              </Col>
+            </Row>
+          </Col>
         </Row>
       </Col>
 
@@ -174,7 +183,7 @@
                 <ListItemMeta
                   avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
                   :title="item.title"
-                  :description="item.message"
+                  :description="item.message.slice(0,20)"
                 />
               </ListItem>
             </List>
@@ -245,7 +254,8 @@ import {
   getStudentLogin,
   getAllNotice,
   getAllReadMessage,
-  getAllResource
+  getAllResource,
+  getAllBook
 } from "../../api";
 export default {
   name: "index",
@@ -264,21 +274,46 @@ export default {
       noticeList: [], //通知公告
       readMessageList: [], //读者列表
       resourceList1: [], //资源导航列表1
-      resourceList2: [] //资源导航列表2
+      resourceList2: [] ,//资源导航列表2
+      ruleModel:{//表单验证
+        sno:[
+          {validator:this.snoRule,trigger:'blur'}
+        ],
+        pwd:[
+          {validator:this.pwdRule,trigger:'blur'},
+        ]
+      },
+      bookList:[],//热门新书列表
+      newBookName:'',//热门新书悬停显示
     };
   },
   created() {
     getAllNotice(1).then(data => {
-      this.noticeList = data.data.slice(0, 5);
-    });
+        if (data.data[0].noticeId == "0") {
+          this.noticeList = [];
+        } else {
+          this.noticeList = data.data.slice(0,5);
+        }
+      });
     getAllReadMessage(1).then(data => {
-      this.readMessageList = data.data.slice(0, 5);
-    });
+        if (data.data[0].readId == "0") {
+          this.readMessageList = [];
+        } else {
+          this.readMessageList = data.data.slice(0,5);
+        }
+      });
     getAllResource(1).then(data => {
       this.resourceList1 = data.data.slice(0, 15);
     });
     getAllResource(2).then(data => {
       this.resourceList2 = data.data.slice(0, 15);
+    });
+    getAllBook("", 1).then(data => {
+      if (data.data[0].msg == "0") {
+        this.bookList = [];
+      } else {
+        this.bookList = data.data.slice(0,6);
+      }
     });
   },
   methods: {
@@ -303,6 +338,10 @@ export default {
       //我要留言跳转
       this.$router.push("/header/readMessage");
       window.sessionStorage.setItem('index',4);
+    },
+    noticeBtn(){//通知公告跳转
+      this.$router.push('/header/notice');
+      window.sessionStorage.setItem('index',3);
     },
     toLend() {
       //检索跳转
@@ -332,6 +371,21 @@ export default {
       //更多
       this.$router.push("/header/notice");
       window.sessionStorage.setItem('index',3);
+    },
+    snoRule(rule,value,callback){//学号表单验证
+      if(value==''){
+        callback(new Error('学号不能为空'));
+      }
+      callback();
+    },
+    pwdRule(rule,value,callback){//密码表单验证
+      if(value==''){
+        callback(new Error('密码不能为空'));
+      }
+      callback();
+    },
+    newBookOver(value){
+      this.newBookName=value.bookName;
     }
   },
   computed: {
@@ -381,15 +435,20 @@ export default {
 }
 
 .lendBack {
+  position: relative;
   height: 430px;
   margin-top: 30px;
   margin-bottom: 30px;
-  padding-top: 65px;
   background: url("../../assets/lendback.jpg") no-repeat;
   background-size: 100%;
   .lendItem {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right: 0;
     width: 75%;
-    height: 300px;
+    height:72%;
     margin: auto;
     background: #363636;
     opacity: 0.7;
@@ -431,5 +490,13 @@ export default {
 }
 #more {
   float: right;
+}
+#newBookItem{
+  img{
+    transition: all 1s;
+  }
+}
+#newBookItem img:hover{
+  box-shadow: 0px 0px 10px green;
 }
 </style>

@@ -38,7 +38,7 @@
         <ListItemMeta
           avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
           :title="item.title"
-          :description="item.message"
+          :description="item.message.slice(0,100)"
           style="padding-left:15px;"
         />
         <el-button type="primary" icon="el-icon-edit" circle @click="changeBtn(item)"></el-button>
@@ -72,14 +72,19 @@ export default {
       message: "修改", //修改、添加
       noticeList: [], //通知公告列表
       updateId: "", //修改ID
-      sum: 1,
+      sum: 0,
       page: 1
     };
   },
   created() {
     getAllNotice(this.page).then(data => {
-      this.noticeList = data.data;
-      this.sum = this.noticeList[0].status;
+      if (data.data[0].noticeId == "0") {
+        this.noticeList = [];
+        this.sum = 0;
+      } else {
+        this.noticeList = data.data;
+        this.sum = this.noticeList[0].status;
+      }
     });
   },
   methods: {
@@ -99,8 +104,13 @@ export default {
             message: "删除成功!"
           });
           getAllNotice(this.page).then(data => {
-            this.noticeList = data.data;
-            this.sum = this.noticeList[0].status;
+            if (data.data[0].noticeId == "0") {
+              this.noticeList = [];
+              this.sum = 0;
+            } else {
+              this.noticeList = data.data;
+              this.sum = this.noticeList[0].status;
+            }
           });
         });
       });
@@ -131,8 +141,13 @@ export default {
           getAddNotice(this.noticeHead, this.noticeMain, noticeId)
             .then(() => {
               getAllNotice(this.page).then(data => {
-                this.noticeList = data.data;
-                this.sum = this.noticeList[0].status;
+                if (data.data[0].noticeId == "0") {
+                  this.noticeList = [];
+                  this.sum = 0;
+                } else {
+                  this.noticeList = data.data;
+                  this.sum = this.noticeList[0].status;
+                }
               });
               this.$message.success("添加成功");
             })
@@ -149,8 +164,13 @@ export default {
           getUpdateNotice(this.noticeHead, this.noticeMain, this.updateId)
             .then(() => {
               getAllNotice(this.page).then(data => {
-                this.noticeList = data.data;
-                this.sum = this.noticeList[0].status;
+                if (data.data[0].noticeId == "0") {
+                  this.noticeList = [];
+                  this.sum = 0;
+                } else {
+                  this.noticeList = data.data;
+                  this.sum = this.noticeList[0].status;
+                }
               });
               this.$message.success("修改成功");
             })
@@ -164,8 +184,13 @@ export default {
       //页码改变回调
       this.page = value;
       getAllNotice(this.page).then(data => {
-        this.noticeList = data.data;
-        this.sum = this.noticeList[0].status;
+        if (data.data[0].noticeId == "0") {
+          this.noticeList = [];
+          this.sum = 0;
+        } else {
+          this.noticeList = data.data;
+          this.sum = this.noticeList[0].status;
+        }
       });
     }
   },

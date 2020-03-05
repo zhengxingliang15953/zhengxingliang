@@ -16,7 +16,7 @@
           </Col>
           <Col :lg="12" v-if="modal2=='修改图书'">
             <FormItem label="ISBN" prop="isbn">
-              <span>{{formData.isbn}}</span>
+              <span style="width:100%;">{{formData.isbn}}</span>
             </FormItem>
           </Col>
           <Col :lg="12">
@@ -190,21 +190,26 @@ export default {
         bookName: "",
         author: "",
         press: "",
-        bookDate: 2020,
+        bookDate: 2005,
         bookNumber: 1,
         bookUrl: "",
         address: ""
       },
       data1: [], //自动填写列表
-      sum: 1,
+      sum: 0,
       value2: "", //当前搜索值
       page: 1 //当前页码
     };
   },
   created() {
     getAllBook(this.value2, this.page).then(data => {
-      this.bookList = data.data;
-      this.sum = this.bookList[0].status;
+      if (data.data[0].msg == "0") {
+        this.bookList = [];
+        this.sum = 0;
+      } else {
+        this.bookList = data.data;
+        this.sum = this.bookList[0].status;
+      }
     });
   },
   methods: {
@@ -229,8 +234,13 @@ export default {
               this.$message.success("添加成功");
               this.modal1 = false;
               getAllBook(this.value2, this.page).then(data => {
-                this.bookList = data.data;
-                this.sum = this.bookList[0].status;
+                if (data.data[0].msg == "0") {
+                  this.bookList = [];
+                  this.sum = 0;
+                } else {
+                  this.bookList = data.data;
+                  this.sum = this.bookList[0].status;
+                }
               });
             } else {
               this.$message.error("改ISBN已存在,请检查");
@@ -263,8 +273,13 @@ export default {
                 message: "删除成功!"
               });
               getAllBook(this.value2, this.page).then(data => {
-                this.bookList = data.data;
-                this.sum = this.bookList[0].status;
+                if (data.data[0].msg == "0") {
+                  this.bookList = [];
+                  this.sum = 0;
+                } else {
+                  this.bookList = data.data;
+                  this.sum = this.bookList[0].status;
+                }
               });
             });
           });
@@ -279,13 +294,18 @@ export default {
     },
     updateBookSubmit() {
       //修改图书提交
-      this.modal1=false;
+      this.modal1 = false;
       getUpdateBook(this.formData).then(data => {
         if (data.data.msg == "修改成功") {
           this.$message.success("修改成功");
           getAllBook(this.value2, this.page).then(data => {
-            this.bookList = data.data;
-            this.sum = this.bookList[0].status;
+            if (data.data[0].msg == "0") {
+              this.bookList = [];
+              this.sum = 0;
+            } else {
+              this.bookList = data.data;
+              this.sum = this.bookList[0].status;
+            }
           });
         } else {
           this.$message.error("修改失败");
@@ -308,8 +328,13 @@ export default {
       //页码回调
       this.page = value;
       getAllBook(this.value2, this.page).then(data => {
-        this.bookList = data.data;
-        this.sum = this.bookList[0].status;
+        if (data.data[0].msg == "0") {
+          this.bookList = [];
+          this.sum = 0;
+        } else {
+          this.bookList = data.data;
+          this.sum = this.bookList[0].status;
+        }
       });
     },
     search() {

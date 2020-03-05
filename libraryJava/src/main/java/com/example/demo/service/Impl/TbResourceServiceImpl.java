@@ -22,7 +22,15 @@ public class TbResourceServiceImpl implements TbResourceService {
     @Override
     public List<TbResource> selectAllResource(Integer start) {
         List<TbResource> tbResourceList=tbResourceMapper.selectAllResource(new RowBounds((start-1)*10,10));
-        tbResourceList.get(0).setStatus(tbResourceMapper.selectNumberResource().size());
+        if(tbResourceList.size()>=1){
+            tbResourceList.get(0).setStatus(tbResourceMapper.selectNumberResource().size());
+        }else{
+            TbResource tbResource=new TbResource();
+            tbResource.setResourceId("0");
+            tbResource.setStatus(0);
+            tbResourceList.add(tbResource);
+        }
+
         return tbResourceList;
     }
 

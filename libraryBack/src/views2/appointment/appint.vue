@@ -39,7 +39,9 @@
             <span>预约时间:{{item.appTime}}</span>
             <span>
               <Tag color="primary" v-if="item.status==1">已预约</Tag>
+              <Tag color="warning" v-if="item.status==2">预约预期</Tag>  
               <Tag color="success" v-if="item.status==3">已借阅</Tag>
+              <Tag color="error" v-if="item.status==4">借阅预期</Tag>
               <Tag color="blue" v-if="item.status==5">已归还</Tag>
             </span>
             <el-button

@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo.mapper.TbResourceMapper">
 
     <select id="selectAllResource" resultType="com.example.demo.entity.TbResource">
-        select * from tb_resource
+        select * from tb_resource order by resourceId desc
     </select>
 
     <delete id="deleteResource">

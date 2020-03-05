@@ -310,7 +310,6 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
      */
     @Override
     public TbAppointment continueBrow(String appId,String isbn) throws ParseException {
-        System.out.println(betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendTime(),getTime()));
         TbAppointment tbAppointment=new TbAppointment();
         if(tbAppointmentMapper.selectDeleteList(5,appId).size()>=1){//状态有问题
             tbAppointment.setMsg("0");
@@ -321,13 +320,59 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
         }else if(tbWaitMapper.selectIsbnWait(isbn).size()>=1){//该书后续已有人预约
             tbAppointment.setMsg("2");
             return tbAppointment;
-        }else if(betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendTime(),getTime())<=27){
+        }else if(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendingTime().equals("")&&betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendTime(),getTime())<=27){
+            tbAppointment.setMsg("3");//没有在最后三天续借
+            return tbAppointment;
+        }else if(betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendingTime(),getTime())<=27){
             tbAppointment.setMsg("3");//没有在最后三天续借
             return tbAppointment;
         }else{
-            tbAppointmentMapper.updateLendingTime(appId,getTime());
+            tbAppointmentMapper.updateLendingTime(appId,getTime());//可以续借
             tbAppointment.setMsg("4");
             return tbAppointment;
+        }
+    }
+
+    /**
+     * 预约预期列表
+     * @param sno
+     * @param appTime
+     * @param start
+     * @return
+     */
+    @Override
+    public List<TbAppointment> selectAppAfter(String sno, String appTime, Integer start) {
+        List<TbAppointment> tbAppointmentList=null;
+        if(sno.equals("")&&appTime.equals("")){
+            tbAppointmentList=tbAppointmentMapper.selectAllAfter(new RowBounds((start-1)*10,10));
+            if(tbAppointmentList.size()<=0){
+                TbAppointment tbAppointment=new TbAppointment();
+                tbAppointment.setMsg("0");
+                tbAppointmentList.add(tbAppointment);
+            }else{
+                tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectAllAfterNumber().size()+"");
+            }
+            return tbAppointmentList;
+        }else if(!sno.equals("")){
+            tbAppointmentList=tbAppointmentMapper.selectSnoAfter(sno,new RowBounds((start-1)*10,10));
+            if(tbAppointmentList.size()<=0){
+                TbAppointment tbAppointment=new TbAppointment();
+                tbAppointment.setMsg("0");
+                tbAppointmentList.add(tbAppointment);
+            }else{
+                tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectSnoAfterNumber(sno).size()+"");
+            }
+            return tbAppointmentList;
+        }else{
+            tbAppointmentList=tbAppointmentMapper.selectAppTimeAfter(appTime,new RowBounds((start-1)*10,10));
+            if(tbAppointmentList.size()<=0){
+                TbAppointment tbAppointment=new TbAppointment();
+                tbAppointment.setMsg("0");
+                tbAppointmentList.add(tbAppointment);
+            }else{
+                tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectAppTimeAfterNumber(appTime).size()+"");
+            }
+            return tbAppointmentList;
         }
     }
 

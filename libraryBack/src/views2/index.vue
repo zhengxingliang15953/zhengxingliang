@@ -100,7 +100,7 @@ export default {
     menuSelect(value){//menu选择回调
       window.sessionStorage.setItem('select',value);
     }
-  }
+  },
 };
 </script>
 

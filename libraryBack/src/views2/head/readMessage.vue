@@ -41,19 +41,24 @@ export default {
   data() {
     return {
       readMessageList: [], //读者留言
-      sum: 1,
+      sum: 0,
       page: 1 //当前页码
     };
   },
   created() {
     getAllReadMessage(this.page).then(data => {
-      this.readMessageList = data.data;
-      this.sum = this.readMessageList[0].status;
+      if (data.data[0].readId == "0") {
+        this.readMessageList = [];
+        this.sum = 0;
+      } else {
+        this.readMessageList = data.data;
+        this.sum = this.readMessageList[0].status;
+      }
     });
   },
   methods: {
     detailBtn(readId) {
-      this.$confirm("确认删除该通知, 是否继续?", "提示", {
+      this.$confirm("确认删除该留言, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -66,10 +71,14 @@ export default {
             type: "success",
             message: "删除成功!"
           });
-          console.log(this.page);
           getAllReadMessage(this.page).then(data => {
-            this.readMessageList = data.data;
-            this.sum = this.readMessageList[0].status;
+            if (data.data[0].readId == "0") {
+              this.readMessageList = [];
+              this.sum = 0;
+            } else {
+              this.readMessageList = data.data;
+              this.sum = this.readMessageList[0].status;
+            }
           });
         });
       });
@@ -77,8 +86,13 @@ export default {
     pageChange(value) {
       this.page = value;
       getAllReadMessage(this.page).then(data => {
-        this.readMessageList = data.data;
-        this.sum = this.readMessageList[0].status;
+        if (data.data[0].readId == "0") {
+          this.readMessageList = [];
+          this.sum = 0;
+        } else {
+          this.readMessageList = data.data;
+          this.sum = this.readMessageList[0].status;
+        }
       });
     }
   }

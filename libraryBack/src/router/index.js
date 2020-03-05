@@ -45,6 +45,11 @@ const routes = [
             name:'backingBook',//已还列表
             path:'/index/appointment/backingBook',
             component:()=>import('../views2/appointment/backingBook.vue'),
+          },
+          {
+            name:'appointmentAfter',//预约预期
+            path:'/index/appointment/appointmentAfter',
+            component:()=>import('../views2/appointment/appointmentAfter.vue'),
           }
         ]
       },
