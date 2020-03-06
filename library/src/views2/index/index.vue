@@ -43,7 +43,6 @@
         <Col :lg="16">
           <ul>
             <li>馆藏目录</li>
-            <li>电子图书</li>
           </ul>
           <div style="100%;">
             <el-input
@@ -128,7 +127,7 @@
     >共享平台</p>
     <Row type="flex" justify="center" style="margin-top:2%;">
       <Col :lg="3"></Col>
-      <Col :lg="11">
+      <Col :lg="11" >
         <Row type="flex" justify="center">
           <Col :lg="6">
             <Menu
@@ -138,7 +137,7 @@
               class="left"
               @on-select="selectName"
             >
-              <MenuItem name="1">
+              <MenuItem name="1" >
                 <Icon type="ios-paper" />资源导航
               </MenuItem>
               <MenuItem name="2">
@@ -218,10 +217,10 @@
       >清华大学图书馆</el-link>
       <el-link
         type="primary"
-        href="http://www.library.fudan.edu.cn"
+        href="http://lib.zzu.edu.cn/"
         target="_blank"
         class="friendly"
-      >复旦大学图书馆</el-link>
+      >郑州大学图书馆</el-link>
       <el-link
         type="primary"
         href="http://libweb.zju.edu.cn"

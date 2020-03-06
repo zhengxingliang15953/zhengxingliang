@@ -56,4 +56,5 @@ public class TbStudentController {
     public List<TbStudent> selectAllStudent(String sno,Integer start){
         return tbStudentService.selectAllStudent(sno, start);
     }
+
 }

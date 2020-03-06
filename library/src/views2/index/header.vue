@@ -32,7 +32,6 @@
           <MenuItem name="2" to="/header/opentime">开放时间</MenuItem>
           <MenuItem name="3" to="/header/notice">通知公告</MenuItem>
           <MenuItem name="4" to="/header/readMessage">读者留言</MenuItem>
-          <MenuItem name="5">热门新书</MenuItem>
           <MenuItem name="6" to="/header/person" v-if="value1">个人中心</MenuItem>
         </Menu>
       </Col>

@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <h1>湖州师范学院图书馆预约系统后台管理</h1>
+    <h1>湖州师范学院图书馆预约系统管理</h1>
     <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" style="width:300px;margin:10px auto;">
       <FormItem label="账号" prop="account">
         <Input v-model="formCustom.account"></Input>
@@ -76,7 +76,8 @@ export default {
 <style lang="less" scoped>
 #login {
   height: 100%;
-  background-color: #cfcfcf;
+  background:url('../assets/loginBack.jpg') no-repeat;
+  background-size: 100%;
   padding-top: 8%;
   h1 {
     color: rgb(0, 0, 0);
