@@ -149,6 +149,7 @@ export default {
     brrowBook(value) {
       //借阅
       getUpdateAppointment(value.appId, 3, value.isbn).then(() => {
+        this.$message.success('借阅成功');
         getAllAppointment(
           this.searchSno,
           typeof this.time == "object"

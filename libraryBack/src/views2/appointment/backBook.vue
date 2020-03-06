@@ -154,7 +154,7 @@ export default {
     backBookBtn(value) {
       //还书
       getBackBookBtn(value.appId, value.isbn).then(() => {
-        this.$Message.success("还书成功");
+        this.$message.success("还书成功");
         getAllBackBook(
           this.searchSno,
           typeof this.time == "object"

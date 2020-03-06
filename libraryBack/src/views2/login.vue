@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <h1>湖州师范学院图书馆预约系统管理</h1>
-    <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" style="width:300px;margin:10px auto;">
+    <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" style="width:300px;margin:15px auto;">
       <FormItem label="账号" prop="account">
         <Input v-model="formCustom.account" placeholder="请输入管理员账号"></Input>
       </FormItem>
@@ -38,19 +38,19 @@ export default {
   methods: {
     loginBtn() {
       if (this.formCustom.account == "" || this.formCustom.pwd == "") {
-        this.$Message.error("账号密码不能为空");
+        this.$message.error("账号密码不能为空");
       } else {
         getLogin(this.formCustom).then(data => {
           if (data.data.msg != null) {
             if (data.data.type == 2) {
-              this.$Message.error("该账号被冻结");
+              this.$message.error("该账号被冻结");
             } else {
               window.sessionStorage.setItem("token", data.data.msg);
-              this.$Message.success("登陆成功");
+              this.$message.success("登陆成功");
               this.$router.push("/index");
             }
           } else {
-            this.$Message.error("登陆失败");
+            this.$message.error("登陆失败");
           }
         });
       }

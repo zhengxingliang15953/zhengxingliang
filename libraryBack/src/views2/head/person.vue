@@ -167,7 +167,7 @@ export default {
         this.$message.warning("你没有该权限");
       } else {
         getUpdateType(value.account, value.type).then(data => {
-          this.$Message.info("冻结成功");
+          this.$message.info("冻结成功");
           getAllAccount().then(data => {
             this.userList = data.data;
           });
@@ -180,7 +180,7 @@ export default {
         this.$message.warning("你没有该权限");
       } else {
         getUpdateType(value.account, value.type).then(data => {
-          this.$Message.info("解冻成功");
+          this.$message.info("解冻成功");
           getAllAccount().then(data => {
             this.userList = data.data;
           });
@@ -198,7 +198,7 @@ export default {
           type: "warning"
         }).then(() => {
           getDeleteAccount(value).then(data => {
-            this.$Message.error("删除成功");
+            this.$message.success("删除成功");
             getAllAccount().then(data => {
               this.userList = data.data;
             });

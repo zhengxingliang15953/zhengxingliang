@@ -42,11 +42,11 @@
       <Row type="flex" justify="center" class="lendItem">
         <Col :lg="16">
           <ul>
-            <li>馆藏目录</li>
+            <li @click="toLend2">馆藏目录</li>
           </ul>
           <div style="100%;">
             <el-input
-              placeholder="请输入内容"
+              placeholder="请输入检索内容"
               class="input-with-select"
               v-model="searchItem"
               type="text"
@@ -148,13 +148,13 @@
           <Col :lg="18" class="resource" v-if="this.name=='1'">
             <ul class="left">
               <li v-for="(item,index) in resourceList1" :key="index">
-                <el-link type="success" :href="item.resourceUrl">{{item.title}}</el-link>
+                <el-link type="success" :href="item.resourceUrl" target="_blank">{{item.title}}</el-link>
               </li>
             </ul>
 
             <ul class="left">
               <li v-for="(item,index) in resourceList2" :key="index">
-              <el-link type="success" :href="item.resourceUrl">{{item.title}}</el-link>
+              <el-link type="success" :href="item.resourceUrl" target="_blank">{{item.title}}</el-link>
               </li>
             </ul>
           </Col>
@@ -349,6 +349,9 @@ export default {
         query: { select: this.select, searchItem: this.searchItem }
       });
     },
+    toLend2(){
+        this.$router.push('/lend');
+    },
     personBtn() {//个人中心
       this.$router.push("/header/person");
       window.sessionStorage.setItem('index',6);
@@ -455,6 +458,11 @@ export default {
       list-style: none;
       height: 60px;
       background-color: #104e8b;
+      li:hover{
+        background: #DCDCDC;
+        color:black;
+        cursor: pointer;
+      }
       li {
         float: left;
         color: white;
@@ -462,6 +470,7 @@ export default {
         line-height: 60px;
         width: 100px;
         text-align: center;
+        transition: all 1s;
       }
     }
   }
