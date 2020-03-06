@@ -80,6 +80,8 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--短信-->
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
