@@ -3,10 +3,10 @@
     <h1>湖州师范学院图书馆预约系统管理</h1>
     <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" style="width:300px;margin:10px auto;">
       <FormItem label="账号" prop="account">
-        <Input v-model="formCustom.account"></Input>
+        <Input v-model="formCustom.account" placeholder="请输入管理员账号"></Input>
       </FormItem>
       <FormItem label="密码" prop="pwd">
-        <Input type="password" v-model="formCustom.pwd"></Input>
+        <Input type="password" v-model="formCustom.pwd" placeholder="请输入管理员密码"></Input>
       </FormItem>
       <FormItem>
         <Button type="primary" long @click="loginBtn">登录</Button>
@@ -65,6 +65,7 @@ export default {
       if(value==''){
         callBack(new Error('密码不能为空'));
       }
+      callBack();
     }
   },
   created(){
@@ -81,8 +82,9 @@ export default {
   padding-top: 8%;
   h1 {
     color: rgb(0, 0, 0);
-    font-size: 30px;
+    font-size: 35px;
     text-align: center;
+    font-family: 'loginText';
   }
 }
 </style>

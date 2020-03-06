@@ -13,3 +13,7 @@ body,html,#app{
 	margin-left: 3%;
 	margin-top: 10px;
   }
+  @font-face{
+	  font-family: 'loginText';
+	  src: url('../assets/汉标景晨毛笔行书体.ttf');
+  }
