@@ -5,3 +5,4 @@
 console.log("a");
 import '../assets/file.css';
 import '../assets/file.less';
+console.log("abc");
