@@ -1,5 +1,8 @@
 const {resolve}=require('path');
 const HtmlWebpackPlugins = require('html-webpack-plugin');//html-webpack插件
+const webpack=require('webpack');//访问内置的插件
+
+
 module.exports={
     /**
      * 模式
@@ -45,7 +48,8 @@ module.exports={
      */
     plugins:[
         /**默认会创建一个index.html空文件，引入打包输出的所有资源 */
-        new HtmlWebpackPlugins
+        new HtmlWebpackPlugins,
+        new webpack.optimeze.UglifyJsPlugin(),
     ],
     /**启动指令webpack-dev-server */
     devServer:{

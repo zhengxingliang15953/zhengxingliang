@@ -14,6 +14,9 @@ import javax.annotation.Resource;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * 定时任务类
+ */
 @Component
 public class Schedule {
 
