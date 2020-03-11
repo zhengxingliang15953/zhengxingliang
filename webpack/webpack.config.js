@@ -1,7 +1,12 @@
 const {resolve}=require('path');
 const HtmlWebpackPlugins = require('html-webpack-plugin');//html-webpack插件
 const webpack=require('webpack');//访问内置的插件
+const MiniCssExtractPlugin=require('mini-css-extract-plugin');//取代style-loader,提取js中的css成单独文件
 
+/**
+ * 设置nodejs环境变量
+ */
+process.env.NODE_ENV='development';
 
 module.exports={
     /**
@@ -25,7 +30,13 @@ module.exports={
      */
     module:{
         rules:[
-            {test:/\.css$/,use:['style-loader','css-loader']},
+            {test:/\.css$/,use:[MiniCssExtractPlugin.loader,'css-loader',{
+                loader:'postcss-loader',options:{
+                    ident:'postcss',plugins:()=>[
+                        require('postcss-preset-env')()
+                    ]
+                }
+            }]},
             {test:/\.less$/,use:['style-loader','css-loader','less-loader']},
             //图片插件只使用一个loader,下载url-loader和file-loader
             {test:/\.(jpg|png|jpeg|gif)$/,loader:'url-loader',options:{
@@ -49,7 +60,10 @@ module.exports={
     plugins:[
         /**默认会创建一个index.html空文件，引入打包输出的所有资源 */
         new HtmlWebpackPlugins,
-        new webpack.optimeze.UglifyJsPlugin(),
+        //new webpack.optimeze.UglifyJsPlugin(),//访问webpack内置插件
+        new MiniCssExtractPlugin({
+            filename:'css/main.css',
+        }),//提取css成单独文件
     ],
     /**启动指令webpack-dev-server */
     devServer:{
