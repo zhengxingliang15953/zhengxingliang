@@ -1,6 +1,0 @@
-html,body{
-    background-color: black;
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-    display: flex;
-}
