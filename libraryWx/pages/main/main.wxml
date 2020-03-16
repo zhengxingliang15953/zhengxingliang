@@ -1,0 +1,10 @@
+<view id="main">
+<van-icon name="cart-circle-o" size="200rpx" color="#CFCFCF" class="icon"/>
+<view class="noone">没有相关订单</view>
+  <van-tabs active="1" >
+    <van-tab title="待取货" name="1" color="#1E90FF">
+      
+    </van-tab>
+    <van-tab title="待送达" name="2" color="#1E90FF"></van-tab>
+  </van-tabs>
+</view>

@@ -26,6 +26,24 @@ const routes = [
         component:()=>import('../views2/head/student.vue'),
       },
       {
+        name:'Rider1',//骑手管理
+        path:'/index/Rider1',
+        component:()=>import('../views2/Rider/Rider1.vue'),
+        redirect:'/index/Rider1/Rider2',
+        children:[
+          {
+            name:'Rider2',//骑手列表
+            path:'/index/Rider1/Rider2',
+            component:()=>import('../views2/Rider/Rider2.vue')
+          },
+          {
+            name:'Rider3',//骑手审批
+            path:'/index/Rider1/Rider3',
+            component:()=>import('../views2/Rider/Rider3.vue')
+          }
+        ]
+      },
+      {
         name:'appointment',//预约管理
         path:'/index/appointment',
         component:()=>import('../views2/head/appointment.vue'),

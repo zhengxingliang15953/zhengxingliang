@@ -1,0 +1,56 @@
+<view>
+  <!-- 骑手申请 -->
+  <van-dialog use-slot title="骑手申请" show="{{ show }}" show-cancel-button bind:confirm="resourirBtn">
+    <van-field placeholder="请输入姓名" label="姓名" value="{{studentName}}" bind:input="studentNameInput"/>
+    <van-field placeholder="请输入学号" label="学号" value="{{sno}}" bind:input="snoInput"/>
+  </van-dialog>
+  <!-- 骑手申请 -->
+
+  <!--你还没有登录-->
+  <van-notify id="van-notify" />
+  <van-toast id="van-toast" />
+  <!--你还没有登录-->
+
+  <!-- 主体部分 -->
+  <view class="top">
+    <view class="headImg" wx:if="{{loginValue}}">
+      <image src="{{infoUser.avatarUrl}}" style="height:160rpx;width:160rpx;"></image>
+    </view>
+    <van-icon name="user-circle-o" size="160rpx" color="white" class="head" wx:if="{{!loginValue}}"/>
+    <text class="login" bindtap="loginBtn" wx:if="{{loginValue}}">{{infoUser.nickName||''}}</text>
+    <button open-type="getUserInfo" bindgetuserinfo="login123123" class="loginBtn" wx:if="{{!loginValue}}">用户登录</button>
+  </view>
+  <view class="bottom">
+    <view class="item">
+      <van-icon name="clock-o" size="70rpx" color="#1E90FF" class="icon" />
+      <text>在线状态</text>
+      <van-switch active-color="#07c160" inactive-color="#ee0a24" size="50rpx" class="goIcon" bind:change="change" name="1" checked="{{checked}}" />
+    </view>
+    <view class="item" bindtap="historyBtn">
+      <van-icon name="completed" size="70rpx" color="#1E90FF" class="icon" />
+      <text>历史订单</text>
+      <van-icon name="arrow" size="65rpx" color="#828282" class="goIcon" />
+    </view>
+    <view class="item" bindtap="statisticBtn">
+      <van-icon name="chart-trending-o" size="70rpx" color="#1E90FF" class="icon" />
+      <text>我的统计</text>
+      <text class="number">累计完成15单</text>
+      <van-icon name="arrow" size="65rpx" color="#828282" class="goIcon" />
+    </view>
+    <view class="item" bindtap="startResourirBtn">
+      <van-icon name="logistics" size="70rpx" color="#1E90FF" class="icon" />
+      <text>申请骑手</text>
+      <van-icon name="arrow" size="65rpx" color="#828282" class="goIcon" />
+    </view>
+    <view class="item" bindtap="start">
+      <van-icon name="friends-o" size="70rpx" color="#1E90FF" class="icon" />
+      <text>开始接单</text>
+      <van-icon name="arrow" size="65rpx" color="#828282" class="goIcon" />
+    </view>
+  </view>
+  <view>
+    <text id="bottom">@郑兴樑版权所有</text>
+  </view>
+
+  <!-- 主体部分 -->
+</view>

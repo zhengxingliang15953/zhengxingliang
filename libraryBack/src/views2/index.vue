@@ -31,6 +31,10 @@
             <Icon type="md-contact"></Icon>
             <span>个人中心</span>
           </MenuItem>
+          <MenuItem name="8" to="/index/Rider1">
+            <Icon type="md-contact"></Icon>
+            <span>骑手管理</span>
+          </MenuItem>
         </Menu>
       </Sider>
       <Layout>

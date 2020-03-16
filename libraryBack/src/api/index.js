@@ -117,3 +117,7 @@ export let getUpdateBookType = (isbn,type) => {
 export let getAppointmentAfter = (sno,appTime,start) => {
     return Http.get(`/api/getAppointmentAfter?sno=${sno}&appTime=${appTime}&start=${start}`);
 };   
+/*获取预约预期列表*/
+export let getApprove = (sno,start) => {
+    return Http.get(`/api/getApprove?sno=${sno}&start=${start}`);
+};   

@@ -1,0 +1,6 @@
+/* pages/statistics/statistic.wxss */
+text{
+  margin-left:5%;
+  font-size: 30rpx;
+  color: #9C9C9C;
+}

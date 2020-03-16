@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-icon":"../../miniprogram_npm/@vant/weapp/icon/index",
+    "van-switch": "../../miniprogram_npm/@vant/weapp/switch/index",
+    "van-dialog": "../../miniprogram_npm/@vant/weapp/dialog/index",
+    "van-field": "../../miniprogram_npm/@vant/weapp/field/index",
+    "van-notify":"../../miniprogram_npm/@vant/weapp/notify/index",
+    "van-toast": "../../miniprogram_npm/@vant/weapp/toast/index"
+  },
+  "navigationBarTitleText":"个人中心"
+}

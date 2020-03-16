@@ -7,7 +7,35 @@
         values (#{openId})
     </insert>
 
-    <select id="selectOpenId" resultMap="com.example.demo.entity.TbRider">
+    <select id="selectOpenId" resultType="com.example.demo.entity.TbRider">
         select * from tb_rider where openId like #{openId}
+    </select>
+
+    <update id="apply">
+        update tb_rider
+        set studentName=#{studentName},sno=#{sno},status=2
+        where openId like #{openId}
+    </update>
+
+    <select id="selectAll" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where status=2
+    </select>
+
+    <select id="selectSno" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where sno like #{sno} and status=2
+    </select>
+
+
+
+
+
+
+
+    <select id="selectAllNumber" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where status=2
+    </select>
+
+    <select id="selectSnoNumber" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where sno like #{sno} and status=2
     </select>
 </mapper>
