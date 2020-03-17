@@ -66,7 +66,6 @@ public class TbWxLoginController {
         JSONObject jsonObject = (JSONObject) JSONObject.parse(resultString);
         session_key = jsonObject.get("session_key")+"";
         openid = jsonObject.get("openid")+"";
-        tbRiderService.insertId(openid+"");
         return resultString;
 
     }

@@ -25,6 +25,19 @@
         select * from tb_rider where sno like #{sno} and status=2
     </select>
 
+    <update id="updateStatus">
+        update tb_rider
+        set status=#{status}
+        where openId like #{openId}
+    </update>
+
+    <delete id="deleteRider">
+        delete from tb_rider where openId like #{openId}
+    </delete>
+
+    <select id="selectOnlineRider" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where status=#{status} order by orderNumber desc
+    </select>
 
 
 

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbPointMapper">
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+    <select id="selectAppAll" resultType="com.example.demo.entity.TbPoint">
+        select * from tb_point where appId like #{appId} and status=0
+    </select>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mapper.TbPoint"
-            prefHeight="400.0" prefWidth="600.0">
+    <insert id="insertPoint">
+        insert into tb_point
+        values (#{pointId},#{openId},#{appId})
+    </insert>
 
-</AnchorPane>
+    <select id="selectOpenIdAppId" resultType="com.example.demo.entity.TbPoint">
+        select * from tb_point where openId like #{openId} and appId like #{openId} and status=0
+    </select>
+
+    <select id="selectOpenId" resultType="com.example.demo.entity.TbPoint">
+        select * from tb_point where openId like #{openId} and status=0
+    </select>
+</mapper>

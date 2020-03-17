@@ -9,7 +9,7 @@ import java.util.List;
 public interface TbWaitMapper {
     List<TbWait> selectSnoWait(String sno);
     List<TbWait> selectIsbnWait(String isbn);
-    void insertWait(String waitId,String sno,String isbn,String appTime);
+    void insertWait(String waitId,String sno,String isbn,String appTime,String appMethods);
     List<TbWait> selectSnoIsbnWait(String sno,String isbn);
     void deleteWait(String waitId);
     List<TbWait> selectWaitId(String waitId);

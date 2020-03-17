@@ -4,10 +4,7 @@ import com.example.demo.entity.TbAppointment;
 import com.example.demo.entity.TbBook;
 import com.example.demo.entity.TbStudent;
 import com.example.demo.entity.TbWait;
-import com.example.demo.mapper.TbAppointmentMapper;
-import com.example.demo.mapper.TbBookMapper;
-import com.example.demo.mapper.TbStudentMapper;
-import com.example.demo.mapper.TbWaitMapper;
+import com.example.demo.mapper.*;
 import com.example.demo.service.TbAppointmentService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -33,6 +30,9 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
     @Resource
     private TbWaitMapper tbWaitMapper;
 
+    @Resource
+    private TbConfigurationMapper tbConfigurationMapper;
+
     /**
      * 预约图书
      * @param appId
@@ -42,8 +42,8 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
      * @param sno
      * @return
      */
-    @Override
-    public TbAppointment insertAppointment(String appId, String bookName, String isbn, String studentName, String sno,String appTime) {
+    @Override//0等待 1
+    public TbAppointment insertAppointment(String appId, String bookName, String isbn, String studentName, String sno,String appTime,String appMethods) {
         TbAppointment tbAppointment=new TbAppointment();
         List<TbBook> tbBookList=tbBookMapper.selectIsbnBook(isbn);
         List<TbWait> tbWaitList=tbWaitMapper.selectIsbnWait(isbn);
@@ -59,10 +59,18 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
         }else if(tbBookList.size()>=1&&tbBookList.get(0).getAppNumber()+tbBookList.get(0).getReadNumber()>=tbBookList.get(0).getBookNumber()){
             tbAppointment.setMsg("2");//排队
             tbAppointment.setLendingNumber(tbWaitList.size());
-            tbWaitMapper.insertWait(appId,sno,isbn,appTime);
+            tbWaitMapper.insertWait(appId,sno,isbn,appTime,appMethods);
             return  tbAppointment;
+        }else if(appMethods.equals("送书上门")&&tbConfigurationMapper.selectAllConfig().getRiderSwitch()==0){
+            tbAppointment.setMsg("5");//不可送书上门
+            return tbAppointment;
         }else{
-            tbAppointmentMapper.insertAppointment(appId,bookName,isbn,studentName,sno,getTime(),tbWaitList.size());
+            if(appMethods.equals("送书上门")){
+                tbAppointmentMapper.insertAppointment(appId,bookName,isbn,studentName,sno,getTime(),6,tbWaitList.size(),appMethods);
+            }else{
+
+                tbAppointmentMapper.insertAppointment(appId,bookName,isbn,studentName,sno,getTime(),1,tbWaitList.size(),appMethods);
+            }
             Integer readNumber=tbBookList.get(0).getReadNumber();
             Integer appNumber1=tbBookList.get(0).getAppNumber();
             appNumber1++;
@@ -125,7 +133,11 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
                         TbWait tbWait=tbWaitList.get(0);
                         tbWaitMapper.deleteWait(tbWait.getWaitId());
                         TbStudent tbStudent=tbStudentMapper.selectSnoStudent(tbWait.getSno()).get(0);
-                        tbAppointmentMapper.insertAppointment(tbWait.getWaitId(),tbAppointmentList.get(0).getBookName(),tbWait.getIsbn(),tbStudent.getName(),tbWait.getSno(),getTime(),tbWaitList.size()-1>=0?tbWaitList.size():0);
+                        if(tbWait.getAppMethods().equals("送书上门")){
+                            tbAppointmentMapper.insertAppointment(tbWait.getWaitId(),tbAppointmentList.get(0).getBookName(),tbWait.getIsbn(),tbStudent.getName(),tbWait.getSno(),getTime(),6,tbWaitList.size()-1>=0?tbWaitList.size():0,tbWait.getAppMethods());
+                        }else{
+                            tbAppointmentMapper.insertAppointment(tbWait.getWaitId(),tbAppointmentList.get(0).getBookName(),tbWait.getIsbn(),tbStudent.getName(),tbWait.getSno(),getTime(),1,tbWaitList.size()-1>=0?tbWaitList.size():0,tbWait.getAppMethods());
+                        }
                     }
                     tbAppointment.setMsg("1");
                     return tbAppointment;
@@ -213,7 +225,12 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
             TbWait tbWait=tbWaitList.get(0);
             tbWaitMapper.deleteWait(tbWait.getWaitId());
             TbStudent tbStudent=tbStudentMapper.selectSnoStudent(tbWait.getSno()).get(0);
-            tbAppointmentMapper.insertAppointment(tbWait.getWaitId(),tbBookList.get(0).getBookName(),isbn,tbStudent.getName(),tbWait.getSno(),getTime(),tbWaitList.size()-1>=0?tbWaitList.size():0);
+            if(tbWait.getAppMethods().equals("送书上门")){
+                tbAppointmentMapper.insertAppointment(tbWait.getWaitId(),tbBookList.get(0).getBookName(),isbn,tbStudent.getName(),tbWait.getSno(),getTime(),6,tbWaitList.size()-1>=0?tbWaitList.size():0,tbWait.getAppMethods());
+            }else{
+                tbAppointmentMapper.insertAppointment(tbWait.getWaitId(),tbBookList.get(0).getBookName(),isbn,tbStudent.getName(),tbWait.getSno(),getTime(),1,tbWaitList.size()-1>=0?tbWaitList.size():0,tbWait.getAppMethods());
+
+            }
         }
     }
 
@@ -371,6 +388,38 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
                 tbAppointmentList.add(tbAppointment);
             }else{
                 tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectAppTimeAfterNumber(appTime).size()+"");
+            }
+            return tbAppointmentList;
+        }
+    }
+
+    /**
+     * 待指派列表
+     * @param sno
+     * @param start
+     * @return
+     */
+    @Override
+    public List<TbAppointment> waitDesignation(String sno, Integer start) {
+        List<TbAppointment> tbAppointmentList=null;
+        if(sno.equals("")){
+            tbAppointmentList=tbAppointmentMapper.selectWaitDesignation(new RowBounds((start-1)*10,10));
+            if(tbAppointmentList.size()<=0){
+                TbAppointment tbAppointment=new TbAppointment();
+                tbAppointment.setMsg("0");
+                tbAppointmentList.add(tbAppointment);
+            }else{
+                tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectWaitDesignationNumber().size()+"");
+            }
+            return tbAppointmentList;
+        }else{
+            tbAppointmentList=tbAppointmentMapper.selectSnoWaitDesignation(sno,new RowBounds((start-1)*10,10));
+            if(tbAppointmentList.size()<=0){
+                TbAppointment tbAppointment=new TbAppointment();
+                tbAppointment.setMsg("0");
+                tbAppointmentList.add(tbAppointment);
+            }else{
+                tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectSnoWaitDesignationNumber(sno).size()+"");
             }
             return tbAppointmentList;
         }

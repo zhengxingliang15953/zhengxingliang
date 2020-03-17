@@ -7,6 +7,7 @@ public class TbWait {
     private String appTime;
     private Integer status;
     private TbBook tbBook;
+    private String appMethods;
 
     public void setSno(String sno) {
         this.sno = sno;
@@ -54,5 +55,13 @@ public class TbWait {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getAppMethods() {
+        return appMethods;
+    }
+
+    public void setAppMethods(String appMethods) {
+        this.appMethods = appMethods;
     }
 }

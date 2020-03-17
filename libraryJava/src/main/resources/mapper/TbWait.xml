@@ -12,7 +12,7 @@
 
     <insert id="insertWait">
         insert into tb_wait
-        values (#{waitId},#{sno},#{isbn},#{appTime},0)
+        values (#{waitId},#{sno},#{isbn},#{appTime},0,#{appMethods})
     </insert>
 
     <select id="selectSnoIsbnWait" resultType="com.example.demo.entity.TbWait">

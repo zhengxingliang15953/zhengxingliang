@@ -15,6 +15,7 @@ public class TbAppointment {
     private Integer status;
     private Integer lendingNumber;
     private String msg;
+    private String appMethods;
     private TbBook tbBook;
     private List<TbWait> tbWaitList;
     private Integer lendingTimeNumber;
@@ -138,5 +139,13 @@ public class TbAppointment {
 
     public void setLendingTimeNumber(Integer lendingTimeNumber) {
         this.lendingTimeNumber = lendingTimeNumber;
+    }
+
+    public void setAppMethods(String appMethods) {
+        this.appMethods = appMethods;
+    }
+
+    public String getAppMethods() {
+        return appMethods;
     }
 }

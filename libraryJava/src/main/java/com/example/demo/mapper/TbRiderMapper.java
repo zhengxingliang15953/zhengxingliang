@@ -13,7 +13,9 @@ public interface TbRiderMapper {
     void apply(String openId,String studentName,String sno);
     List<TbRider> selectAll(RowBounds rowBounds);
     List<TbRider> selectSno(String sno, RowBounds rowBounds);
-
+    void updateStatus(String openId,Integer status);
+    void deleteRider(String openId);
+    List<TbRider> selectOnlineRider(Integer status);
 
 
 

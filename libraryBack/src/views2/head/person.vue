@@ -47,23 +47,20 @@
               </Col>
               <Col :lg="4">
                 <el-button type="danger" icon="el-icon-close" @click="deleteAccount(item.account)"></el-button>
-                <i class="el-icon-user"  v-if="item.account==indexAccount.account" style="margin-left:10px;"></i>
+                <i
+                  class="el-icon-user"
+                  v-if="item.account==indexAccount.account"
+                  style="margin-left:10px;"
+                ></i>
               </Col>
             </Row>
           </Card>
         </Scroll>
       </Col>
       <Col :lg="12">
-        <span
-          class="accountInfo"
-        >管理员账号:{{indexAccount.account}}</span>
-        <span
-          style=";color:#4876FF;"
-          class="accountInfo"
-          @click="addAccount"
-          id="addAccount"
-        >添加管理员</span>
-        <br />
+        <span class="accountInfo">管理员账号:{{indexAccount.account}}</span>
+        <span style=";color:#4876FF;" class="accountInfo" @click="addAccount" id="addAccount">添加管理员</span>
+        <br></br>
         <Form :model="formPwd" :label-width="50" style="width:70%;margin:50px auto;">
           <FormItem label="新密码">
             <Input v-model="formPwd.pwd1" placeholder="请输入密码" type="password"></Input>
@@ -72,6 +69,15 @@
             <Input v-model="formPwd.pwd2" placeholder="请再次输入密码" type="password"></Input>
           </FormItem>
           <Button type="primary" long @click="changePwd">修改密码</Button>
+          </FormItem>
+          <FormItem label="骑手">
+              <el-switch
+                v-model="rider"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                @change="riderChange">
+              </el-switch>
+          </FormItem>
         </Form>
       </Col>
     </Row>
@@ -85,7 +91,9 @@ import {
   getUpdateAccountPwd,
   getAllAccount,
   getUpdateType,
-  getDeleteAccount
+  getDeleteAccount,
+  getRiderConfig,
+  getAllConfig
 } from "../../api";
 export default {
   name: "index",
@@ -105,7 +113,8 @@ export default {
         pwd1: "",
         pwd2: ""
       },
-      userList: [] //管理员列表
+      userList: [] ,//管理员列表
+      rider:true,//骑手开关
     };
   },
   created() {
@@ -115,6 +124,9 @@ export default {
     getAllAccount().then(data => {
       this.userList = data.data;
     });
+    getAllConfig().then(data=>{
+      this.rider=data.data.riderSwitch=='1'?true:false;
+    })
   },
   methods: {
     ok() {
@@ -205,6 +217,24 @@ export default {
           });
         });
       }
+    },
+    riderChange(value){//骑手开关变化回调
+      if(this.indexAccount.status!='1'){
+        this.$message.warning("您没有该权限");
+        this.rider=!value;
+      }else{
+        let a;
+        this.rider=value;
+        if(this.rider==true){
+          a=1;
+        }else{
+          a=0;
+        }
+        getRiderConfig(a).then(()=>{
+          this.$message.success('更改成功');
+        })
+      }
+      
     }
   },
   computed: {
@@ -229,14 +259,14 @@ h2 {
   line-height: 50px;
 }
 .account1 {
-  background-color: #90EE90;
+  background-color: #90ee90;
 }
 .account2 {
   background-color: #b5b5b5;
 }
-.accountInfo{
-  display:inline-block;
-  width:50%;
-  text-align:center;
+.accountInfo {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
 }
 </style>

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface TbAppointmentMapper {
-    void insertAppointment(String appId,String bookName,String isbn,String studentName,String sno,String appTime,Integer lendingNumber);
+    void insertAppointment(String appId,String bookName,String isbn,String studentName,String sno,String appTime,Integer status,Integer lendingNumber,String appMethods);
     List<TbAppointment> selectIfAppointment(String sno, String isbn);
     List<TbAppointment> selectSnoAppointment(String sno);
     void deleteAppointment(String appId);
@@ -32,6 +32,12 @@ public interface TbAppointmentMapper {
     List<TbAppointment> selectSnoAfter(String sno,RowBounds rowBounds);
     List<TbAppointment> selectAppTimeAfter(String appTime,RowBounds rowBounds);
     void updateAfter(String appId,Integer status);
+    List<TbAppointment> selectWaitDesignation(RowBounds rowBounds);
+    List<TbAppointment> selectSnoWaitDesignation(String sno,RowBounds rowBounds);
+
+
+
+
 
     List<TbAppointment> selectAppTimeNumber(String appTime);//appTime计数
     List<TbAppointment> selectAllAppointmentNumber();//查询所有计数
@@ -44,4 +50,6 @@ public interface TbAppointmentMapper {
     List<TbAppointment> selectAllAfterNumber();//查询预约预期所有列表计数
     List<TbAppointment> selectSnoAfterNumber(String sno);//查询sno预约预期计数
     List<TbAppointment> selectAppTimeAfterNumber(String appTime);//查询appTime预约计数
+    List<TbAppointment> selectWaitDesignationNumber();//查询待指派列表计数
+    List<TbAppointment> selectSnoWaitDesignationNumber(String sno);//查询sno待指派计数
 }

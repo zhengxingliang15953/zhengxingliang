@@ -6,12 +6,10 @@ public class TbRider {
     private String studentName;
     private String sno;
     private Integer status;
-    private Integer number;
+    private Integer orderNumber;
     private String msg;
 
-    public Integer getNumber() {
-        return number;
-    }
+
 
     public Integer getStatus() {
         return status;
@@ -42,9 +40,6 @@ public class TbRider {
         this.nickName = nickName;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
 
     public void setOpenId(String openId) {
         this.openId = openId;
@@ -64,5 +59,13 @@ public class TbRider {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }

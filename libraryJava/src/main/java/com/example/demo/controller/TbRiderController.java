@@ -45,4 +45,60 @@ public class TbRiderController {
     public List<TbRider> selectApprove(String sno,Integer start){
         return tbRiderService.selectApply(sno, start);
     }
+
+    /**
+     * 审批通过
+     * @param openId
+     * @param status
+     * @return
+     */
+    @ApiOperation(value = "审批列表", notes = "审批列表",httpMethod = "GET")
+    @RequestMapping(value = "api/getAgreement",method = RequestMethod.GET)
+    public TbRider agreement(String openId,Integer status){
+        return tbRiderService.agreement(openId,status);
+    }
+
+    /**
+     * 根据openID获取用户信息
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "根据openID获取用户信息", notes = "根据openID获取用户信息",httpMethod = "GET")
+    @RequestMapping(value = "api/getOpenIdUser",method = RequestMethod.GET)
+    public TbRider selectOpenId(String openId){
+        return tbRiderService.selectOpenId(openId);
+    }
+
+    /**
+     * 审批不通过
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "审批不通过", notes = "审批不通过",httpMethod = "GET")
+    @RequestMapping(value = "api/getRefuse",method = RequestMethod.GET)
+    public TbRider deleteRider(String openId){
+        return tbRiderService.refuse(openId);
+    }
+
+    /**
+     * 骑手小程序上线下线
+     * @param openId
+     * @param status
+     */
+    @ApiOperation(value = "骑手上下线", notes = "骑手上下线",httpMethod = "GET")
+    @RequestMapping(value = "api/getLineType",method = RequestMethod.GET)
+    public void getLineType(String openId,Integer status){
+        tbRiderService.riderLineType(openId, status);
+    }
+
+    /**
+     * 根据appId获取相应的骑手
+     * @param appId
+     * @return
+     */
+    @ApiOperation(value = "根据appId获取骑手列表", notes = "根据appId获取骑手列表",httpMethod = "GET")
+    @RequestMapping(value = "api/getAppRider",method = RequestMethod.GET)
+    public List<TbRider> getAppRider(String appId){
+        return tbRiderService.selectAppId(appId);
+    }
 }

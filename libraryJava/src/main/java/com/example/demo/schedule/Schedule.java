@@ -56,7 +56,11 @@ public class Schedule {
                     tbWaitMapper.deleteWait(tbWaitList.get(0).getWaitId());
                     String studentName=tbStudentMapper.selectOneStudent(tbWaitList.get(0).getSno()).getName();//学生姓名
                     String bookName=tbBookMapper.selectIsbnBook(tbWaitList.get(0).getIsbn()).get(0).getBookName();
-                    tbAppointmentMapper.insertAppointment(tbWaitList.get(0).getWaitId(),bookName,tbWaitList.get(0).getIsbn(),studentName,tbWaitList.get(0).getSno(),tbAppointmentService.getTime(),tbWaitList.size()-1);
+                    if(tbWaitList.get(0).getAppMethods().equals("送书上门")){
+                        tbAppointmentMapper.insertAppointment(tbWaitList.get(0).getWaitId(),bookName,tbWaitList.get(0).getIsbn(),studentName,tbWaitList.get(0).getSno(),tbAppointmentService.getTime(),6,tbWaitList.size()-1,tbWaitList.get(0).getAppMethods());
+                    }else{
+                        tbAppointmentMapper.insertAppointment(tbWaitList.get(0).getWaitId(),bookName,tbWaitList.get(0).getIsbn(),studentName,tbWaitList.get(0).getSno(),tbAppointmentService.getTime(),1,tbWaitList.size()-1,tbWaitList.get(0).getAppMethods());
+                    }
                 }else{
                     List<TbBook> tbBookList=tbBookMapper.selectIsbnBook(appointment.getIsbn()); //图书预约人数、借阅人数修改
                     Integer appNumber=tbBookList.get(0).getAppNumber();

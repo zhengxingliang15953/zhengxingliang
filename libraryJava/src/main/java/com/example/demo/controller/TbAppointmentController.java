@@ -34,8 +34,8 @@ public class TbAppointmentController {
      */
     @ApiOperation(value = "预约图书", notes = "预约图书",httpMethod = "GET")
     @RequestMapping(value = "api/getAppointment",method = RequestMethod.GET)
-    public TbAppointment insertAppointment(String appId, String bookName, String isbn, String studentName, String sno,String appTime){
-        return tbAppointmentService.insertAppointment(appId, bookName, isbn, studentName, sno, appTime);
+    public TbAppointment insertAppointment(String appId, String bookName, String isbn, String studentName, String sno,String appTime,String appMethods){
+        return tbAppointmentService.insertAppointment(appId, bookName, isbn, studentName, sno, appTime,appMethods);
     }
 
     /**
@@ -145,5 +145,17 @@ public class TbAppointmentController {
     @RequestMapping(value = "api/getAppointmentAfter",method = RequestMethod.GET)
     public List<TbAppointment> selectAppointmentAfter(String sno,String appTime,Integer start){
         return tbAppointmentService.selectAppAfter(sno, appTime, start);
+    }
+
+    /**
+     * 获取待指派列表
+     * @param sno
+     * @param start
+     * @return
+     */
+    @ApiOperation(value = "待指派列表", notes = "待指派列表",httpMethod = "GET")
+    @RequestMapping(value = "api/getWaitDesignation",method = RequestMethod.GET)
+    public List<TbAppointment> getWaitDesignation(String sno,Integer start){
+        return tbAppointmentService.waitDesignation(sno, start);
     }
 }

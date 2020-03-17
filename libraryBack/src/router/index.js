@@ -68,6 +68,11 @@ const routes = [
             name:'appointmentAfter',//预约预期
             path:'/index/appointment/appointmentAfter',
             component:()=>import('../views2/appointment/appointmentAfter.vue'),
+          },
+          {
+            name:'waitDesignate',//待指派
+            path:'/index/appointment/waitDesignate',
+            component:()=>import('../views2/appointment/waitDesignate.vue'),
           }
         ]
       },

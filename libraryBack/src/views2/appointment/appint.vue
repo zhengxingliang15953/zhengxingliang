@@ -43,13 +43,17 @@
               <Tag color="success" v-if="item.status==3">已借阅</Tag>
               <Tag color="error" v-if="item.status==4">借阅预期</Tag>
               <Tag color="blue" v-if="item.status==5">已归还</Tag>
+              <Tag color="cyan" v-if="item.status==6">待指派</Tag>
+              <Tag color="blue" v-if="item.status==7">骑手未接单</Tag>
+              <Tag color="blue" v-if="item.status==8">骑手取货中</Tag>
+              <Tag color="blue" v-if="item.status==9">骑手送货中</Tag>
             </span>
             <el-button
               type="success"
               icon="el-icon-check"
               circle
               size="small"
-              v-if="item.status==1"
+              v-if="item.status==1||item.status==6||item.status==7"
               @click="brrowBook(item)"
             ></el-button>
           </ListItem>

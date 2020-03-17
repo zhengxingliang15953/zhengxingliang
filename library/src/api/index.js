@@ -57,8 +57,8 @@ export let getAuthorBook = (author, start) => {
     return Http.get(`/api/getAuthorBook?author=${author}&start=${start}`);
 };
 /*预约图书*/
-export let getAppointment = (appId,bookName,isbn,name,sno,appTime) => {
-    return Http.get(`/api/getAppointment?appId=${appId}&bookName=${bookName}&isbn=${isbn}&studentName=${name}&sno=${sno}&appTime=${appTime}`);
+export let getAppointment = (appId,bookName,isbn,name,sno,appTime,appMethods) => {
+    return Http.get(`/api/getAppointment?appId=${appId}&bookName=${bookName}&isbn=${isbn}&studentName=${name}&sno=${sno}&appTime=${appTime}&appMethods=${appMethods}`);
 };
 /*我的预约*/
 export let getMyAppointment = (sno) => {
@@ -71,4 +71,8 @@ export let getDeleteAppointment = (appId,status) => {
 /*续借*/
 export let getUpdateLendingTime = (appId,isbn) => {
     return Http.get(`/api/getUpdateLendingTime?appId=${appId}&isbn=${isbn}`);
+};
+/*获取骑手配置*/
+export let getAllConfig = () => {
+    return Http.get(`/api/getAllConfig`);
 };

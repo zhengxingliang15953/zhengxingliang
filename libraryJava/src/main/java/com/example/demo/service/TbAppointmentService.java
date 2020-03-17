@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface TbAppointmentService {
-    TbAppointment insertAppointment(String appId, String bookName, String isbn, String studentName, String sno,String appTime);
+    TbAppointment insertAppointment(String appId, String bookName, String isbn, String studentName, String sno,String appTime,String appMethods);
     List<TbAppointment> selectSnoAppointment(String sno);
     TbAppointment deleteAppointment(String appId,Integer status);
     List<TbAppointment> selectThreeAppointment(String sno, String appTime,Integer start);
@@ -17,4 +17,5 @@ public interface TbAppointmentService {
     List<TbAppointment> selectBackingBook(String sno,String backTime,Integer start);
     TbAppointment continueBrow(String appId,String isbn) throws ParseException;
     List<TbAppointment> selectAppAfter(String sno,String appTime,Integer start);
+    List<TbAppointment> waitDesignation(String sno,Integer start);
 }

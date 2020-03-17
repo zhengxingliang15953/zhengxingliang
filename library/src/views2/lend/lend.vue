@@ -1,5 +1,13 @@
 <template>
   <div id="lend">
+    <!--借阅方式-->
+    <Modal v-model="lendMethods" title="请选择借阅方式" width="400px" @on-ok="appointmentSubmit">
+      <RadioGroup v-model="border" @on-change="ridioChange">
+        <Radio label="图书自提" border></Radio>
+        <Radio label="送书上门" border v-if="bookDoor"></Radio>
+      </RadioGroup>
+    </Modal>
+    <!--借阅方式-->
     <div class="el-menu-demo header">
       <img src="../../assets/logo.png" height="100%" alt />
       <el-input placeholder="请输入内容" style="width:40%;margin:40px auto" v-model="searchItem">
@@ -97,7 +105,8 @@ import {
   getAuthorBook,
   getBookName2,
   getIndexStudent,
-  getAppointment
+  getAppointment,
+  getAllConfig
 } from "../../api";
 export default {
   name: "lend",
@@ -110,7 +119,11 @@ export default {
       sum: 0, //检索总数
       user: "匿名", //当前登录id
       searchItemShow: "", //当前检索
-      studentName: "" //登录姓名
+      studentName: "", //登录姓名
+      lendMethods: false, //借阅方式绑定
+      border: "图书自提",
+      bookDoor: true ,//送书上门有没有
+      appItem:{},//具体提交书本信息
     };
   },
   created() {
@@ -133,6 +146,9 @@ export default {
     } else {
       this.startChanceBook();
     }
+    getAllConfig().then(data => {
+      this.bookDoor = data.data.riderSwitch == 1 ? true : false;
+    });
   },
   methods: {
     appointmentBtn(value) {
@@ -140,35 +156,8 @@ export default {
       if (!window.sessionStorage.getItem("token")) {
         this.$message.warning("请先登录");
       } else {
-        var appid = `${value.isbn}${
-          this.user
-        }${new Date().getTime().toString()}`;
-        var apptime = this.timeFilter(new Date().toString());
-        getAppointment(
-          appid,
-          value.bookName,
-          value.isbn,
-          this.studentName,
-          this.user,
-          apptime
-        ).then(data => {
-          if(data.data.msg==4){
-            this.$Message.warning('该书已下架');
-          }else if (data.data.msg == 0) {
-            this.$Message.warning("你已经预约该书,不可再预约");
-          } else if (data.data.msg == 1) {
-            this.$Message.error("该书预约人数过多,暂时不可预约");
-          } else if (data.data.msg == 2) {
-            this.$Message.warning(
-              `该书以被预约,您前面还有${data.data.lendingNumber}位`
-            );
-          } else {
-            this.$Modal.success({
-              title: "预约成功",
-              content: "请前往个人中心查看预约详细信息"
-            });
-          }
-        });
+        this.lendMethods = true;
+        this.appItem=value;
       }
     },
     pageChange(value) {
@@ -233,6 +222,25 @@ export default {
       } else {
         this.startChanceBook();
       }
+    },
+    ridioChange(value) {
+      //单选按钮选择回调
+      this.border = value;
+    },
+    appointmentSubmit() {
+      //预约提交
+      var appid = `${this.appItem.isbn}${this.user}${new Date().getTime().toString()}`;
+      var apptime = this.timeFilter(new Date().toString());
+      getAppointment(appid,this.appItem.bookName,this.appItem.isbn,this.studentName,this.user,apptime,this.border).then(data=>{
+        switch(data.data.msg){
+          case '0':this.$message.warning('你已经预约该书');break;
+          case '1':this.$message.warning('排队人数过多不可预约');break;
+          case '2':this.$message.success('预约排队成功');break;
+          case '3':this.$message.success('预约成功');break;
+          case '4':this.$message.warning('该书已下架');break;
+          case '5':this.$message.warning('送书上门功能已关闭');break;
+        }
+      });
     },
     timeFilter(value) {
       let list = [];

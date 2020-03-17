@@ -3,8 +3,8 @@
 <mapper namespace="com.example.demo.mapper.TbAppointmentMapper">
 
     <insert id="insertAppointment">
-        insert into tb_appointment(appId,bookName,isbn,studentName,sno,appTime,status,lendingNumber,lendingTimeNumber)
-        values (#{appId},#{bookName},#{isbn},#{studentName},#{sno},#{appTime},1,#{lendingNumber},0)
+        insert into tb_appointment(appId,bookName,isbn,studentName,sno,appTime,status,lendingNumber,lendingTimeNumber,appMethods)
+        values (#{appId},#{bookName},#{isbn},#{studentName},#{sno},#{appTime},#{status},#{lendingNumber},0,#{appMethods})
     </insert>
 
     <select id="selectIfAppointment" resultType="com.example.demo.entity.TbAppointment">
@@ -101,6 +101,13 @@
         where appId like #{appId}
     </update>
 
+    <select id="selectWaitDesignation" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=6
+    </select>
+    <select id="selectSnoWaitDesignation" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=6 and sno like #{sno}
+    </select>
+
 
 
 
@@ -162,5 +169,13 @@
     </select>
     <select id="selectAppTimeAfterNumber" resultType="com.example.demo.entity.TbAppointment">
         select * from tb_appointment where status=2 and appTime like #{appTime}
+    </select>
+    <!--查询待指派列表计数-->
+    <select id="selectWaitDesignationNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=6
+    </select>
+    <!--查询sno待指派计数-->
+    <select id="selectSnoWaitDesignationNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=6 and sno like #{sno}
     </select>
 </mapper>

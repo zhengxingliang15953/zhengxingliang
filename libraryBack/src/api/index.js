@@ -117,7 +117,35 @@ export let getUpdateBookType = (isbn,type) => {
 export let getAppointmentAfter = (sno,appTime,start) => {
     return Http.get(`/api/getAppointmentAfter?sno=${sno}&appTime=${appTime}&start=${start}`);
 };   
-/*获取预约预期列表*/
+/*获取骑手审批列表*/
 export let getApprove = (sno,start) => {
     return Http.get(`/api/getApprove?sno=${sno}&start=${start}`);
 };   
+/*审批通过*/
+export let getAgreement = (openId,status) => {
+    return Http.get(`/api/getAgreement?openId=${openId}&status=${status}`);
+};   
+/*骑手配置修改*/
+export let getRiderConfig = (riderSwitch) => {
+    return Http.get(`/api/getRiderConfig?riderSwitch=${riderSwitch}`);
+};   
+/*获取配置信息*/
+export let getAllConfig = () => {
+    return Http.get(`/api/getAllConfig`);
+};   
+/*审批不通过*/
+export let getRefuse = (openId) => {
+    return Http.get(`/api/getRefuse?openId=${openId}`);
+};
+/*审批不通过*/
+export let getWaitDesignation = (sno,start) => {
+    return Http.get(`/api/getWaitDesignation?sno=${sno}&start=${start}`);
+};
+/*根据appId获取相应的骑手*/
+export let getAppRider = (appId) => {
+    return Http.get(`/api/getAppRider?appId=${appId}`);
+};
+/*添加配送单*/
+export let getAddPoint = (openId,appId) => {
+    return Http.get(`/api/getAddPoint?openId=${openId}&appId=${appId}`);
+};

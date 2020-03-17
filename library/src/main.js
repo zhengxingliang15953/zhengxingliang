@@ -49,5 +49,9 @@ Vue.filter('appType',function(value){
     case 3:return '已借阅';
     case 4:return '借阅预期';
     case 5:return '已归还';
+    case 6:return '待指派';
+    case 7:return '骑手未接单';
+    case 8:return '骑手取书中';
+    case 9:return '骑手已取货';
   }
 })
