@@ -3,19 +3,45 @@
 <mapper namespace="com.example.demo.mapper.TbPointMapper">
 
     <select id="selectAppAll" resultType="com.example.demo.entity.TbPoint">
-        select * from tb_point where appId like #{appId} and status=0
+        select * from tb_point where appId like #{appId} and status=#{status}
     </select>
 
     <insert id="insertPoint">
-        insert into tb_point
+        insert into tb_point(pointId,openId,appId)
         values (#{pointId},#{openId},#{appId})
     </insert>
 
     <select id="selectOpenIdAppId" resultType="com.example.demo.entity.TbPoint">
-        select * from tb_point where openId like #{openId} and appId like #{openId} and status=0
+        select * from tb_point where openId like #{openId} and appId like #{appId} and status=6
     </select>
 
     <select id="selectOpenId" resultType="com.example.demo.entity.TbPoint">
-        select * from tb_point where openId like #{openId} and status=0
+        select * from tb_point where openId like #{openId} and status=6
     </select>
+
+    <delete id="deletePoint">
+        delete from tb_point where appId like #{appId} and openId not like #{openId}
+    </delete>
+
+    <update id="agreePoint">
+        update tb_point
+        set status=#{status}
+        where pointId like #{pointId}
+    </update>
+
+    <select id="selectOpenIdStatus" resultType="com.example.demo.entity.TbPoint">
+        select * from tb_point where openId like #{openId} and status=#{status}
+    </select>
+
+    <select id="selectIngPoint" resultType="com.example.demo.entity.TbPoint">
+        select * from tb_point where appId=#{appId} and (status=8 or status=9)
+    </select>
+
+    <select id="deleteRider" resultType="com.example.demo.entity.TbPoint">
+        select * from tb_point where openId like #{openId}
+    </select>
+
+    <delete id="deleteAppId">
+        delete from tb_point where appId like #{appId} and status=6
+    </delete>
 </mapper>

@@ -1,9 +1,6 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.TbAppointment;
-import com.example.demo.entity.TbBook;
-import com.example.demo.entity.TbStudent;
-import com.example.demo.entity.TbWait;
+import com.example.demo.entity.*;
 import com.example.demo.mapper.*;
 import com.example.demo.service.TbAppointmentService;
 import org.apache.ibatis.session.RowBounds;
@@ -33,6 +30,12 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
     @Resource
     private TbConfigurationMapper tbConfigurationMapper;
 
+    @Resource
+    private TbRiderMapper tbRiderMapper;
+
+    @Resource
+    private TbPointMapper tbPointMapper;
+
     /**
      * 预约图书
      * @param appId
@@ -47,7 +50,7 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
         TbAppointment tbAppointment=new TbAppointment();
         List<TbBook> tbBookList=tbBookMapper.selectIsbnBook(isbn);
         List<TbWait> tbWaitList=tbWaitMapper.selectIsbnWait(isbn);
-        if(tbBookList.get(0).getType()==0||tbBookList.size()<=0){//该书已经下架
+        if(tbBookList.size()<=0||tbBookList.get(0).getType()==0){//该书已经下架
             tbAppointment.setMsg("4");
             return  tbAppointment;
         }else if(tbAppointmentMapper.selectIfAppointment(sno, isbn).size()>=1||tbWaitMapper.selectSnoIsbnWait(sno, isbn).size()>=1){
@@ -203,6 +206,7 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
         appNumber1--;
         readNumber1++;
         tbBookMapper.updateReadLend(isbn,appNumber1,readNumber1);
+        tbPointMapper.deleteAppId(appId);
     }
 
     /**
@@ -421,6 +425,49 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
             }else{
                 tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectSnoWaitDesignationNumber(sno).size()+"");
             }
+            return tbAppointmentList;
+        }
+    }
+
+    /**
+     * 获取正在配送列表
+     * @param sno
+     * @param start
+     * @return
+     */
+    @Override
+    public List<TbAppointment> ingDesignation(String sno, Integer start) {
+        List<TbAppointment> tbAppointmentList=null;
+        if(sno.equals("")){
+            tbAppointmentList=tbAppointmentMapper.selectingDesignation(8,new RowBounds((start-1)*10,10));
+            if(tbAppointmentList.size()<=0){
+                TbAppointment tbAppointment=new TbAppointment();
+                tbAppointment.setMsg("0");
+                tbAppointmentList.add(tbAppointment);
+                return tbAppointmentList;
+            }else{
+                tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectingDesignationNumber(8).size()+"");
+            }
+            for(TbAppointment tbAppointment:tbAppointmentList){//加入骑手信息
+                TbPoint tbPoint=tbPointMapper.selectIngPoint(tbAppointment.getAppId()).get(0);
+                TbRider tbRider=tbRiderMapper.selectOpenId(tbPoint.getOpenId()).get(0);
+                tbAppointment.setTbRider(tbRider);
+            }
+            return tbAppointmentList;
+        }else{
+            tbAppointmentList=tbAppointmentMapper.selectSnoIngDesignation(sno,8,new RowBounds((start-1)*10,10));
+            if(tbAppointmentList.size()<=0){
+                TbAppointment tbAppointment=new TbAppointment();
+                tbAppointment.setMsg("0");
+                tbAppointmentList.add(tbAppointment);
+                return tbAppointmentList;
+            }else{
+                tbAppointmentList.get(0).setMsg(tbAppointmentMapper.selectSnoIngDesignation2(sno,8).size()+"");
+            }
+            for(TbAppointment tbAppointment:tbAppointmentList){//加入骑手信息
+                TbPoint tbPoint=tbPointMapper.selectIngPoint(tbAppointment.getAppId()).get(0);
+                TbRider tbRider=tbRiderMapper.selectOpenId(tbPoint.getOpenId()).get(0);
+                tbAppointment.setTbRider(tbRider);            }
             return tbAppointmentList;
         }
     }

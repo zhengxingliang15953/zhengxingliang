@@ -1,0 +1,60 @@
+<view id="main">
+  <van-toast id="van-toast" />
+  <van-icon name="cart-circle-o" size="200rpx" color="#CFCFCF" class="icon" />
+  <view class="noone">没有相关订单</view>
+  <van-tabs active="1" bind:change="tabsChange">
+    <van-tab title="待接单" name="1" color="#1E90FF">
+      <view>
+        <van-panel wx:for="{{orderItem1}}" wx:key="index" title="{{item.tbStudent.name}}" desc="{{item.tbStudent.tel}}" status="待接单">
+          <view class="box">
+            <van-button type="danger" data-id="{{item}}" size="small" style="margin-left:520rpx;" bindtap="pointBtn1">同意接单</van-button>
+          </view>
+        </van-panel>
+      </view>
+    </van-tab>
+    <van-tab title="待取货" name="2" color="#1E90FF">
+      <view>
+        <van-panel wx:for="{{orderItem2}}" wx:key="index" title="{{item.tbStudent.name}}" desc="{{item.tbStudent.tel}}" status="待取货">
+          <view class="box">
+            <van-row>
+              <van-col span="24">
+                书名:{{item.tbBook.bookName}}
+              </van-col>
+              <van-col span="24">
+                isbn:{{item.tbBook.isbn}}
+              </van-col>
+              <van-col span="18">
+                地址:{{item.tbBook.address}}
+              </van-col>
+              <van-col span="6">
+                <van-button type="primary" data-id="{{item}}" size="small" bindtap="finsh">完成取货</van-button>
+              </van-col>
+            </van-row>
+          </view>
+        </van-panel>
+      </view>
+    </van-tab>
+    <van-tab title="待送达" name="3" color="#1E90FF">
+      <view>
+        <van-panel wx:for="{{orderItem3}}" wx:key="index" title="{{item.tbStudent.name}}" desc="{{item.tbStudent.tel}}" status="待送达">
+          <view class="box">
+            <van-row>
+              <van-col span="24">
+                书名:{{item.tbBook.bookName}}
+              </van-col>
+              <van-col span="24">
+                isbn:{{item.tbBook.isbn}}
+              </van-col>
+              <van-col span="18">
+                地址:{{item.tbBook.address}}
+              </van-col>
+              <van-col span="6">
+                <van-button type="warning" data-id="{{item}}" size="small" bindtap="finshOrder">完成订单</van-button>
+              </van-col>
+            </van-row>
+          </view>
+        </van-panel>
+      </view>
+    </van-tab>
+  </van-tabs>
+</view>

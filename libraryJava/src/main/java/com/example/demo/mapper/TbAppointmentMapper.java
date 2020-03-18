@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.entity.TbAppointment;
+import com.sun.rowset.internal.Row;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
@@ -34,6 +35,8 @@ public interface TbAppointmentMapper {
     void updateAfter(String appId,Integer status);
     List<TbAppointment> selectWaitDesignation(RowBounds rowBounds);
     List<TbAppointment> selectSnoWaitDesignation(String sno,RowBounds rowBounds);
+    List<TbAppointment> selectingDesignation(Integer status,RowBounds rowBounds);
+    List<TbAppointment> selectSnoIngDesignation(String sno,Integer status,RowBounds rowBounds);
 
 
 
@@ -52,4 +55,6 @@ public interface TbAppointmentMapper {
     List<TbAppointment> selectAppTimeAfterNumber(String appTime);//查询appTime预约计数
     List<TbAppointment> selectWaitDesignationNumber();//查询待指派列表计数
     List<TbAppointment> selectSnoWaitDesignationNumber(String sno);//查询sno待指派计数
+    List<TbAppointment> selectingDesignationNumber(Integer status);//查询待指派计数
+    List<TbAppointment> selectSnoIngDesignation2(String sno,Integer status);//查询待指派sno计数
 }

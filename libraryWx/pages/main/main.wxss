@@ -1,0 +1,34 @@
+/* pages/main/main.wxss */
+#main{
+  min-height: 1334rpx;
+  background-color: #FFFAFA;
+}
+.icon{
+  position: absolute;
+  top:210rpx;
+  left:275rpx;
+}
+.noone{
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top:420rpx;
+  font-size: 30rpx;
+}
+.order1{
+  width:95%;
+  height:200rpx;
+  margin:2px auto;
+  border:1px solid #1E90FF;
+  border-radius: 10px;
+}
+.box{
+  width:90.3%;
+  margin:0 auto;
+  border-bottom:2px solid #1E90FF;
+  font-size: 30rpx;
+}
+.bokItem{
+  height:32rpx;
+  line-height: 32rpx;
+}

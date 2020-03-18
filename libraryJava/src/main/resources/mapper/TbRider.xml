@@ -39,6 +39,19 @@
         select * from tb_rider where status=#{status} order by orderNumber desc
     </select>
 
+    <select id="selectAllRider" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where status=4 or status=5
+    </select>
+    <select id="selectAllSnoRider" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where sno=#{sno} and (status=4 or status=5)
+    </select>
+
+    <update id="updateNumber">
+        update tb_rider
+        set orderNumber=#{orderNumber}
+        where openId like #{openId}
+    </update>
+
 
 
 
@@ -50,5 +63,13 @@
 
     <select id="selectSnoNumber" resultType="com.example.demo.entity.TbRider">
         select * from tb_rider where sno like #{sno} and status=2
+    </select>
+
+    <select id="selectAllRiderNumber" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where status=4 or status=5
+    </select>
+
+    <select id="selectAllSnoRiderNumber" resultType="com.example.demo.entity.TbRider">
+        select * from tb_rider where sno=#{sno} and (status=4 or status=5)
     </select>
 </mapper>

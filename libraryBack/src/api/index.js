@@ -149,3 +149,15 @@ export let getAppRider = (appId) => {
 export let getAddPoint = (openId,appId) => {
     return Http.get(`/api/getAddPoint?openId=${openId}&appId=${appId}`);
 };
+/*获取正在配送列表*/
+export let getIngDesignation = (sno,start) => {
+    return Http.get(`/api/getIngDesignation?sno=${sno}&start=${start}`);
+};
+/*获取所有骑手*/
+export let getAllRider = (sno,start) => {
+    return Http.get(`/api/getAllRider?sno=${sno}&start=${start}`);
+};
+/*删除骑手*/
+export let getDeleteRider = (openId) => {
+    return Http.get(`/api/getDeleteRider?openId=${openId}`);
+};

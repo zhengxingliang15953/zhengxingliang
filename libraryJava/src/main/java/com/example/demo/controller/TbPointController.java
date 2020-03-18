@@ -47,4 +47,62 @@ public class TbPointController {
     public List<TbPoint> selectOpenIdPoint(String openId){
         return tbPointService.selectOpenId(openId);
     }
+
+    /**
+     * 骑手同意接单
+     * @param appId
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "骑手同意接单", notes = "骑手同意接单",httpMethod = "GET")
+    @RequestMapping(value = "api/getAgreePoint",method = RequestMethod.GET)
+    public TbPoint getAgreePoint(String appId,String openId,String pointId){
+        return tbPointService.agreeOrder(appId, openId,pointId);
+    }
+
+    /**
+     * 根据openId获取取货单
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "根据openId获取取货单", notes = "根据openId获取取货单",httpMethod = "GET")
+    @RequestMapping(value = "api/selectHavePointId",method = RequestMethod.GET)
+    public List<TbPoint> selectHavePointId(String openId){
+        return tbPointService.selectHavePointId(openId);
+    }
+
+
+    /**
+     * 骑手完成取货
+     * @param pointId
+     * @param appId
+     */
+    @ApiOperation(value = "骑手完成取货", notes = "骑手完成取货",httpMethod = "GET")
+    @RequestMapping(value = "api/getFinishTake",method = RequestMethod.GET)
+    public void getFinishTake(String pointId,String appId){
+        tbPointService.finishTake(pointId, appId);
+    }
+
+    /**
+     * 根据openID获取待送达单
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "骑手完成取货", notes = "骑手完成取货",httpMethod = "GET")
+    @RequestMapping(value = "api/getWaitFinish",method = RequestMethod.GET)
+    public List<TbPoint> selectWaitFinish(String openId){
+        return tbPointService.selectWaitFinish(openId);
+    }
+
+    /**
+     * 骑手完成订单
+     * @param pointId
+     * @param appId
+     * @param openId
+     */
+    @ApiOperation(value = "骑手完成订单", notes = "骑手完成订单",httpMethod = "GET")
+    @RequestMapping(value = "api/getFinishOrder",method = RequestMethod.GET)
+    public void getFinishOrder(String pointId,String appId,String openId){
+        tbPointService.finishOrder(pointId, appId, openId);
+    }
 }

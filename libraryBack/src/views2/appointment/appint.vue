@@ -45,8 +45,8 @@
               <Tag color="blue" v-if="item.status==5">已归还</Tag>
               <Tag color="cyan" v-if="item.status==6">待指派</Tag>
               <Tag color="blue" v-if="item.status==7">骑手未接单</Tag>
-              <Tag color="blue" v-if="item.status==8">骑手取货中</Tag>
-              <Tag color="blue" v-if="item.status==9">骑手送货中</Tag>
+              <Tag color="gold" v-if="item.status==8">骑手取货中</Tag>
+              <Tag color="purple" v-if="item.status==9">骑手配送中</Tag>
             </span>
             <el-button
               type="success"

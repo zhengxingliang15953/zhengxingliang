@@ -81,9 +81,29 @@ export default {
   methods: {
     searchBtn() {
       //搜索
+      this.searchSno = this.searchSnoItem;
+      getWaitDesignation(this.searchSno, 1).then(data => {
+        if (data.data[0].msg == "0") {
+          this.waitDesignateList = [];
+          this.sum = 0;
+        } else {
+          this.waitDesignateList = data.data;
+          this.sum = Number(this.waitDesignateList[0].msg);
+        }
+      });
     },
     changePage(value) {
       //页码改变回调
+      this.page = value;
+      getWaitDesignation(this.searchSno, value).then(data => {
+        if (data.data[0].msg == "0") {
+          this.waitDesignateList = [];
+          this.sum = 0;
+        } else {
+          this.waitDesignateList = data.data;
+          this.sum = Number(this.waitDesignateList[0].msg);
+        }
+      });
     },
     pointBtn(value) {
       //指派按钮
@@ -98,13 +118,13 @@ export default {
       this.riderList = this.riderList.filter(function(item) {
         return item.openId != value.openId;
       });
-      getAddPoint(value.openId,this.appointmentItem.appId).then(data=>{
-          if(data.data.msg=='0'){
-              this.$message.warning('该骑手已被指派');
-          }else{
-              this.$message.success("指派成功");
-          }
-      });   
+      getAddPoint(value.openId, this.appointmentItem.appId).then(data => {
+        if (data.data.msg == "0") {
+          this.$message.warning("该骑手已被指派");
+        } else {
+          this.$message.success("指派成功");
+        }
+      });
     }
   }
 };

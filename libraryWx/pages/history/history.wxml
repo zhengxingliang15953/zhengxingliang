@@ -1,0 +1,8 @@
+<view>
+  <van-panel title="借阅人:郑兴樑" desc="联系电话:15314652021" status="已完成">
+    <view class="box">
+      <text class="time1">取书时间:2020-3-17</text>
+      <text class="time2">送达时间:2020-3-17</text>
+    </view>
+  </van-panel>
+</view>

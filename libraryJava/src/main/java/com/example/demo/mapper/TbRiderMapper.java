@@ -16,10 +16,15 @@ public interface TbRiderMapper {
     void updateStatus(String openId,Integer status);
     void deleteRider(String openId);
     List<TbRider> selectOnlineRider(Integer status);
+    List<TbRider> selectAllRider(RowBounds rowBounds);
+    List<TbRider> selectAllSnoRider(String sno,RowBounds rowBounds);
+    void updateNumber(String openId,Integer orderNumber);
 
 
 
 
     List<TbRider> selectAllNumber();
     List<TbRider> selectSnoNumber(String sno);
+    List<TbRider> selectAllRiderNumber();
+    List<TbRider> selectAllSnoRiderNumber(String sno);
 }

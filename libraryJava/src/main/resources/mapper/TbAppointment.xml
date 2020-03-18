@@ -108,6 +108,16 @@
         select * from tb_appointment where status=6 and sno like #{sno}
     </select>
 
+    <select id="selectingDesignation" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=#{status} or status=9
+    </select>
+
+    <select id="selectSnoIngDesignation" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where sno like #{sno} and (status=#{status} or status=9)
+    </select>
+
+
+
 
 
 
@@ -177,5 +187,14 @@
     <!--查询sno待指派计数-->
     <select id="selectSnoWaitDesignationNumber" resultType="com.example.demo.entity.TbAppointment">
         select * from tb_appointment where status=6 and sno like #{sno}
+    </select>
+    <!--待指派计数-->
+    <select id="selectingDesignationNumber" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where status=#{status} or status=9
+    </select>
+
+    <!--待指派sno计数-->
+    <select id="selectSnoIngDesignation2" resultType="com.example.demo.entity.TbAppointment">
+        select * from tb_appointment where sno like #{sno} and (status=#{status} or status=9)
     </select>
 </mapper>

@@ -48,39 +48,70 @@
           </div>
 
           <row type="flex" justify="center" v-if="prodetail.title=='多介质过滤器'||prodetail.title=='Multi-media filter'">
-            <Col :lg="11"><img src="../../assets/img/upload/image/20191010/6370629844080622923888909.jpg" alt="" width="100%"></Col>
-            <Col :lg="2"></Col> 
-            <Col :lg="11"><img src="../../assets/img/upload/image/20191010/6370629844784829751302031.jpg" alt="" width="100%"></Col>
+            <Col :lg="8"><img src="../../assets/img/duojiezhiguolvqi1.png" alt="" width="99%" height="100%"></Col>
+            <Col :lg="8"><img src="../../assets/img/duojiezhiguolvqi2.png" alt="" width="99%"></Col> 
+            <Col :lg="8"><img src="../../assets/img/duojiezhiguolvqi3.png" alt="" width="99%"></Col>
           </row>
 
           <row type="flex" justify="center" v-if="prodetail.title=='叠片过滤器'||prodetail.title=='Laminated filter'">
-            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629846750340262945185.jpg" alt="" width="100%"></Col>
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629846750340262945185.jpg" alt="" width="100%" class="imgTop"></Col>
             <Col :lg="1"></Col> 
-            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629847499839835505213.jpg" alt="" width="100%"></Col>
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629847499839835505213.jpg" alt="" width="100%" class="imgTop"></Col>
             <Col :lg="1"></Col> 
-            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629853720698659641272.jpg" alt="" width="100%"></Col>
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629853720698659641272.jpg" alt="" width="100%" class="imgTop"></Col>
             <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/diepianguolvqi1.png" alt="" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/diepianguolvqi2.png" alt="" width="100%" height="80%" class="imgTop"></Col>
           </row>
 
           <row type="flex" justify="center" v-if="prodetail.title=='除铁除锰过滤器'||prodetail.title=='iron and manganese filters'">
-            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629859494123245324708.jpg" alt="" width="100%"></Col>
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629859494123245324708.jpg" alt="" width="100%" class="imgTop"></Col>
             <Col :lg="1"></Col> 
-            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629867356580256121538.jpg" alt="" width="100%"></Col>
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629867356580256121538.jpg" alt="" width="100%" class="imgTop"></Col>
             <Col :lg="1"></Col> 
-            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629867672946021459646.jpg" alt="" width="100%"></Col>
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629867672946021459646.jpg" alt="" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/chutiemeng1.png" alt="" width="100%" height="80%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/chutiemeng2.png" alt="" width="100%" height="80%" class="imgTop"></Col>
             <Col :lg="1"></Col>
           </row>
 
+          <row type="flex" justify="center" v-if="prodetail.title=='活性炭过滤器'||prodetail.title=='Activated carbon filter'">
+            <Col :lg="11"><img src="../../assets/img/huoxintan1.png" width="100%" class="imgTop"></Col>
+            <Col :lg="2"></Col>
+            <Col :lg="11"><img src="../../assets/img/huoxintan2.png" width="100%" class="imgTop"></Col>
+          </row>
+
           <row type="flex" justify="center" v-if="prodetail.title=='超滤装置'||prodetail.title=='The ultrafiltration device'">
-            <Col :lg="11"><img src="../../assets/img/upload/image/20191010/6370629876753964179634310.jpg" alt="" width="100%"></Col>
-            <Col :lg="2"></Col> 
-            <Col :lg="11"><img src="../../assets/img/upload/image/20191010/6370629877208601095312290.jpg" alt="" width="100%"></Col>
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629876753964179634310.jpg" alt="" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col> 
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629877208601095312290.jpg" alt="" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/chaolv4.png" width="100%" height="95%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/cholv2.png" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/chaolv3.png" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/chaolv1.png" height="75%" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
           </row>
 
           <row type="flex" justify="center" v-if="prodetail.title=='反渗透设备'||prodetail.title=='Reverse osmosis equipment'">
-            <Col :lg="11"><img src="../../assets/img/upload/image/20191010/6370629884923850153360722.jpg" alt="" width="100%"></Col>
-            <Col :lg="2"></Col> 
-            <Col :lg="11"><img src="../../assets/img/upload/image/20191010/6370629885392230828874047.jpg" alt="" width="100%"></Col>
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629884923850153360722.jpg" alt="" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col> 
+            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629885392230828874047.jpg" alt="" width="100%" class="imgTop"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/fansheng2.png" alt="" width="100%" class="imgTop"></Col> 
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/fansheng3.png" alt="" width="100%" class="imgTop"></Col> 
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/fansheng4.png" alt="" width="100%" class="imgTop"></Col> 
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/fansheng1.png" alt="" width="100%" class="imgTop"></Col> 
+            <Col :lg="1"></Col>
           </row>
 
           <row type="flex" justify="center" v-if="prodetail.title=='预处理系统'||prodetail.title=='Pretreatment system'">
@@ -88,10 +119,12 @@
           </row>
 
           <row type="flex" justify="center" v-if="prodetail.title=='蒸馏水系统'||prodetail.title=='Distilled water system'">
-            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629914281996224277457.jpg" alt="" width="100%"></Col>
+            <!--<Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629914281996224277457.jpg" alt="" width="100%"></Col>
             <Col :lg="1"></Col> 
             <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629914570950635437650.jpg" alt="" width="100%"></Col> 
-            <Col :lg="1"></Col>
+            <Col :lg="1"></Col>-->
+            <Col :lg="24"><img src="../../assets/img/zhengliushui1.png" width="100%" alt=""></Col>
+            
           </row>
 
           <row type="flex" justify="center" v-if="prodetail.title=='透析用纯水装置'||prodetail.title=='Dialysis with pure water device'">
@@ -101,7 +134,11 @@
           <row type="flex" justify="center" v-if="prodetail.title=='精滤及微孔过滤'||prodetail.title=='Fine filtration and microporous'">
             <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629914972223877757765.jpg" alt="" width="100%"></Col>
             <Col :lg="1"></Col> 
-            <Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629916441937485244947.jpg" alt="" width="60%"></Col> 
+            <!--<Col :lg="7"><img src="../../assets/img/upload/image/20191010/6370629916441937485244947.jpg" alt="" width="60%"></Col> 
+            <Col :lg="1"></Col>-->
+            <Col :lg="7"><img src="../../assets/img/jinglv1.png" alt="" width="100%"></Col>
+            <Col :lg="1"></Col>
+            <Col :lg="7"><img src="../../assets/img/jinglv2.png" alt="" width="100%" height="100%"></Col>
             <Col :lg="1"></Col>
           </row>
 
@@ -224,5 +261,7 @@ export default {
       width: 100%;
     }
   }
-
+.imgTop{
+  margin-top:10px;
+}
 </style>

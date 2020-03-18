@@ -18,6 +18,7 @@ public class TbAppointment {
     private String appMethods;
     private TbBook tbBook;
     private List<TbWait> tbWaitList;
+    private TbRider tbRider;
     private Integer lendingTimeNumber;
 
     public void setStatus(Integer status) {
@@ -147,5 +148,13 @@ public class TbAppointment {
 
     public String getAppMethods() {
         return appMethods;
+    }
+
+    public void setTbRider(TbRider tbRider) {
+        this.tbRider = tbRider;
+    }
+
+    public TbRider getTbRider() {
+        return tbRider;
     }
 }

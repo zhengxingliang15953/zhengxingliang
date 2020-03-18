@@ -9,12 +9,29 @@
         </div>
       </div>
       <div class="boxOfProducts mt-6">
-        <div class="itemOfProducts" v-for="(item, index) in prodata" :key="index">
+        <!--<div class="itemOfProducts" v-for="(item, index) in prodata" :key="index">
           <router-link :to="{name:'proDetail',params:{pid:item.id}}">
           <img :src="item.img" alt="products">
           <div class="titleOfPro">{{item.title}}</div>
-          <!--<img :src="item.img" alt="products">-->
           </router-link>
+        </div>-->
+        <div class="itemOfProducts" >
+          
+            <img src="../../assets/img/homeproduct1.png" alt="products">
+            <div class="titleOfPro">活性炭过滤器</div>
+         
+        </div>
+        <div class="itemOfProducts" >
+          
+            <img src="../../assets/img/homeproduct2.png" alt="products" height="110%;" width="100%">
+            <div class="titleOfPro">水处理设备</div>
+         
+        </div>
+        <div class="itemOfProducts" >
+          
+            <img src="../../assets/img/homeproduct3.png" alt="products">
+            <div class="titleOfPro">超滤装置</div>
+         
         </div>
       </div>
     </Col>

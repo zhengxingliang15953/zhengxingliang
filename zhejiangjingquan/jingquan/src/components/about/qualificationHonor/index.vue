@@ -2,7 +2,19 @@
   <div>
     <h2 class="titleOfAbout">{{$t('honor')}}</h2>
     <div class="text-default mt-5 text-img"><!--class="text-default mt-5"-->
-      <div v-html="info.body"></div>
+      <!--<div v-html="info.body"></div>-->
+      <Row type="flex">
+        <Col :lg="6" :xs="12">
+          <img src="../../../assets/晶泉荣誉资质/营业执照.jpg" width="100%">
+        </Col>
+         <Col :lg="6">132
+        </Col>
+         <Col :lg="6">1231
+        </Col>
+         <Col :lg="6">23
+        </Col>
+      </Row>
+      
     </div>
   </div>
 </template>

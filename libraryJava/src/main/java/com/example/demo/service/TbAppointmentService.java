@@ -18,4 +18,5 @@ public interface TbAppointmentService {
     TbAppointment continueBrow(String appId,String isbn) throws ParseException;
     List<TbAppointment> selectAppAfter(String sno,String appTime,Integer start);
     List<TbAppointment> waitDesignation(String sno,Integer start);
+    List<TbAppointment> ingDesignation(String sno,Integer start);
 }

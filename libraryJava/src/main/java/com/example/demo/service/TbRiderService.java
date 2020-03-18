@@ -13,4 +13,6 @@ public interface TbRiderService {
     TbRider refuse(String openId);
     void riderLineType(String openId,Integer status);
     List<TbRider> selectAppId(String appId);
+    List<TbRider> selectAllRider(String sno,Integer start);
+    TbRider deleteRider(String openId);
 }

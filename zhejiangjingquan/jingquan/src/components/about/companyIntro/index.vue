@@ -16,7 +16,12 @@
           <!--浙江晶泉将一如既往，配合用户的需要，提供更完善的设计和工艺，并以合理的价格与优良的品质，不断创新适应用户的需求。切实奉行"质量第一、信誉至上"的原则，与您携手共进，共创明天！-->
         <!--</div>-->
         <div class="mt-5 imgOfTextDefault">
-          <img src="../../../assets/img/img-about.jpg" alt="">
+          <img src="../../../assets/img/img-about2.png" alt="">
+        </div><div class="mt-5 imgOfTextDefault">
+          <img src="../../../assets/img/img-about3.png" alt="">
+        </div>
+        <div class="mt-5 imgOfTextDefault">
+          <img src="../../../assets/img/img-about4.png" alt="">
         </div>
       </div>
     </div>

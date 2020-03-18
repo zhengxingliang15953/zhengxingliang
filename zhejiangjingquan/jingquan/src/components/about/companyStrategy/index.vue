@@ -3,6 +3,7 @@
     <h2 class="titleOfAbout">{{$t('company strategy')}}</h2>
     <div class="text-default mt-5">
       <div v-html="info.body"></div>
+      <img src="../../../assets/img/img-strategy.png" alt="" width="100%">
     </div>
   </div>
 </template>

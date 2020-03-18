@@ -164,7 +164,7 @@ public class TbRiderServiceImpl implements TbRiderService {
      */
     @Override
     public List<TbRider> selectAppId(String appId) {
-        List<TbPoint> tbPointList=tbPointMapper.selectAppAll(appId);//获取已有骑手列表
+        List<TbPoint> tbPointList=tbPointMapper.selectAppAll(appId,6);//获取已有骑手列表
         List<TbRider> tbRiderList=tbRiderMapper.selectOnlineRider(5);//获取上线骑手
         if(tbPointList.size()<=0){
             return tbRiderList;
@@ -178,5 +178,53 @@ public class TbRiderServiceImpl implements TbRiderService {
             }
         }
         return tbRiderList;
+    }
+
+    /**
+     * 获取所有的骑手
+     * @return
+     */
+    @Override
+    public List<TbRider> selectAllRider(String sno,Integer start) {
+        List<TbRider> tbRiderList=null;
+        if(sno.equals("")){
+            tbRiderList=tbRiderMapper.selectAllRider(new RowBounds((start-1)*10,10));
+            if(tbRiderList.size()<=0){
+                TbRider tbRider=new TbRider();
+                tbRider.setMsg("0");
+                tbRiderList.add(tbRider);
+            }else{
+                tbRiderList.get(0).setMsg(tbRiderMapper.selectAllRiderNumber().size()+"");
+            }
+            return tbRiderList;
+        }else{
+            tbRiderList=tbRiderMapper.selectAllSnoRider(sno,new RowBounds((start-1)*10,10));
+            if(tbRiderList.size()<=0){
+                TbRider tbRider=new TbRider();
+                tbRider.setMsg("0");
+                tbRiderList.add(tbRider);
+            }else{
+                tbRiderList.get(0).setMsg(tbRiderMapper.selectAllSnoRiderNumber(sno).size()+"");
+            }
+            return tbRiderList;
+        }
+    }
+
+    /**
+     * 删除骑手
+     * @param openId
+     * @return
+     */
+    @Override
+    public TbRider deleteRider(String openId) {
+        TbRider tbRider=new TbRider();
+        if(tbPointMapper.deleteRider(openId).size()>=1){
+            tbRider.setMsg("0");
+            return tbRider;
+        }else{
+            tbRiderMapper.deleteRider(openId);
+            tbRider.setMsg("1");
+        }
+        return tbRider;
     }
 }

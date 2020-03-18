@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.TbPoint;
 import com.example.demo.entity.TbRider;
 import com.example.demo.service.TbRiderService;
 import io.swagger.annotations.Api;
@@ -100,5 +101,28 @@ public class TbRiderController {
     @RequestMapping(value = "api/getAppRider",method = RequestMethod.GET)
     public List<TbRider> getAppRider(String appId){
         return tbRiderService.selectAppId(appId);
+    }
+
+    /**
+     * 获取所有骑手
+     * @param sno
+     * @param start
+     * @return
+     */
+    @ApiOperation(value = "获取所有骑手", notes = "获取所有骑手",httpMethod = "GET")
+    @RequestMapping(value = "api/getAllRider",method = RequestMethod.GET)
+    public List<TbRider> getAllRider(String sno,Integer start){
+        return tbRiderService.selectAllRider(sno, start);
+    }
+
+    /**
+     * 删除骑手
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "删除骑手", notes = "删除骑手",httpMethod = "GET")
+    @RequestMapping(value = "api/getDeleteRider",method = RequestMethod.GET)
+    public TbRider getDeleteRider(String openId){
+        return tbRiderService.deleteRider(openId);
     }
 }

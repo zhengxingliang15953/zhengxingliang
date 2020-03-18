@@ -1,0 +1,7 @@
+<view>
+  <van-panel title="统计数据">
+    <view class="box">
+      <text class="time1">完成单数:{{count}}单</text>
+    </view>
+  </van-panel>
+</view>

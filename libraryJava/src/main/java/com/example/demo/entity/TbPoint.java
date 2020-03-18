@@ -5,6 +5,8 @@ public class TbPoint {
     private String openId;
     private String appId;
     private TbStudent tbStudent;
+    private TbBook tbBook;
+    private TbRider tbRider;
     private String msg;
     private Integer status;
 
@@ -54,5 +56,21 @@ public class TbPoint {
 
     public Integer getStatus() {
         return status;
+    }
+
+    public TbBook getTbBook() {
+        return tbBook;
+    }
+
+    public void setTbBook(TbBook tbBook) {
+        this.tbBook = tbBook;
+    }
+
+    public TbRider getTbRider() {
+        return tbRider;
+    }
+
+    public void setTbRider(TbRider tbRider) {
+        this.tbRider = tbRider;
     }
 }

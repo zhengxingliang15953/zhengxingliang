@@ -12,7 +12,7 @@
           </div>
           
           <ul class="listOfNavInside" v-if="cnzn">
-            <li v-for="(item, index) in infolist" :key="index" @click="getProData(item.id,'application',$i18n.locale)">
+            <li v-for="(item, index) in infolist" :key="index" @click="getProData(item.id,'application',$i18n.locale)" v-show="item.title!='工程业绩'">
               <span>{{item.title}}</span>
               <span>-></span>
             </li>
@@ -20,7 +20,7 @@
             
           </ul>
           <ul class="listOfNavInside" v-if="!cnzn">
-            <li v-for="(item, index) in titles" :key="index" @click="getChance(index)">
+            <li v-for="(item, index) in titles" :key="index" @click="getChance(index)" v-show="item!='project performance'">
               <span>{{item}}</span>
               <span>-></span>
             </li>
@@ -33,15 +33,15 @@
       <Col :lg="1"></Col>
       <Col :lg="15" :sm="24" class="contentOfAbout">
         <h2 class="titleOfAbout" v-if="this.$i18n.locale=='cn'">{{info.title}}</h2>
-        <h2 class="titleOfAbout" v-if="this.$i18n.locale=='en'">{{titles[index]||titles[0]}}</h2>
+        <h2 class="titleOfAbout" v-if="this.$i18n.locale=='en'">{{titles[index]||titles[1]}}</h2>
         <div class="text-default mt-5">
-          <div v-html="info.body" v-if="!imgId">
+          <div v-html="info.body" v-if="!imgId &&info.title!='工程业绩'">
 
           </div>
           <operativefirmenglisg v-if="this.index==4&&this.$i18n.locale=='en'"></operativefirmenglisg>
           <copperative v-if="this.index==3&&this.$i18n.locale=='en'"></copperative>
           <design v-if="this.index==2&&this.$i18n.locale=='en'"></design>
-          <project v-if="this.index==0&&this.$i18n.locale=='en'"></project>
+          <!--<project v-if="this.index==0&&this.$i18n.locale=='en'"></project>-->
           <operative v-if="(info.title=='合作厂商'&&this.$i18n.locale=='cn')"></operative>
           <!--后来加的图片（数据库没改），只是显示作用，后期修改可以删掉-->
           <div v-if="(info.title=='应用领域'&&this.$i18n.locale=='cn')||(this.index==1&&this.$i18n.locale=='en')">
@@ -116,14 +116,14 @@ import operativefirmenglisg from './operativefirmEnglish.vue';
 export default {
   name: 'application',
   created () {
-    this.getinfolist('', 'application', this.$i18n.locale)
+    this.getinfolist(54, 'application', this.$i18n.locale)
   },
   data () {
     return {
       info: '',
       infolist: '',
       titles:['project performance','application area','engineering design','cooperative client','cooperative firm'],
-      index:'',
+      index:1,
     }
   },
   methods: {

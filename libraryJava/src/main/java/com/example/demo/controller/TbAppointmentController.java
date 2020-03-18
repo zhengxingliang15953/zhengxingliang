@@ -158,4 +158,16 @@ public class TbAppointmentController {
     public List<TbAppointment> getWaitDesignation(String sno,Integer start){
         return tbAppointmentService.waitDesignation(sno, start);
     }
+
+    /**
+     * 正在配送列表
+     * @param sno
+     * @param start
+     * @return
+     */
+    @ApiOperation(value = "正在配送列表", notes = "正在配送列表",httpMethod = "GET")
+    @RequestMapping(value = "api/getIngDesignation",method = RequestMethod.GET)
+    public List<TbAppointment> getIngDesignation(String sno,Integer start){
+        return tbAppointmentService.ingDesignation(sno, start);
+    }
 }

@@ -8,7 +8,7 @@
           <MenuItem name="3" to="/index/appointment/backBook">还书列表</MenuItem>
           <MenuItem name="4" to="/index/appointment/backingBook">已还列表</MenuItem> 
           <MenuItem name="5" to="/index/appointment/waitDesignate">待指派</MenuItem>  
-          <MenuItem name="6" to="/index/appointment/backingBook">正在配送</MenuItem>     
+          <MenuItem name="6" to="/index/appointment/ingDesignate">正在配送</MenuItem>     
         </Menu>
       </Col>
       <Col :lg="21">
