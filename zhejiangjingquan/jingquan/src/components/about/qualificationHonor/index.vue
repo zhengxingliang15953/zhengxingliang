@@ -21,7 +21,7 @@
           <p>吴兴区科技成长企业</p>
         </Col>
         <Col :lg="6" :xs="12">
-          <img src="../../../assets/晶泉荣誉资质/省级高新技术企业研发中心证书.jpg" >
+          <img src="../../../assets/晶泉荣誉资质/shenggaoji.jpg" >
           <p>省级高新技术企业研发中心证书</p>
         </Col>
         <Col :lg="6" :xs="12">

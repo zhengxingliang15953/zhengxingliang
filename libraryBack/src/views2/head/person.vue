@@ -77,6 +77,9 @@
                 inactive-color="#ff4949"
                 @change="riderChange">
               </el-switch>
+              <Tooltip content="如无需骑手,可在此关闭,读者将无法选择’送书上门‘服务" max-width="200">
+        <Icon type="md-alert" size="24"/>
+    </Tooltip>
           </FormItem>
         </Form>
       </Col>

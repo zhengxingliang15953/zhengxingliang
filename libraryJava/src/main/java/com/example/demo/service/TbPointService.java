@@ -12,4 +12,5 @@ public interface TbPointService {
     void finishTake(String pointId,String appId);
     List<TbPoint> selectWaitFinish(String openId);
     void finishOrder(String pointId,String appId,String openId);
+    List<TbPoint> selectHistory(String openId);
 }

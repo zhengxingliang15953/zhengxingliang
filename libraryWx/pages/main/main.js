@@ -9,6 +9,8 @@ Page({
     orderItem1: [], //配送单1
     orderItem2:[],//取货单
     orderItem3:[],//待送达单
+    noneValue:false,//监听当前有无订单
+    tap:'1',//标识
   },
   pointBtn1(e) { //骑手同意接单
     let _this = this;
@@ -29,9 +31,21 @@ Page({
         })
       }
     })
+    if (_this.data.orderItem1.length <= 0) {
+      _this.setData({
+        noneValue: true
+      })
+    } else {
+      _this.setData({
+        noneValue: false
+      })
+    }
   },
   tabsChange(value){//监听标签页状态改变
     let _this=this;
+    _this.setData({
+      tap: value.detail.name
+    })
     switch(value.detail.name){//123
       case '1':{
         wx.request({ //根据openId获取待接单列表
@@ -42,6 +56,15 @@ Page({
             })
           }
         })
+        if(_this.data.orderItem1.length<=0){
+          _this.setData({
+            noneValue:true
+          })
+        }else{
+          _this.setData({
+            noneValue: false
+          })
+        }
         break;
       }
       case '2':{
@@ -53,6 +76,15 @@ Page({
             })
           }
         })
+        if (_this.data.orderItem2.length <= 0) {
+          _this.setData({
+            noneValue: true
+          })
+        } else {
+          _this.setData({
+            noneValue: false
+          })
+        }
         break;
       }
       case '3':{
@@ -64,14 +96,21 @@ Page({
             })
           }
         })
+        if (_this.data.orderItem3.length <= 0) {
+          _this.setData({
+            noneValue: true
+          })
+        } else {
+          _this.setData({
+            noneValue: false
+          })
+        }
         break;
       }
     }
   },
   finsh(value){//完成取货
     let _this=this;
-    console.log(value.target.dataset.id.pointId);
-    console.log(value.target.dataset.id.appId);
     wx.request({
       url: `http://localhost:8081/api/getFinishTake?pointId=${value.target.dataset.id.pointId}&appId=${value.target.dataset.id.appId}`,
     })
@@ -83,6 +122,15 @@ Page({
     wx.showToast({
       title: '成功取货',
     })
+    if (_this.data.orderItem2.length <= 0) {
+      _this.setData({
+        noneValue: true
+      })
+    } else {
+      _this.setData({
+        noneValue: false
+      })
+    }
   },
   finshOrder(value){//完成订单
     let _this=this;
@@ -97,6 +145,15 @@ Page({
     wx.showToast({
       title: '订单完成',
     })
+    if (_this.data.orderItem3.length <= 0) {
+      _this.setData({
+        noneValue: true
+      })
+    } else {
+      _this.setData({
+        noneValue: false
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -111,20 +168,47 @@ Page({
         })
       }
     })
+    if (_this.data.orderItem1.length <= 0) {
+      _this.setData({
+        noneValue: true
+      })
+    } else {
+      _this.setData({
+        noneValue: false
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    let _this = this;
+    if (_this.data.orderItem1.length <= 0) {
+      _this.setData({
+        noneValue: true
+      })
+    } else {
+      _this.setData({
+        noneValue: false
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    let _this=this;
+    if (_this.data.orderItem1.length <= 0) {
+      _this.setData({
+        noneValue: true
+      })
+    } else {
+      _this.setData({
+        noneValue: false
+      })
+    }
   },
 
   /**

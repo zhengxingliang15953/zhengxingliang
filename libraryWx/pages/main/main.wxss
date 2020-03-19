@@ -32,3 +32,10 @@
   height:32rpx;
   line-height: 32rpx;
 }
+
+.box2{
+  width:90%;
+  margin:0 auto;
+  margin-bottom:5px;
+  background-color: #E8E8E8;
+}

@@ -27,13 +27,13 @@
             <Icon type="md-browsers"></Icon>
             <span>公告管理</span>
           </MenuItem>
+          <MenuItem name="8" to="/index/Rider1">
+            <Icon type="ios-car"></Icon>
+            <span>骑手管理</span>
+          </MenuItem>
           <MenuItem name="7" to="/index/person">
             <Icon type="md-contact"></Icon>
             <span>个人中心</span>
-          </MenuItem>
-          <MenuItem name="8" to="/index/Rider1">
-            <Icon type="md-contact"></Icon>
-            <span>骑手管理</span>
           </MenuItem>
         </Menu>
       </Sider>

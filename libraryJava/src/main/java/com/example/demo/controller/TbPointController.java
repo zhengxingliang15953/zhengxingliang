@@ -105,4 +105,15 @@ public class TbPointController {
     public void getFinishOrder(String pointId,String appId,String openId){
         tbPointService.finishOrder(pointId, appId, openId);
     }
+
+    /**
+     * 获取历史订单
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "获取历史订单", notes = "获取历史订单",httpMethod = "GET")
+    @RequestMapping(value = "api/getHistory",method = RequestMethod.GET)
+    public List<TbPoint> getHistory(String openId){
+        return tbPointService.selectHistory(openId);
+    }
 }

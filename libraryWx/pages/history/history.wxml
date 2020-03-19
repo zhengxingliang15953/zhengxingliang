@@ -1,8 +1,22 @@
-<view>
-  <van-panel title="借阅人:郑兴樑" desc="联系电话:15314652021" status="已完成">
-    <view class="box">
-      <text class="time1">取书时间:2020-3-17</text>
-      <text class="time2">送达时间:2020-3-17</text>
-    </view>
-  </van-panel>
+<view id="history">
+  <view class="box" wx:for="{{historyList}}" wx:key="index">
+    <van-row>
+      <van-col span="2">
+        <van-icon name="thumb-circle-o" size="50rpx" color="#1E90FF" />
+      </van-col>
+      <van-col span="22" style="color:#9C9C9C;">图书配送服务
+        <text style="float:right;color:red;">已完成</text>
+      </van-col>
+    </van-row>
+    <van-row>
+      <van-col span="5">
+        <image src="../../assets/image/book.png" style="width:100%;height:130rpx;"></image>
+      </van-col>
+      <van-col span="19">
+        <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">联系人:{{item.tbStudent.sno}}{{item.tbStudent.name}}</view>
+        <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">书名:{{item.tbBook.bookName}}</view>
+        <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">联系方式:{{item.tbStudent.tel}}</view>
+      </van-col>
+    </van-row>
+  </view>
 </view>

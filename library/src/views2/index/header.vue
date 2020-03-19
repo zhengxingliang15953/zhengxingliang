@@ -40,7 +40,7 @@
       </Col>
       <Col :lg="2"></Col>
     </Row>
-    <p class="footer">湖ICP备20182841 湖州师范学院图书馆</p>
+    <p class="footer">湖ICP备2018284129 湖州师范学院图书馆</p>
   </div>
 </template>
 

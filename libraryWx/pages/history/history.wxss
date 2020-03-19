@@ -1,4 +1,5 @@
 /* pages/history/history.wxss */
+
 .time1{
   font-size: 30rpx;
   width: 50%;
@@ -9,7 +10,8 @@
   padding-left:10%;
 }
 .box{
-  width:90.3%;
+  width:90%;
   margin:0 auto;
-  border-bottom:2px solid #1E90FF;
+  margin-bottom:5px;
+  background-color: #E8E8E8;
 }

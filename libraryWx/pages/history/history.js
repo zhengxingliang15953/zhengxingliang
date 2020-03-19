@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    historyList:[],//历史订单
   },
 
   /**
@@ -26,7 +26,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let _this=this;
+    wx.request({
+      url: `http://localhost:8081/api/getHistory?openId=${wx.getStorageSync('token')}`,
+      success(res){
+        console.log(res.data);
+        _this.setData({
+          historyList:res.data
+        })
+      }
+    })
   },
 
   /**

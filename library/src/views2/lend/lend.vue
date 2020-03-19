@@ -10,7 +10,7 @@
     <!--借阅方式-->
     <div class="el-menu-demo header">
       <img src="../../assets/logo.png" height="100%" alt />
-      <el-input placeholder="请输入内容" style="width:40%;margin:40px auto" v-model="searchItem">
+      <el-input placeholder="请输入检索内容" style="width:40%;margin:40px auto" v-model="searchItem">
         <el-select slot="prepend" placeholder="请选择" v-model="select" style="width:100px;">
           <el-option label="题名(精)" value="1"></el-option>
           <el-option label="题名(糊)" value="2"></el-option>
@@ -26,7 +26,7 @@
       </el-input>
     </div>
     <br />
-    <Row type="flex" justify="center">
+    <Row type="flex" justify="center" style="min-height:600px;">
       <Col :lg="1"></Col>
       <Col :lg="17">
         <span style="width:80%;background:#5d8fb6;">检索记录({{count}}条)</span>
@@ -37,11 +37,21 @@
           @on-change="pageChange"
           style="display:inline-block;"
         />
+        <div style="height:350px;line-height:350px;font-size:40px" v-if="count==0">
+          <Row type="flex">
+            <Col :lg="8">
+              <img src="../../assets/baoqian.jpg" width="100%">
+            </Col>
+            <Col :lg="16">
+             抱歉没有检索到相关图书...
+            </Col>
+          </Row>
+        </div>
         <Row
           type="flex"
           v-for="(item,index) in searchBookList"
           :key="index"
-          style="border-top:1px solid #B5B5B5;"
+          style="border-top:1px solid #B5B5B5;margin-top:2px;"
         >
           <Col :lg="5">
             <img :src="item.bookUrl" width="90px" height="100px" alt="错误,请检查链接" />
@@ -80,7 +90,7 @@
       <Col :lg="4" style="margin-left:10px;">
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px;">
           <p class="headBar">读者信息>></p>
-          <p class="headBarItem">您好!{{user}}用户</p>
+          <p class="headBarItem">您好!{{this.user}}用户</p>
         </div>
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px">
           <p class="headBar">当前检索>></p>
@@ -88,12 +98,14 @@
         </div>
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px">
           <p class="headBar">主题词>></p>
-          <p class="headBarItem">计算机、、、、、、、</p>
+          <p class="headBarItem" style="font-size:20px;">计算机、临床医学、生物、物理、历史、数学、英语、中医药、机械、电气自动化、护理、光电、PLC、电子、船舶、制药、物联网、现代教育、日语、小语种...</p>
         </div>
       </Col>
       <Col :lg="1"></Col>
     </Row>
-    <p class="footer">湖ICP备20182841 湖州师范学院图书馆</p>
+    <div class="footer">
+      湖ICP备2018284129 湖州师范学院图书馆
+    </div>
   </div>
 </template>
 
@@ -117,7 +129,7 @@ export default {
       searchBookList: [], //检索列表
       page: 1, //当前页码
       sum: 0, //检索总数
-      user: "匿名", //当前登录id
+      user: "匿名", //当前登录学号
       searchItemShow: "", //当前检索
       studentName: "", //登录姓名
       lendMethods: false, //借阅方式绑定
@@ -314,7 +326,7 @@ export default {
         return this.sum;
       }
     }
-  }
+  },
 };
 </script>
 

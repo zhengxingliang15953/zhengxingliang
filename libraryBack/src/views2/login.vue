@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <h1>湖州师范学院图书馆预约系统管理</h1>
+    <h1>湖州师范学院图书馆预约管理系统</h1>
     <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" style="width:300px;margin:15px auto;">
       <FormItem label="账号" prop="account">
         <Input v-model="formCustom.account" placeholder="请输入管理员账号"></Input>
@@ -12,6 +12,7 @@
         <Button type="primary" long @click="loginBtn">登录</Button>
       </FormItem>
     </Form>
+    <p>@本站建设 2018284129郑兴樑</p>
   </div>
 </template>
 
@@ -86,5 +87,11 @@ export default {
     text-align: center;
     font-family: 'loginText';
   }
+}
+p{
+  text-align: center;
+  font-size: 15px;
+  margin-top:250px;
+  color:#9C9C9C;
 }
 </style>

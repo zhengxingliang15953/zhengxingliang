@@ -52,6 +52,6 @@ Vue.filter('appType',function(value){
     case 6:return '待指派';
     case 7:return '骑手未接单';
     case 8:return '骑手取书中';
-    case 9:return '骑手已取货';
+    case 9:return '骑手配送中';
   }
 })

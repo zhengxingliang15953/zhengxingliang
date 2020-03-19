@@ -27,6 +27,9 @@ public class TbPointServiceImpl implements TbPointService {
     @Resource
     private TbRiderMapper tbRiderMapper;
 
+    @Resource
+    private TbAppointmentServiceImpl tbAppointmentService;
+
     /**
      * 插入指派
      * @param openId
@@ -93,6 +96,21 @@ public class TbPointServiceImpl implements TbPointService {
     }
 
     /**
+     * 获取历史订单
+     * @param openId
+     * @return
+     */
+    @Override
+    public List<TbPoint> selectHistory(String openId) {
+        List<TbPoint> tbPointList=tbPointMapper.selectOpenIdStatus(openId,3);
+        for(TbPoint tbPoint1:tbPointList){
+            tbPoint1.setTbStudent(tbStudentMapper.selectOneStudent(tbAppointmentMapper.selectAppIdList(tbPoint1.getAppId()).get(0).getSno()));
+            tbPoint1.setTbBook(tbBookMapper.selectIsbnBook(tbAppointmentMapper.selectAppIdList(tbPoint1.getAppId()).get(0).getIsbn()).get(0));
+        }
+        return tbPointList;
+    }
+
+    /**
      * 骑手同意接单
      * @param appId
      * @return
@@ -134,7 +152,8 @@ public class TbPointServiceImpl implements TbPointService {
     @Override
     public void finishOrder(String pointId, String appId,String openId) {
         tbPointMapper.agreePoint(pointId,3);
-        tbAppointmentMapper.updateAfter(appId,3);
+        //tbAppointmentMapper.updateAfter(appId,3);
+        tbAppointmentMapper.updateAppointment(appId,3,tbAppointmentService.getTime());
         Integer orderNumber=tbRiderMapper.selectOpenId(openId).get(0).getOrderNumber();
         orderNumber++;
         tbRiderMapper.updateNumber(openId,orderNumber);

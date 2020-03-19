@@ -1,59 +1,73 @@
 <view id="main">
+  <!--提示信息-->
   <van-toast id="van-toast" />
-  <van-icon name="cart-circle-o" size="200rpx" color="#CFCFCF" class="icon" />
-  <view class="noone">没有相关订单</view>
-  <van-tabs active="1" bind:change="tabsChange">
+  <van-icon name="cart-circle-o" size="200rpx" color="#CFCFCF" class="icon" wx:if="{{noneValue}}"/>
+  <view class="noone" wx:if="{{noneValue}}">没有相关订单</view>
+  <!--提示信息-->
+
+  <van-tabs active="{{tap}}" bind:change="tabsChange">
     <van-tab title="待接单" name="1" color="#1E90FF">
-      <view>
-        <van-panel wx:for="{{orderItem1}}" wx:key="index" title="{{item.tbStudent.name}}" desc="{{item.tbStudent.tel}}" status="待接单">
-          <view class="box">
-            <van-button type="danger" data-id="{{item}}" size="small" style="margin-left:520rpx;" bindtap="pointBtn1">同意接单</van-button>
-          </view>
-        </van-panel>
+      <view class="box2" wx:for="{{orderItem1}}" wx:key="index">
+        <van-row>
+          <van-col span="2">
+            <van-icon name="thumb-circle-o" size="50rpx" color="#1E90FF" />
+          </van-col>
+          <van-col span="22" style="color:#9C9C9C;">图书配送服务
+            <text style="float:right;color:red;">待接单</text>
+          </van-col>
+        </van-row>
+        <van-row>
+          <van-col span="5">
+            <image src="../../assets/image/book.png" style="width:100%;height:130rpx;"></image>
+          </van-col>
+          <van-col span="19">
+            <van-button plain type="info" size="large" data-id="{{item}}" bindtap="pointBtn1">我要接单</van-button>
+          </van-col>
+        </van-row>
       </view>
     </van-tab>
     <van-tab title="待取货" name="2" color="#1E90FF">
-      <view>
-        <van-panel wx:for="{{orderItem2}}" wx:key="index" title="{{item.tbStudent.name}}" desc="{{item.tbStudent.tel}}" status="待取货">
-          <view class="box">
-            <van-row>
-              <van-col span="24">
-                书名:{{item.tbBook.bookName}}
-              </van-col>
-              <van-col span="24">
-                isbn:{{item.tbBook.isbn}}
-              </van-col>
-              <van-col span="18">
-                地址:{{item.tbBook.address}}
-              </van-col>
-              <van-col span="6">
-                <van-button type="primary" data-id="{{item}}" size="small" bindtap="finsh">完成取货</van-button>
-              </van-col>
-            </van-row>
-          </view>
-        </van-panel>
+      <view class="box2" wx:for="{{orderItem2}}" wx:key="index">
+        <van-row>
+          <van-col span="2">
+            <van-icon name="thumb-circle-o" size="50rpx" color="#1E90FF" />
+          </van-col>
+          <van-col span="22" style="color:#9C9C9C;">图书配送服务
+            <van-button type="info" style="float:right;" size="small" data-id="{{item}}" bindtap="finsh">完成取货</van-button>
+          </van-col>
+        </van-row>
+        <van-row>
+          <van-col span="5">
+            <image src="../../assets/image/book.png" style="width:100%;height:130rpx;"></image>
+          </van-col>
+          <van-col span="19">
+            <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">书名:{{item.tbBook.bookName}}</view>
+            <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">ISBN:{{item.tbBook.isbn}}</view>
+            <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">地址:{{item.tbBook.address}}</view>
+          </van-col>
+        </van-row>
       </view>
     </van-tab>
     <van-tab title="待送达" name="3" color="#1E90FF">
-      <view>
-        <van-panel wx:for="{{orderItem3}}" wx:key="index" title="{{item.tbStudent.name}}" desc="{{item.tbStudent.tel}}" status="待送达">
-          <view class="box">
-            <van-row>
-              <van-col span="24">
-                书名:{{item.tbBook.bookName}}
-              </van-col>
-              <van-col span="24">
-                isbn:{{item.tbBook.isbn}}
-              </van-col>
-              <van-col span="18">
-                地址:{{item.tbBook.address}}
-              </van-col>
-              <van-col span="6">
-                <van-button type="warning" data-id="{{item}}" size="small" bindtap="finshOrder">完成订单</van-button>
-              </van-col>
-            </van-row>
-          </view>
-        </van-panel>
+      <view class="box2" wx:for="{{orderItem3}}" wx:key="index">
+        <van-row>
+          <van-col span="2">
+            <van-icon name="thumb-circle-o" size="50rpx" color="#1E90FF" />
+          </van-col>
+          <van-col span="22" style="color:#9C9C9C;">图书配送服务
+            <van-button type="info" style="float:right;" size="small" data-id="{{item}}" bindtap="finshOrder">配送完成</van-button>
+          </van-col>
+        </van-row>
+        <van-row>
+          <van-col span="5">
+            <image src="../../assets/image/book.png" style="width:100%;height:130rpx;"></image>
+          </van-col>
+          <van-col span="19">
+            <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">联系人:{{item.tbStudent.sno}}{{item.tbStudent.name}}</view>
+            <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">联系方式:{{item.tbStudent.tel}}</view>
+            <view style="font-size:30rpx;height:52rpx;line-height:52rpx;">书名:{{item.tbBook.bookName}}</view>
+          </van-col>
+        </van-row>
       </view>
     </van-tab>
   </van-tabs>

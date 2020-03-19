@@ -12,36 +12,43 @@ Page({
     infoUser: {}, //微信用户信息
     studentName: '', //姓名
     sno: '', //学号
-    backUserInfo:{},//后台用户信息
+    backUserInfo: {}, //后台用户信息
   },
   change() {
     if (!wx.getStorageSync('token')) {
       Notify('你还没有登录');
-    } else if (this.data.backUserInfo.msg == '0' || this.data.backUserInfo.status == '2'){
+    } else if (this.data.backUserInfo.msg == '0' || this.data.backUserInfo.status == '2') {
       Notify('你还不是骑手');
-    }else {
-      let sta=this.data.checked==false?5:4;
+    } else {
+      let sta = this.data.checked == false ? 5 : 4;
       wx.request({
         url: `http://localhost:8081/api/getLineType?openId=${wx.getStorageSync('token')}&status=${sta}`,
       })
-      if(this.data.checked==true){
+      if (this.data.checked == true) {
         wx.showToast({
           title: '下线成功',
         })
-      }else{
+      } else {
         wx.showToast({
           title: '上线成功',
         })
       }
       this.setData({
-        checked:!this.data.checked
+        checked: !this.data.checked
+        
       })
     }
   },
   start() { //开始接单
-    wx.navigateTo({
-      url: '/pages/main/main',
-    })
+    if (!wx.getStorageSync('token')) {
+      Notify('你还没有登录');
+    } else if (this.data.checked==false){
+      Notify('请先上线');
+    }else{
+      wx.navigateTo({
+        url: '/pages/main/main',
+      })
+    }
   },
   loginBtn() { //获取openId
     let _this = this;
@@ -58,14 +65,34 @@ Page({
   },
   login123123(res) { //用户登录
     let _this = this;
-    this.loginBtn();
-    this.setData({
+    _this.loginBtn();
+    _this.setData({
       infoUser: res.detail.userInfo,
       loginValue: true
     })
+    let time = setTimeout(function() {
+      wx.request({
+        url: `http://localhost:8081/api/getOpenIdUser?openId=${wx.getStorageSync('token')}`,
+        success(res) {
+          _this.setData({
+            backUserInfo: res.data
+          })
+          if (res.data.msg == '0' || res.data.status == '4' || res.data.status == '2') {
+            _this.setData({
+              checked: false
+            })
+          } else {
+            _this.setData({
+              checked: true
+            })
+          }
+        }
+      })
+    }, 1000)
+    time = null;
   },
   resourirBtn() { //骑手申请成功提交
-    let _this=this;
+    let _this = this;
     if (this.data.studentName == '' || this.data.sno == '') {
       Notify({
         type: 'warning',
@@ -77,17 +104,17 @@ Page({
     } else {
       wx.request({
         url: `http://localhost:8081/api/getApply?openId=${wx.getStorageSync('token')}&studentName=${_this.data.studentName}&sno=${_this.data.sno}`,
-        success(res){
-          if(res.data.msg=='1'){
+        success(res) {
+          if (res.data.msg == '1') {
             wx.showToast({
               title: '申请成功',
             })
-          }else if(res.data.msg=='2'){
+          } else if (res.data.msg == '2') {
             Toast.loading({
               mask: true,
               message: '审批中'
             });
-          }else{
+          } else {
             Toast.fail('你已经是骑手');
           }
           _this.setData({
@@ -107,21 +134,31 @@ Page({
     }
   },
   historyBtn() { //历史订单
-    wx.navigateTo({
-      url: "/pages/history/history"
-    })
+    if (!wx.getStorageSync('token')) {
+      Notify('你还没有登录');
+    } else {
+      wx.navigateTo({
+        url: "/pages/history/history"
+      })
+    }
+
   },
   statisticBtn() { //我的统计
-    wx.navigateTo({
-      url: `/pages/statistics/statistic?count=${this.data.backUserInfo.orderNumber}`
-    })
+    if (!wx.getStorageSync('token')) {
+      Notify('你还没有登录');
+    } else {
+      wx.navigateTo({
+        url: `/pages/statistics/statistic?count=${this.data.backUserInfo.orderNumber}`
+      })
+    }
+
   },
-  studentNameInput(value){//姓名输入框监听
+  studentNameInput(value) { //姓名输入框监听
     this.setData({
-      studentName:value.detail
+      studentName: value.detail
     })
   },
-  snoInput(value){//学号框监听
+  snoInput(value) { //学号框监听
     this.setData({
       sno: value.detail
     })
@@ -130,7 +167,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    let _this=this;
+    let _this = this;
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
@@ -153,15 +190,15 @@ Page({
           })
           wx.request({
             url: `http://localhost:8081/api/getOpenIdUser?openId=${wx.getStorageSync('token')}`,
-            success(res){
+            success(res) {
               _this.setData({
-                backUserInfo:res.data
+                backUserInfo: res.data
               })
-              if(res.data.msg=='0'||res.data.status=='4'||res.data.status=='2'){
+              if (res.data.msg == '0' || res.data.status == '4' || res.data.status == '2') {
                 _this.setData({
-                  checked:false
+                  checked: false
                 })
-              }else{
+              } else {
                 _this.setData({
                   checked: true
                 })
@@ -186,7 +223,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    let _this=this;
+    let _this = this;
     wx.request({
       url: `http://localhost:8081/api/getOpenIdUser?openId=${wx.getStorageSync('token')}`,
       success(res) {
