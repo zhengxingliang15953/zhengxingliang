@@ -65,7 +65,7 @@ export default {
         {title: 'application', path: '/application', index: "6"},
         {title: 'process', path: '/process', index: "7"},
         {title: 'humanResources', path: '/humanResources', index: "8"},
-        {title: 'waterKnowledge', path: '/waterKnowledge', index: "9"},
+        //{title: 'waterKnowledge', path: '/waterKnowledge', index: "9"},
         {title: 'contactUs', path: '/contactUs', index: "10"}
       ],
       

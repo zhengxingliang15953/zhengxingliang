@@ -10,7 +10,7 @@
               <p>{{$t('products')}}</p>
             </div>
             <ul class="listOfNavInside">
-              <li v-for="(item, index) in navData" :key="index" @click="getProData(item.id, $i18n.locale)">
+              <li v-for="(item, index) in navData" :key="index" @click="getProData(item.id, $i18n.locale)" v-show="item.title!='水处理设备'&&item.title!='Water treatment equipment'">
                   <span>{{item.title}}</span>
                   <span>-></span>
               </li>

@@ -18,19 +18,19 @@
         <div class="itemOfProducts" >
           
             <img src="../../assets/img/homeproduct1.png" alt="products">
-            <div class="titleOfPro">活性炭过滤器</div>
+            <div class="titleOfPro">{{$t('Activated carbon filter')}}</div>
          
         </div>
         <div class="itemOfProducts" >
           
             <img src="../../assets/img/homeproduct2.png" alt="products" height="110%;" width="100%">
-            <div class="titleOfPro">水处理设备</div>
+            <div class="titleOfPro">{{$t('Water treatment equipment')}}</div>
          
         </div>
         <div class="itemOfProducts" >
           
             <img src="../../assets/img/homeproduct3.png" alt="products">
-            <div class="titleOfPro">超滤装置</div>
+            <div class="titleOfPro">{{$t('Ultrafiltration device')}}</div>
          
         </div>
       </div>
