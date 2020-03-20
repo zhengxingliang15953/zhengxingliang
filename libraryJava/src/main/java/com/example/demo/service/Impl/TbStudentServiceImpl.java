@@ -39,6 +39,7 @@ public class TbStudentServiceImpl implements TbStudentService {
         student=tbStudentMapper.selectOneStudent(sno);
         if(tbStudentList.size()>=1&&student.getPwd()==null){
                 tbStudentMapper.updatePwd(sno,student.getIdCard().substring(12));
+                student.setPwd(student.getIdCard().substring(12));
             }
             if(tbStudentList.size()>=1&&pwd.equals(student.getPwd())){
                 student.setMsg(tbAccountServiceImpl.getToken(sno,20));

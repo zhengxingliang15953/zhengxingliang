@@ -15,7 +15,7 @@
           <el-option label="题名(精)" value="1"></el-option>
           <el-option label="题名(糊)" value="2"></el-option>
           <el-option label="著者" value="3"></el-option>
-          <el-option label="ISSN" value="4"></el-option>
+          <el-option label="ISBN" value="4"></el-option>
         </el-select>
         <el-button
           slot="append"
