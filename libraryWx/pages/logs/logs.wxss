@@ -1,8 +1,13 @@
 .log-list {
   display: flex;
   flex-direction: column;
-  padding: 40rpx;
+  padding: 40rpx;j
 }
 .log-item {
   margin: 10rpx;
+}
+.father{
+  width:750rpx;
+  display: flex;
+  
 }

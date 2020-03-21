@@ -1,3 +1,6 @@
 <view>
-  {{title}}
+  {{number}}
+  <slot name="header"></slot>
+  <button bindtap="show">按钮</button>
+  <slot name="footer"></slot>
 </view>
