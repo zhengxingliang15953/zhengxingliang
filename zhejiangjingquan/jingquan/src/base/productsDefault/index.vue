@@ -16,22 +16,22 @@
           </router-link>
         </div>-->
         <div class="itemOfProducts" >
-          
+        
             <img src="../../assets/img/homeproduct1.png" alt="products">
             <div class="titleOfPro">{{$t('Activated carbon filter')}}</div>
-         
+        
         </div>
         <div class="itemOfProducts" >
           
             <img src="../../assets/img/homeproduct2.png" alt="products" height="110%;" width="100%">
             <div class="titleOfPro">{{$t('Water treatment equipment')}}</div>
-         
+        
         </div>
         <div class="itemOfProducts" >
           
             <img src="../../assets/img/homeproduct3.png" alt="products">
             <div class="titleOfPro">{{$t('Ultrafiltration device')}}</div>
-         
+       
         </div>
       </div>
     </Col>

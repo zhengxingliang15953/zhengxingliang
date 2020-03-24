@@ -17,8 +17,6 @@
         <!--</div>-->
         <div class="mt-5 imgOfTextDefault">
           <img src="../../../assets/img/img-about2.png" alt="">
-        </div><div class="mt-5 imgOfTextDefault">
-          <img src="../../../assets/img/img-about3.png" alt="">
         </div>
         <div class="mt-5 imgOfTextDefault">
           <img src="../../../assets/img/img-about4.png" alt="">
