@@ -17,7 +17,6 @@ public interface TbBookMapper {
     List<TbBook> selectBookNameBook2(String bookName,RowBounds rowBounds);
     void updateReadLend(String isbn,Integer appNumber,Integer readNumber);
     void updateBookType(String isbn,Integer type);
-
     List<TbBook> selectAllJiShu();
     List<TbBook> selectBook1Number(String bookName);
     List<TbBook> selectBook2Number(String bookName);
