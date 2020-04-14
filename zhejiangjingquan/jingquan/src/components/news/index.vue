@@ -4,11 +4,11 @@
     <row class="mt-8 rowOfContent" type="flex" justify="center">
       <Col :lg="2"></Col>
       <Col :lg="4" :sm="24">
-        <navOfInside :navData="navdata" v-if="this.$i18n.locale=='cn'">  
+        <navOfInside :navData="navdata" >  
           <p>{{$t('news')}}</p>
         </navOfInside>
 
-        <div class="navOfInside" v-if="this.$i18n.locale=='en'">
+        <!-- <div class="navOfInside" v-if="this.$i18n.locale=='en'">
             <div class="boxOfTitleInside">
               <img src="../../assets/img/icon-about-inside.png" alt="icon-about-inside">
               <p>{{$t('news')}}</p>
@@ -19,7 +19,7 @@
                   <span>-></span>
               </li>
             </ul>
-        </div>
+        </div> -->
 
         <div class="contactUs mt-7">
           <p>联系我们 / CONTACT US</p>
@@ -46,16 +46,16 @@
       <Col :lg="1"></Col>
       <Col :lg="15" :sm="24" class="contentOfAbout" >
 
-          <div v-if="this.$i18n.locale=='en'">
+          <!-- <div v-if="this.$i18n.locale=='en'">
             <h2 class="titleOfAbout">{{this.navdata[this.index].name}}</h2>
-            <div class="text-default mt-5"><!--text-default mt-5-->
+            <div class="text-default mt-5">text-default mt-5
               <bussiness v-if="this.index==2"></bussiness>
               <comapny v-if="this.index==1"></comapny>
               <hangye v-if="this.index==0"></hangye>
             </div>
-          </div>
+          </div> -->
 
-        <router-view v-if="this.$i18n.locale=='cn'"></router-view>
+        <router-view ></router-view>
       </Col>
       <Col :lg="2"></Col>
     </row>

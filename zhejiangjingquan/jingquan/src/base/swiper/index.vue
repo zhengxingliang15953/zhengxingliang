@@ -1,17 +1,17 @@
 <template>
   <swiper :options="swiperOption">
-    <!--<swiper-slide v-for="(slide, index) in banner" :key="index">
+    <swiper-slide v-for="(slide, index) in banner" :key="index">
       <img :src="slide.src" alt />
-    </swiper-slide>-->
-    <swiper-slide>
-      <img src="../../assets/img/瀑布.jpg" alt width="100%;"/>
+    </swiper-slide>
+    <!-- <swiper-slide>
+      <img src="../../assets/img/瀑布2.jpg" alt width="100%;"/>
     </swiper-slide>
     <swiper-slide>
-      <!--<img :src="slide[0].src" alt />--><img src="../../assets/img/changfang.png" alt width="100%;"/>
+      <img src="../../assets/img/changfang2.png" alt width="100%;"/>
     </swiper-slide>
     <swiper-slide>
-      <img src="../../assets/img/swriper3.png" alt width="100%;"/>
-    </swiper-slide>
+      <img src="../../assets/img/swriper31.jpg" alt width="100%;"/>
+    </swiper-slide> -->
     <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
 </template>
@@ -26,7 +26,6 @@ export default {
   data() {
     return {
       banner: "",
-
       swiperOption: {
         pagination: {
           el: ".swiper-pagination"

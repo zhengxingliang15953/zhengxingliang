@@ -6,7 +6,7 @@
       <Col :lg="12"  :md="12" :sm="24" class="contentOfAbout">
         <h2 class="titleOfAbout">{{$t('contactUs')}}</h2>
         <div style="width:80%;" class="text-mobile1">
-          <!--<div class="infoOfContact" v-html="info.body">-->
+          <!-- <div class="infoOfContact" v-html="info.body"> -->
             <div>
               <iframe src="map.html" width="100%" height="310px" scrolling="no"></iframe><!--导入地图api-->
             </div>
@@ -18,7 +18,7 @@
         <p>电话：0572-3112233&nbsp;3112201&nbsp;3112202</p>
         <p>传真：0572-3112203</p>
         <p>邮编：313022<br/></p>
-        <p>网址：<a href=\"http://www.jing-quan.com\">www.jing-quan.com</a></p>
+        <p>网址：<a href="http://www.jing-quan.com\">www.jing-quan.com</a></p>
         <p>邮箱：info@jing-quan.com&nbsp;&nbsp;</p><p>销售部：&nbsp;</p>
         <p>联系人： 胡先生&nbsp;</p><p>联系电话： 15257225188</p>
         <p>联系人： 王先生&nbsp;</p><p>联系电话： 15257226158&nbsp;</p>
