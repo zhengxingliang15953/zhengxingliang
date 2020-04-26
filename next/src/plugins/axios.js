@@ -26,6 +26,7 @@ instance.interceptors.response.use(
     return res;
   },
   err => {
+    console.log(err);
     /* const { status } = err.response;
 
     if (status === 403) {

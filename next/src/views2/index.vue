@@ -23,7 +23,7 @@
             <Icon type="md-briefcase"></Icon>
             <span>安装人员</span>
           </MenuItem>
-          <MenuItem name="6" to="/index/notice">
+          <MenuItem name="6" to="/index/system">
             <Icon type="md-browsers"></Icon>
             <span>系统管理</span>
           </MenuItem>

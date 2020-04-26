@@ -12,7 +12,7 @@
         <Button type="primary" long @click="loginBtn">登录</Button>
       </FormItem>
     </Form>
-    <!-- <p>@本站建设</p> -->
+    <p>Copyright © 2019.盘古技术支持</p>
   </div>
 </template>
 
@@ -87,9 +87,11 @@ export default {
   }
 }
 p{
+  position: absolute;
+  width: 100%;
+  bottom: 40px;
   text-align: center;
   font-size: 15px;
-  margin-top:250px;
   color:#9C9C9C;
 }
 </style>

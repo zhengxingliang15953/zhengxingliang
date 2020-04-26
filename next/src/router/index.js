@@ -40,6 +40,11 @@ const routes = [
         path:'/index/install',
         component:()=>import('../views2/install.vue'),
       },
+      {
+        name:'system',//系统管理
+        path:'/index/system',
+        component:()=>import('../views2/system.vue'),
+      },
     ]
   }
 ];

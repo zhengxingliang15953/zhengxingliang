@@ -5,8 +5,7 @@
         v-model="modal1"
         title="添加安装人员"
         ok-text="添加"
-        @on-ok="ok"
-        @on-cancel="cancel">
+        @on-ok="addSubmit">
         <div class="modal-item">
             联系人:<Input v-model="value" placeholder="请输入支出人" style="width: 70%;" />
         </div>
@@ -35,7 +34,7 @@
           <Button type="error" size="small" @click="remove(row)">删除</Button>
         </template>
       </Table>
-
+      <Page :total="sum" :current="page" style="margin-top:20px;" @on-change="pageChange" />
     </div>
   </div>
 </template>
@@ -47,16 +46,12 @@ export default {
     return {
       columns1: [
         {
-          title: "名称",
-          key: "customer"
+          title: "序号",
+          key: "id"
         },
         {
           title: "联系人",
           key: "name"
-        },
-        {
-          title: "地址",
-          key: "address"
         },
         {
           title: "电话",
@@ -67,7 +62,7 @@ export default {
           key: "weixin"
         },
         {
-          title: "开票信息",
+          title: "付款账号",
           key: "info"
         },
         {
@@ -78,16 +73,21 @@ export default {
         }
       ],
       data1: [
-        {
-          
-        }
+        
       ] ,//开支列表
       modal1:false,//弹窗控制
+      sum:0,//总数
+      page:1,//当前页码
     };
   },
   created() {},
   methods:{
-      
+      addSubmit(){//添加安装人员
+
+      },
+      pageChange(value){//页码改编回调
+        this.page=value;
+      }
   }
 };
 </script>

@@ -5,8 +5,7 @@
         v-model="modal1"
         title="添加供应商"
         ok-text="添加"
-        @on-ok="ok"
-        @on-cancel="cancel">
+        @on-ok="addSubmit">
         <div class="modal-item">
             名称:<Input v-model="value" placeholder="请输入支出金额" style="width: 70%;" />
         </div>
@@ -34,8 +33,8 @@
     <div class="panel-head">供应商管理</div>
     <div class="panel-body">
       <div class="panel-body-search">
-        <Input v-model="value" placeholder="请输入客户名称" style="width: 250px;" />
-        <Button type="info" class="searchBtn">查询</Button>
+        <Input v-model="supplySearch1" placeholder="请输入供应商名称" style="width: 250px;" />
+        <Button type="info" class="searchBtn" @click="searchBtn">查询</Button>
         <Button type="primary" class="searchBtn" @click="modal1=true">添加供应商</Button>
       </div>
       <Table :columns="columns1" :data="data1">
@@ -44,7 +43,7 @@
           <Button type="error" size="small" @click="remove(row)">删除</Button>
         </template>
       </Table>
-
+      <Page :total="sum" :current="page" style="margin-top:20px;" @on-change="pageChange" />
     </div>
   </div>
 </template>
@@ -76,7 +75,11 @@ export default {
           key: "weixin"
         },
         {
-          title: "开票信息",
+          title: "供应材料",
+          key: "weixin"
+        },
+        {
+          title: "付款账号",
           key: "info"
         },
         {
@@ -87,16 +90,26 @@ export default {
         }
       ],
       data1: [
-        {
-          
-        }
+      
       ] ,//开支列表
       modal1:false,//弹窗控制
+      sum:0,//总数量
+      page:1,//当前页码
+      supplySearch1:'',//查询供应商v-model
+      supplySearch2:'',//实际查询供应商
     };
   },
   created() {},
   methods:{
-      
+      addSubmit(){//添加供应商
+
+      },
+      pageChange(value){//页码改编回调
+        this.page=value;
+      },
+      searchBtn(){//查询供应商
+        this.supplySearch2=this.supplySearch1;
+      }
   }
 };
 </script>
