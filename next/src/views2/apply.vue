@@ -9,6 +9,8 @@
           :value="submitForm.date"
           placeholder="请选择支出时间"
           style="width:70%;"
+          :clearable="false"
+          :editable="false"
           @on-change="applyTimeChange"
         ></DatePicker>
       </div>
@@ -41,6 +43,8 @@
           :value="stime"
           placeholder="请选择查询开始时间"
           style="width: 200px"
+          :clearable="false"
+          :editable="false"
           @on-change="timeChange1"
         ></DatePicker>至
         <DatePicker
@@ -48,6 +52,8 @@
           :value="etime"
           placeholder="请选择查询结束时间"
           style="width: 200px"
+          :clearable="false"
+          :editable="false"
           @on-change="timeChange2"
         ></DatePicker>
         <Button type="info" class="searchBtn" @click="searchBtn">查询</Button>
@@ -61,6 +67,7 @@
         </template>
       </Table>
       <Page :total="sum" :current="page" style="margin-top:20px;" @on-change="pageChange" />
+      <span class="sum-footer">总共{{sum}}条记录</span>
     </div>
   </div>
 </template>
@@ -72,7 +79,7 @@ export default {
   name: "apply",
   data() {
     return {
-      columns1: [
+      columns1: [//表头
         {
           title: "支出时间",
           key: "date"

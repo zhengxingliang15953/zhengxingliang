@@ -7,25 +7,25 @@
         ok-text="添加"
         @on-ok="addSubmit">
         <div class="modal-item">
-            名称:<Input v-model="value" placeholder="请输入支出金额" style="width: 70%;" />
+            名称:<Input v-model="value" placeholder="请输入供应商名称" style="width: 70%;" />
         </div>
         <div class="modal-item">
-            地址:<Input v-model="value" placeholder="请输入支出人" style="width: 70%;" />
+            地址:<Input v-model="value" placeholder="请输入供应商地址" style="width: 70%;" />
         </div>
         <div class="modal-item">
-            联系人:<Input v-model="value" placeholder="请输入支出人" style="width: 70%;" />
+            联系人:<Input v-model="value" placeholder="请输入供应商联系人" style="width: 70%;" />
         </div>
         <div class="modal-item">
-            电话:<Input v-model="value" placeholder="请输入支出人" style="width: 70%;" />
+            电话:<Input v-model="value" placeholder="请输入供应商电话" style="width: 70%;" />
         </div>
         <div class="modal-item">
-            微信:<Input v-model="value" placeholder="请输入支出人" style="width: 70%;" />
+            微信:<Input v-model="value" placeholder="请输入供应商微信" style="width: 70%;" />
         </div>
         <div class="modal-item">
-            付款账号:<Input v-model="value" placeholder="请输入支出人" style="width: 70%;" />
+            付款账号:<Input v-model="value" placeholder="请输入付款账号" style="width: 70%;" />
         </div>
         <div class="modal-item">
-            开票信息:<Input v-model="value17" maxlength="100" show-word-limit type="textarea" placeholder="请输入支出信息" style="width:70%;" />
+            开票信息:<Input v-model="value17" maxlength="100" show-word-limit type="textarea" placeholder="请输入开票信息" style="width:70%;" />
         </div>
     </Modal>
     <!--添加弹窗-->
@@ -44,6 +44,7 @@
         </template>
       </Table>
       <Page :total="sum" :current="page" style="margin-top:20px;" @on-change="pageChange" />
+      <span class="sum-footer">总共{{sum}}条记录</span>
     </div>
   </div>
 </template>
@@ -53,7 +54,7 @@ export default {
   name: "apply",
   data() {
     return {
-      columns1: [
+      columns1: [//表头
         {
           title: "名称",
           key: "customer"

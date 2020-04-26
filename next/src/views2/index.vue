@@ -4,7 +4,7 @@
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
         <Menu :active-name="select" @on-select="menuSelect" theme="dark" width="auto" :class="menuitemClasses">
           <MenuItem name="1" to="/index/apply">
-            <Icon type="ios-book"></Icon>
+            <Icon type="ios-calculator"></Icon>
             <span>开支管理</span>
           </MenuItem>
           <MenuItem name="2" to="/index/customer">
@@ -12,7 +12,7 @@
             <span>客户管理</span>
           </MenuItem>
           <MenuItem name="3" to="/index/supply">
-            <Icon type="md-calculator"></Icon>
+            <Icon type="md-car"></Icon>
             <span>供应管理</span>
           </MenuItem>
           <MenuItem name="4" to="/index/order">
@@ -20,11 +20,11 @@
             <span>订单管理</span>
           </MenuItem>
           <MenuItem name="5" to="/index/install">
-            <Icon type="md-briefcase"></Icon>
+            <Icon type="md-construct"></Icon>
             <span>安装人员</span>
           </MenuItem>
           <MenuItem name="6" to="/index/system">
-            <Icon type="md-browsers"></Icon>
+            <Icon type="md-person"></Icon>
             <span>系统管理</span>
           </MenuItem>
         </Menu>

@@ -4,7 +4,14 @@
     <Modal v-model="modal1" title="添加订单" ok-text="添加" @on-ok="addSubmit">
       <div class="modal-item">
         支出时间:
-        <DatePicker type="date" placeholder="请选择支出时间" style="width:70%;"></DatePicker>
+        <DatePicker
+          type="date"
+          placeholder="请选择支出时间"
+          :clearable="false"
+          :editable="false"
+          :start-date="new Date()"
+          style="width:70%;"
+        ></DatePicker>
       </div>
       <div class="modal-item">
         支出金额:
@@ -30,8 +37,24 @@
     <div class="panel-head">订单管理</div>
     <div class="panel-body">
       <div class="panel-body-search">
-        <DatePicker type="date" :value="stime" placeholder="请选择查询开始时间" @on-change="timeChange1" style="width: 200px"></DatePicker>至
-        <DatePicker type="date" :value="etime" placeholder="请选择查询结束时间" @on-change="timeChange2" style="width: 200px"></DatePicker>
+        <DatePicker
+          type="date"
+          :value="stime"
+          placeholder="请选择查询开始时间"
+          @on-change="timeChange1"
+          :clearable="false"
+          :editable="false"
+          style="width: 200px"
+        ></DatePicker>至
+        <DatePicker
+          type="date"
+          :value="etime"
+          placeholder="请选择查询结束时间"
+          @on-change="timeChange2"
+          :clearable="false"
+          :editable="false"
+          style="width: 200px"
+        ></DatePicker>
         <Input
           v-model="customerSearch1"
           placeholder="请输入客户名称"
@@ -47,6 +70,7 @@
         </template>
       </Table>
       <Page :total="sum" :current="page" style="margin-top:20px;" @on-change="pageChange" />
+      <span class="sum-footer">总共{{sum}}条记录</span>
     </div>
   </div>
 </template>
@@ -57,7 +81,7 @@ export default {
   name: "apply",
   data() {
     return {
-      columns1: [
+      columns1: [//表头
         {
           title: "支出时间",
           key: "time"
@@ -93,24 +117,22 @@ export default {
           align: "center"
         }
       ],
-      data1: [
-        
-      ], //开支列表
+      data1: [], //开支列表
       modal1: false, //弹窗控制
       sum: 0, //总数目
       page: 1, //当前页码
       stime: "0001-01-01", //开始时间
-      etime: "" ,//结束时间
-      customerSearch1:'',//客户名称查询v-model
-      customerSearch2:'',//客户名称查询实际
+      etime: "", //结束时间
+      customerSearch1: "", //客户名称查询v-model
+      customerSearch2: "" //客户名称查询实际
     };
   },
   created() {
     this.etime = changeTime(new Date());
   },
   methods: {
-    addSubmit(){//添加订单
-
+    addSubmit() {
+      //添加订单
     },
     pageChange(value) {
       //页码改变回调
@@ -124,8 +146,9 @@ export default {
       //结束时间
       this.etime = value;
     },
-    searchBtn(){//查询
-      this.customerSearch2=this.customerSearch1;
+    searchBtn() {
+      //查询
+      this.customerSearch2 = this.customerSearch1;
     }
   }
 };

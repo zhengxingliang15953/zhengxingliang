@@ -12,7 +12,7 @@
       </div>
       <div class="modal-item">
         密码:
-        <Input v-model="value" type="password2" placeholder="请输入再次密码" style="width: 70%;" />
+        <Input v-model="password2" type="password2" placeholder="请输入再次密码" style="width: 70%;" />
       </div>
       <div class="modal-item">
         权限:
@@ -38,6 +38,7 @@
         </template>
       </Table>
       <Page :total="sum" :current="page" style="margin-top:20px;" @on-change="pageChange" />
+      <span class="sum-footer">总共{{sum}}条记录</span>
     </div>
   </div>
 </template>
@@ -47,7 +48,7 @@ export default {
   name: "apply",
   data() {
     return {
-      columns1: [
+      columns1: [//表头
         {
           title: "序号",
           key: "id"
@@ -77,7 +78,8 @@ export default {
       page: 1 ,//当前页码
       submitForm:{
           jurisdiction:'超级管理员',
-      }
+      },
+      password2:'',//二次密码
     };
   },
   created() {},
