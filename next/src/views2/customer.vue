@@ -28,7 +28,7 @@
     </Modal>
     <!--添加弹窗-->
 
-    <div class="panel-head">客户列表</div>
+    <div class="panel-head">客户管理</div>
     <div class="panel-body">
       <div class="panel-body-search">
         <Input v-model="customerSearch1" placeholder="请输入客户名称" style="width: 250px;" />

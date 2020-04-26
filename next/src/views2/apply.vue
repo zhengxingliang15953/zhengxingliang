@@ -79,6 +79,19 @@ export default {
   name: "apply",
   data() {
     return {
+      modal1: false, //弹窗控制
+      stime: "0001-01-01", //开始时间
+      etime: "", //结束时间
+      expensesList: [], //展示列表
+      sum: 0, //总数
+      page: 1, //当前页码
+      submitForm: {
+        //添加开支
+        date: "",
+        money: 0,
+        name: "",
+        info: ""
+      },
       columns1: [//表头
         {
           title: "支出时间",
@@ -115,19 +128,6 @@ export default {
           align: "center"
         }
       ],
-      modal1: false, //弹窗控制
-      stime: "0001-01-01", //开始时间
-      etime: "", //结束时间
-      expensesList: [], //展示列表
-      sum: 0, //总数
-      page: 1, //当前页码
-      submitForm: {
-        //添加开支
-        date: "",
-        money: 0,
-        name: "",
-        info: ""
-      }
     };
   },
   created() {

@@ -7,7 +7,7 @@
         ok-text="添加"
         @on-ok="addSubmit">
         <div class="modal-item">
-            联系人:<Input v-model="value" placeholder="请输入安装人员" style="width: 70%;" />
+            联系人:<Input v-model="value" placeholder="请输入安装人员名称" style="width: 70%;" />
         </div>
         <div class="modal-item">
             电话:<Input v-model="value" placeholder="请输入安装人员电话" style="width: 70%;" />
