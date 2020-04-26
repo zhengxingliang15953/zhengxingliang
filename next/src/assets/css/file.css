@@ -1,0 +1,41 @@
+body,html,#app{
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+.headAppointment {
+	width: 97%;
+	margin-left: 3%;
+	margin-top: 10px;
+  }
+.panel-head{
+	background-color: #36a9e1;
+	padding: 5px 15px;
+	color: white;
+	font-weight: 300;
+	font-size: 16px;
+} 
+.panel-body{
+	padding: 10px;
+	border: 1px solid #9C9C9C;
+}
+.panel-body-search{
+	background-color: #f6f6f6;
+	padding: 20px 10px;
+	margin-bottom: 20px;
+} 
+.panel-body-search .searchBtn{
+	margin-left: 20px;
+}
+.modal-item{
+	display:-webkit-flex;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 10px;
+}
