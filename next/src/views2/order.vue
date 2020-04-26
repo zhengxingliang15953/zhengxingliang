@@ -83,32 +83,44 @@ export default {
     return {
       columns1: [//表头
         {
-          title: "支出时间",
-          key: "time"
+          title: "客户名称",
+          key: "customer"
         },
         {
-          title: "支出信息",
-          key: "info"
+          title: "业务内用",
+          key: "bussiness"
         },
         {
-          title: "支出金额",
-          key: "money"
+          title: "成交金额",
+          key: "dealmoney"
         },
         {
-          title: "支出人",
-          key: "name"
+          title: "制作成本",
+          key: "costmoney"
         },
         {
-          title: "审核状态",
-          key: "type"
+          title: "供应商",
+          key: "supply"
         },
         {
-          title: "审核结果",
-          key: "result"
+          title: "安装费",
+          key: "insallmoney"
         },
         {
-          title: "审核人",
-          key: "people"
+          title: "安装人员",
+          key: "installname"
+        },
+        {
+          title: "已收款项",
+          key: "received"
+        },
+         {
+          title: "日期",
+          key: "date"
+        },
+        {
+          title: "订单状态",
+          key: "status"
         },
         {
           title: "操作",

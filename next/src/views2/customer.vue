@@ -54,40 +54,28 @@ export default {
     return {
       columns1: [//表头
         {
-          title: "客户名称",
+          title: "名称",
           key: "customer"
         },
         {
-          title: "业务内用",
-          key: "bussiness"
+          title: "联系人",
+          key: "name"
         },
         {
-          title: "成交金额",
-          key: "money"
+          title: "地址",
+          key: "address"
         },
         {
-          title: "制作成本",
-          key: "cost"
+          title: "电话",
+          key: "tel"
         },
         {
-          title: "安装费用",
-          key: "installMoney"
+          title: "微信",
+          key: "weixin"
         },
         {
-          title: "安装人员",
-          key: "installName"
-        },
-        {
-          title: "已收款项",
-          key: "installName"
-        },
-        {
-          title: "日期",
-          key: "date"
-        },
-        {
-          title: "订单状态",
-          key: "status"
+          title: "开票信息",
+          key: "info"
         },
         {
           title: "操作",
