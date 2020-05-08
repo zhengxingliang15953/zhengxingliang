@@ -173,6 +173,7 @@ export default {
           this.$message.success("修改成功");
           this.formPwd.pwd1 = "";
           this.formPwd.pwd2 = "";
+          this.$router.push('/');
         });
       }
     },

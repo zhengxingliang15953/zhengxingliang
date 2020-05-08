@@ -38,10 +38,14 @@
     </select>
 
     <select id="deleteRider" resultType="com.example.demo.entity.TbPoint">
-        select * from tb_point where openId like #{openId}
+        select * from tb_point where openId like #{openId} and status!=3
     </select>
 
     <delete id="deleteAppId">
         delete from tb_point where appId like #{appId} and status=6
     </delete>
+
+    <select id="selectAllOpenId" resultType="com.example.demo.entity.TbPoint">
+        select * from tb_point where openId like #{openId}
+    </select>
 </mapper>

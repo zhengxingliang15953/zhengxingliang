@@ -41,9 +41,11 @@ public class TbRiderServiceImpl implements TbRiderService {
     public TbRider apply(String openId, String studentName, String sno) {
         TbRider tbRider=new TbRider();
         List<TbRider> tbRiderList=tbRiderMapper.selectOpenId(openId);
+//        System.out.println(tbPointMapper.selectOpenId(openId).size());
         if(tbRiderList.size()<=0){
             insertId(openId);
-            tbRiderMapper.apply(openId, studentName, sno);
+            tbRiderMapper.apply(openId, studentName, sno,tbPointMapper.selectAllOpenId(openId).size());
+
             tbRider.setMsg("1");
             return tbRider;
         }else if(tbRiderList.get(0).getStatus()==2){

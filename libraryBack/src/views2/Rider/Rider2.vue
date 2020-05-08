@@ -78,7 +78,7 @@ export default {
     },
     changePage(value) {
       //页码改变回调
-      this.page=value;
+      this.page = value;
       getAllRider(this.searchSno, value).then(data => {
         if (data.data[0].msg == "0") {
           this.riderList = [];
@@ -96,6 +96,15 @@ export default {
           this.$message.warning("骑手有订单信息无法删除");
         } else {
           this.$message.success("删除成功");
+          getAllRider(this.searchSno, this.page).then(data => {
+            if (data.data[0].msg == "0") {
+              this.riderList = [];
+              this.sum = 0;
+            } else {
+              this.riderList = data.data;
+              this.sum = Number(data.data[0].msg);
+            }
+          });
         }
       });
     }

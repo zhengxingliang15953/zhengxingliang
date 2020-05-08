@@ -13,7 +13,7 @@
 
     <update id="apply">
         update tb_rider
-        set studentName=#{studentName},sno=#{sno},status=2
+        set studentName=#{studentName},sno=#{sno},status=2,orderNumber=#{orderNumber}
         where openId like #{openId}
     </update>
 

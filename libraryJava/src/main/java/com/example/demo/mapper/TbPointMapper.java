@@ -16,4 +16,5 @@ public interface TbPointMapper {
     List<TbPoint> selectIngPoint(String appId);
     List<TbPoint> deleteRider(String openId);
     void deleteAppId(String appId);
+    List<TbPoint> selectAllOpenId(String openId);
 }

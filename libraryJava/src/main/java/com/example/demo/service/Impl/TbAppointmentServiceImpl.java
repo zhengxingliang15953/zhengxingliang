@@ -331,6 +331,7 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
      */
     @Override
     public TbAppointment continueBrow(String appId,String isbn) throws ParseException {
+        System.out.println(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendingTime());
         TbAppointment tbAppointment=new TbAppointment();
         if(tbAppointmentMapper.selectDeleteList(5,appId).size()>=1){//状态有问题
             tbAppointment.setMsg("0");
@@ -341,7 +342,7 @@ public class TbAppointmentServiceImpl  implements TbAppointmentService {
         }else if(tbWaitMapper.selectIsbnWait(isbn).size()>=1){//该书后续已有人预约
             tbAppointment.setMsg("2");
             return tbAppointment;
-        }else if(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendingTime().equals("")&&betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendTime(),getTime())<=27){
+        }else if(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendingTime()==null&&betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendTime(),getTime())<=27){
             tbAppointment.setMsg("3");//没有在最后三天续借
             return tbAppointment;
         }else if(betweenDate(tbAppointmentMapper.selectAppIdList(appId).get(0).getLendingTime(),getTime())<=27){

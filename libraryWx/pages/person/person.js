@@ -12,39 +12,48 @@ Page({
     infoUser: {}, //微信用户信息
     studentName: '', //姓名
     sno: '', //学号
-    backUserInfo: {}, //后台用户信息
+    backUserInfo: null, //后台用户信息
   },
   change() {
-    if (!wx.getStorageSync('token')) {
-      Notify('你还没有登录');
-    } else if (this.data.backUserInfo.msg == '0' || this.data.backUserInfo.status == '2') {
-      Notify('你还不是骑手');
-    } else {
-      let sta = this.data.checked == false ? 5 : 4;
-      wx.request({
-        url: `http://localhost:8081/api/getLineType?openId=${wx.getStorageSync('token')}&status=${sta}`,
-      })
-      if (this.data.checked == true) {
-        wx.showToast({
-          title: '下线成功',
+    let _this = this;
+    wx.request({
+      url: `http://localhost:8081/api/getOpenIdUser?openId=${wx.getStorageSync('token')}`,
+      success(res) {
+        _this.setData({
+          backUserInfo: res.data
         })
-      } else {
-        wx.showToast({
-          title: '上线成功',
-        })
+        if (!wx.getStorageSync('token')) {
+          Notify('你还没有登录');
+        } else if (_this.data.backUserInfo.msg == '0' || _this.data.backUserInfo.status == '2') {
+          Notify('你还不是骑手');
+        } else {
+          let sta = _this.data.checked == false ? 5 : 4;
+          wx.request({
+            url: `http://localhost:8081/api/getLineType?openId=${wx.getStorageSync('token')}&status=${sta}`,
+          })
+          if (_this.data.checked == true) {
+            wx.showToast({
+              title: '下线成功',
+            })
+          } else {
+            wx.showToast({
+              title: '上线成功',
+            })
+          }
+          _this.setData({
+            checked: !_this.data.checked
+
+          })
+        }
       }
-      this.setData({
-        checked: !this.data.checked
-        
-      })
-    }
+    })
   },
   start() { //开始接单
     if (!wx.getStorageSync('token')) {
       Notify('你还没有登录');
-    } else if (this.data.checked==false){
+    } else if (this.data.checked == false) {
       Notify('请先上线');
-    }else{
+    } else {
       wx.navigateTo({
         url: '/pages/main/main',
       })
@@ -65,31 +74,38 @@ Page({
   },
   login123123(res) { //用户登录
     let _this = this;
-    _this.loginBtn();
+    // _this.loginBtn();
     _this.setData({
       infoUser: res.detail.userInfo,
       loginValue: true
     })
-    let time = setTimeout(function() {
-      wx.request({
-        url: `http://localhost:8081/api/getOpenIdUser?openId=${wx.getStorageSync('token')}`,
-        success(res) {
-          _this.setData({
-            backUserInfo: res.data
-          })
-          if (res.data.msg == '0' || res.data.status == '4' || res.data.status == '2') {
-            _this.setData({
-              checked: false
-            })
-          } else {
-            _this.setData({
-              checked: true
+    wx.login({
+      success(res) {
+        wx.request({
+          url: `http://localhost:8081/api/getWxLogin?code=${res.code}`,
+          success(res) {
+            wx.setStorageSync('token', res.data.openid);
+            wx.request({
+              url: `http://localhost:8081/api/getOpenIdUser?openId=${wx.getStorageSync('token')}`,
+              success(res) {
+                _this.setData({
+                  backUserInfo: res.data
+                })
+                if (res.data.msg == '0' || res.data.status == '4' || res.data.status == '2') {
+                  _this.setData({
+                    checked: false
+                  })
+                } else {
+                  _this.setData({
+                    checked: true
+                  })
+                }
+              }
             })
           }
-        }
-      })
-    }, 1000)
-    time = null;
+        })
+      }
+    })
   },
   resourirBtn() { //骑手申请成功提交
     let _this = this;
@@ -109,6 +125,7 @@ Page({
             wx.showToast({
               title: '申请成功',
             })
+
           } else if (res.data.msg == '2') {
             Toast.loading({
               mask: true,
@@ -191,6 +208,7 @@ Page({
           wx.request({
             url: `http://localhost:8081/api/getOpenIdUser?openId=${wx.getStorageSync('token')}`,
             success(res) {
+              console.log(res);
               _this.setData({
                 backUserInfo: res.data
               })

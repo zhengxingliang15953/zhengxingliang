@@ -212,13 +212,14 @@ export default {
       //我的预约
       this.value1 = "2";
       getMyAppointment(this.indexStudent.sno).then(data => {
+        console.log(data);
         if (data.data[0].msg == 0) {
           this.myAppointmentList = [];
         } else {
           this.myAppointmentList = data.data;
         }
         //if (data.data[0].tbWaitList != null) {
-        this.myWaitList = this.data.data[0].tbWaitList || [];
+        this.myWaitList =data.data[0].tbWaitList || [];
         //}
       });
     },

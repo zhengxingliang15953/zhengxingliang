@@ -10,7 +10,7 @@ import java.util.List;
 public interface TbRiderMapper {
     void insertId(String openId);
     List<TbRider> selectOpenId(String openId);
-    void apply(String openId,String studentName,String sno);
+    void apply(String openId,String studentName,String sno,Integer orderNumber);
     List<TbRider> selectAll(RowBounds rowBounds);
     List<TbRider> selectSno(String sno, RowBounds rowBounds);
     void updateStatus(String openId,Integer status);

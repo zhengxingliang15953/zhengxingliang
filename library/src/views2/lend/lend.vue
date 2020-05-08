@@ -90,7 +90,7 @@
       <Col :lg="4" style="margin-left:10px;">
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px;">
           <p class="headBar">读者信息>></p>
-          <p class="headBarItem">您好!{{this.user}}用户</p>
+          <p class="headBarItem">您好!{{user}}用户</p>
         </div>
         <div style="border:1px solid  #5d8fb6;margin-bottom:10px">
           <p class="headBar">当前检索>></p>
@@ -143,7 +143,7 @@ export default {
     this.searchItem = this.$route.query.searchItem || "";
     this.searchItemShow = this.searchItem;
     getIndexStudent().then(data => {
-      if (data.data.msg == 0) {
+      if (data.data.msg == 0||!window.sessionStorage.getItem('token')) {
         this.user = "匿名";
       } else {
         this.user = data.data.sno;
