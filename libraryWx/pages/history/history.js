@@ -30,7 +30,6 @@ Page({
     wx.request({
       url: `http://localhost:8081/api/getHistory?openId=${wx.getStorageSync('token')}`,
       success(res){
-        console.log(res.data);
         _this.setData({
           historyList:res.data
         })

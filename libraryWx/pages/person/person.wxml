@@ -26,7 +26,7 @@
       <text>在线状态</text>
       <van-switch active-color="#07c160" inactive-color="#ee0a24" size="50rpx" class="goIcon" bind:change="change" name="1" checked="{{checked}}" />
     </view>
-    <view class="item" bindtap="historyBtn">
+    <view class="item" bindtap="historyBtn" wx:if="{{false}}">
       <van-icon name="completed" size="70rpx" color="#1E90FF" class="icon" />
       <text>历史订单</text>
       <van-icon name="arrow" size="65rpx" color="#828282" class="goIcon" />
