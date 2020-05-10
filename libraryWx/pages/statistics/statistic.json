@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "van-panel":"../../miniprogram_npm/@vant/weapp/panel/index"
-  },
-  "navigationBarTitleText":"我的统计"
-}
